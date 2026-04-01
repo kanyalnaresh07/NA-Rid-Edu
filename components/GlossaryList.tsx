@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, AlertCircle } from 'lucide-react';
+import { Search, AlertCircle, BookOpen, Lightbulb, Target, Settings, Rocket, BarChart } from 'lucide-react';
 import { getGlossaryTerms } from '../constants';
 import { GlossaryTerm, Language } from '../types';
 import { EmptyState } from './ui/EmptyState';
@@ -258,32 +258,123 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
     });
   }, [allTerms, searchQuery]);
 
+  const circleColors = [
+    { border: 'border-slate-600', line: 'bg-slate-600', text: 'text-slate-600' },
+    { border: 'border-teal-500', line: 'bg-teal-500', text: 'text-teal-500' },
+    { border: 'border-amber-500', line: 'bg-amber-500', text: 'text-amber-500' },
+    { border: 'border-purple-600', line: 'bg-purple-600', text: 'text-purple-600' },
+    { border: 'border-slate-800', line: 'bg-slate-800', text: 'text-slate-800' },
+  ];
+
+  const circleIcons = [Search, Settings, Lightbulb, Rocket, BarChart, Target];
+
+  const getConnectorClasses = (index: number, total: number) => {
+    if (index === total - 1) return 'hidden';
+    const isSmEnd = (index + 1) % 2 === 0;
+    const isLgEnd = (index + 1) % 4 === 0;
+
+    if (isSmEnd && isLgEnd) return 'hidden sm:hidden lg:hidden';
+    if (isSmEnd && !isLgEnd) return 'hidden sm:hidden lg:flex';
+    if (!isSmEnd && isLgEnd) return 'hidden sm:flex lg:hidden';
+    return 'hidden sm:flex lg:flex';
+  };
+
   return (
     <div className="relative z-10">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-20">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-6 md:mb-12">
+      <div className="max-w-[1600px] mx-auto px-2 md:px-4 lg:px-6 py-4 md:py-8">
+        
+        {/* Intro Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-6 md:mb-8"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            {/* Point 1 */}
+            <div className="relative bg-slate-900/60 backdrop-blur-xl border border-emerald-500/20 rounded-xl p-4 md:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] ml-5 md:ml-6 hover:border-emerald-500/50 transition-colors group">
+              {/* Ribbon */}
+              <div className="absolute -left-5 md:-left-6 top-4 w-5 md:w-6 h-24 bg-emerald-500 rounded-l-md flex items-center justify-center shadow-lg">
+                <span className="transform -rotate-90 text-slate-950 font-black text-[8px] md:text-[10px] tracking-[0.2em] whitespace-nowrap">
+                  OPTION 01
+                </span>
+                {/* Top Fold */}
+                <div className="absolute -top-1.5 right-0 w-0 h-0 border-b-[6px] border-b-emerald-700 border-l-[6px] border-l-transparent"></div>
+                {/* Bottom Fold */}
+                <div className="absolute -bottom-1.5 right-0 w-0 h-0 border-t-[6px] border-t-emerald-700 border-l-[6px] border-l-transparent"></div>
+              </div>
+
+              {/* Content */}
+              <div className="pl-2 flex flex-col items-center text-center">
+                <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                  <BookOpen className="w-4 h-4 text-emerald-400" />
+                </div>
+                <h3 className="text-xs md:text-sm font-black text-white uppercase tracking-wider mb-2">Manufacturing Education Hub</h3>
+                <p className="text-[10px] md:text-xs text-slate-400 leading-snug">
+                  NA-RID Education Hub is a modern digital platform that explains the concepts of manufacturing, industrial processes, and operational excellence in a simple and structured way. The main objective of this platform is to make real-world industrial knowledge easily accessible to students, engineers, and professionals.
+                </p>
+              </div>
+            </div>
+
+            {/* Point 2 */}
+            <div className="relative bg-slate-900/60 backdrop-blur-xl border border-cyan-500/20 rounded-xl p-4 md:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] ml-5 md:ml-6 hover:border-cyan-500/50 transition-colors group">
+              {/* Ribbon */}
+              <div className="absolute -left-5 md:-left-6 top-4 w-5 md:w-6 h-24 bg-cyan-500 rounded-l-md flex items-center justify-center shadow-lg">
+                <span className="transform -rotate-90 text-slate-950 font-black text-[8px] md:text-[10px] tracking-[0.2em] whitespace-nowrap">
+                  OPTION 02
+                </span>
+                {/* Top Fold */}
+                <div className="absolute -top-1.5 right-0 w-0 h-0 border-b-[6px] border-b-cyan-700 border-l-[6px] border-l-transparent"></div>
+                {/* Bottom Fold */}
+                <div className="absolute -bottom-1.5 right-0 w-0 h-0 border-t-[6px] border-t-cyan-700 border-l-[6px] border-l-transparent"></div>
+              </div>
+
+              {/* Content */}
+              <div className="pl-2 flex flex-col items-center text-center">
+                <div className="w-8 h-8 rounded-full bg-cyan-500/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                  <Lightbulb className="w-4 h-4 text-cyan-400" />
+                </div>
+                <h3 className="text-xs md:text-sm font-black text-white uppercase tracking-wider mb-2">What You Will Learn</h3>
+                <p className="text-[10px] md:text-xs text-slate-400 leading-snug">
+                  On this website, you will find detailed information about core departments such as Production, Quality, Planning, and Maintenance. Each section explains practical concepts, tools, and methodologies that are used in real industries.
+                </p>
+              </div>
+            </div>
+
+            {/* Point 3 */}
+            <div className="relative bg-slate-900/60 backdrop-blur-xl border border-blue-500/20 rounded-xl p-4 md:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] ml-5 md:ml-6 hover:border-blue-500/50 transition-colors group">
+              {/* Ribbon */}
+              <div className="absolute -left-5 md:-left-6 top-4 w-5 md:w-6 h-24 bg-blue-500 rounded-l-md flex items-center justify-center shadow-lg">
+                <span className="transform -rotate-90 text-slate-950 font-black text-[8px] md:text-[10px] tracking-[0.2em] whitespace-nowrap">
+                  OPTION 03
+                </span>
+                {/* Top Fold */}
+                <div className="absolute -top-1.5 right-0 w-0 h-0 border-b-[6px] border-b-blue-700 border-l-[6px] border-l-transparent"></div>
+                {/* Bottom Fold */}
+                <div className="absolute -bottom-1.5 right-0 w-0 h-0 border-t-[6px] border-t-blue-700 border-l-[6px] border-l-transparent"></div>
+              </div>
+
+              {/* Content */}
+              <div className="pl-2 flex flex-col items-center text-center">
+                <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                  <Target className="w-4 h-4 text-blue-400" />
+                </div>
+                <h3 className="text-xs md:text-sm font-black text-white uppercase tracking-wider mb-2">Why This Platform</h3>
+                <p className="text-[10px] md:text-xs text-slate-400 leading-snug">
+                  In today's time, industrial knowledge is often scattered. NA-RID Education Hub provides a centralized platform where you can engage in structured learning. This platform is especially useful for those who want to build their career in the manufacturing and process improvement fields.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-4 md:mb-6">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex-grow border-b border-white/10 pb-2 md:pb-4"
+            className="flex-grow border-b border-white/10 pb-2"
           >
-            <h2 className="text-[10px] md:text-sm font-black text-slate-400 tracking-[0.3em] md:tracking-[0.4em] uppercase leading-none">{translations.browseTerms}</h2>
+            <h2 className="text-[10px] md:text-xs font-black text-slate-400 tracking-[0.3em] uppercase leading-none">{translations.browseTerms}</h2>
             <div className="w-6 md:w-10 h-0.5 bg-cyan-500 mt-2"></div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="relative w-full md:w-80"
-          >
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={14} />
-            <input 
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={isHi ? 'खोजें...' : 'Search terms...'}
-              className="w-full bg-slate-900/50 border border-white/5 rounded-xl py-2.5 md:py-3 pl-10 md:pl-12 pr-4 text-xs md:text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20 transition-all shadow-inner"
-            />
           </motion.div>
         </div>
 
@@ -368,78 +459,50 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-4 xl:gap-8 px-0 md:px-4"
             >
-              {filteredTerms.map((term, index) => (
-                <motion.button 
-                  layout
-                  key={term.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  whileHover={{ 
-                    y: -5,
-                    backgroundColor: "rgba(15, 23, 42, 0.6)",
-                    borderColor: "rgba(6, 182, 212, 0.3)",
-                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(6, 182, 212, 0.1)"
-                  }}
-                  whileTap={{ 
-                    scale: 0.96,
-                    backgroundColor: "rgba(15, 23, 42, 0.8)"
-                  }}
-                  transition={{ 
-                    type: "spring",
-                    damping: 25,
-                    stiffness: 120,
-                    delay: index * 0.02 
-                  }}
-                  onClick={() => onCategorySelect(term)}
-                  className="bg-slate-900/40 backdrop-blur-xl p-5 md:p-10 border border-white/5 transition-all group cursor-pointer relative overflow-hidden rounded-[32px] md:rounded-[48px] shadow-2xl text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
-                >
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-2 mb-3 md:mb-6">
-                      <div className="w-1 h-3 md:w-2 md:h-5 bg-cyan-500 rounded-full shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
-                      <div className="text-[8px] md:text-[11px] font-black text-cyan-500 uppercase tracking-[0.4em]">
-                         {term.category}
-                      </div>
+              {filteredTerms.map((term, index) => {
+                const color = circleColors[index % circleColors.length];
+                const Icon = circleIcons[index % circleIcons.length];
+                
+                return (
+                  <div key={term.id} className="relative flex justify-center items-center w-full">
+                    {/* Connector Lines */}
+                    <div className={`absolute top-1/2 -right-4 sm:-right-6 lg:-right-4 xl:-right-8 w-4 sm:w-6 lg:w-4 xl:w-8 h-4 -translate-y-1/2 z-0 flex-col justify-center gap-1.5 ${getConnectorClasses(index, filteredTerms.length)}`}>
+                      <div className={`w-full h-[3px] md:h-[4px] ${color.line}`}></div>
+                      <div className={`w-full h-[3px] md:h-[4px] ${color.line}`}></div>
                     </div>
-                    <h3 className="text-xl md:text-4xl font-black text-white mb-4 md:mb-8 group-hover:text-cyan-400 transition-colors uppercase tracking-tighter leading-none italic">
-                      {term.title}
-                    </h3>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-8 md:mb-12">
-                      {term.subItems.map((item, i) => (
-                        <li key={i} className="flex items-center gap-3 text-[10px] md:text-[13px] font-bold text-slate-400 group-hover:text-cyan-400/90 transition-colors uppercase tracking-wider">
-                          <div className="w-1.5 h-1.5 bg-slate-700 group-hover:bg-cyan-500 rounded-full transition-colors shadow-[0_0_8px_rgba(6,182,212,0)] group-hover:shadow-[0_0_8px_rgba(6,182,212,0.8)]"></div>
-                          <span className="truncate">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    <div className="flex items-center justify-between mt-auto pt-6 border-t border-white/5">
-                      <div className="flex items-center gap-2 text-cyan-400 font-black text-[9px] md:text-[12px] uppercase tracking-widest group-hover:gap-4 transition-all">
-                        {translations.viewDepartments}
-                        <svg className="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                        </svg>
+
+                    <motion.button 
+                      layout
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ type: "spring", damping: 20, stiffness: 100, delay: index * 0.05 }}
+                      onClick={() => onCategorySelect(term)}
+                      className={`relative w-full max-w-[320px] lg:max-w-full aspect-square rounded-full border-[8px] md:border-[12px] ${color.border} bg-white flex flex-col items-center justify-center p-6 md:p-8 text-center group z-10 shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50`}
+                    >
+                      {/* Inner dashed ring */}
+                      <div className="absolute inset-1 border border-dashed border-slate-200 rounded-full pointer-events-none"></div>
+
+                      <div className={`mb-2 md:mb-4 ${color.text} group-hover:scale-110 transition-transform duration-300`}>
+                        <Icon className="w-10 h-10 md:w-12 md:h-12" strokeWidth={1.5} />
                       </div>
-                      <div className="text-[8px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest font-mono">
-                        {term.id.toUpperCase()}
-                      </div>
-                    </div>
+                      
+                      <h3 className="text-slate-900 font-black text-sm md:text-base uppercase tracking-widest mb-2 md:mb-3 line-clamp-2 px-2">
+                        {term.title}
+                      </h3>
+                      
+                      <div className="w-12 h-[2px] bg-slate-200 mb-2 md:mb-3"></div>
+                      
+                      <p className="text-xs md:text-sm text-slate-500 leading-relaxed line-clamp-4 px-2 md:px-4 font-medium">
+                        {term.subItems.join(', ')}
+                      </p>
+                    </motion.button>
                   </div>
-                  
-                  <div className="absolute -bottom-6 md:-bottom-12 -right-6 md:-right-12 text-8xl md:text-[16rem] font-black text-white/[0.02] select-none pointer-events-none group-hover:text-white/[0.04] transition-all duration-700 leading-none italic">
-                    {term.subItems.length}
-                  </div>
-                  
-                  {/* Subtle glow effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                  
-                  {/* Scanline effect */}
-                  <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-10 transition-opacity duration-700">
-                    <div className="w-full h-[2px] bg-cyan-500/50 absolute top-0 animate-[scan_4s_linear_infinite]"></div>
-                  </div>
-                </motion.button>
-              ))}
+                );
+              })}
             </motion.div>
           )}
         </AnimatePresence>
