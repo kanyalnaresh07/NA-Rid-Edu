@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://na-rid-edu.netlify.app/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://na-rid-edu.netlify.app/oee-machine-efficiency</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://na-rid-edu.netlify.app/5s-workplace-management</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://na-rid-edu.netlify.app/iqc-incoming-quality-control</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://na-rid-edu.netlify.app/ipqc-in-process-quality-control</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://na-rid-edu.netlify.app/fqc-oqc-final-outgoing-quality</loc>
+    <priority>0.9</priority>
+  </url>
+
+</urlset>

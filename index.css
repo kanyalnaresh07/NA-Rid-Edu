@@ -1,0 +1,53 @@
+* {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+/* Allow selection in specific interactive elements if needed */
+input, textarea, [contenteditable="true"] {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+/* Prevent image dragging and selection */
+img {
+  pointer-events: none !important;
+  -webkit-user-drag: none !important;
+  user-select: none !important;
+}
+
+/* Global Focus Styles */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+}
+
+/* Print Prevention */
+@media print {
+  body {
+    display: none !important;
+  }
+}
+
+/* 3D Cylinder Animation */
+@keyframes spinX {
+  0% { transform: perspective(1000px) rotateX(0deg); }
+  100% { transform: perspective(1000px) rotateX(-360deg); }
+}
+
+.animate-spin-x {
+  animation: spinX 6s linear infinite;
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
