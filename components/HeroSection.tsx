@@ -214,9 +214,19 @@ const HeroSection: React.FC<HeroProps> = ({
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.5, delay: 1.5 }}
                   onClick={onGlossaryClick}
-                  className="group relative py-5 px-6 md:py-8 md:px-12 bg-slate-950/80 text-white font-black text-xl md:text-3xl xl:text-4xl leading-none uppercase tracking-[0.2em] transition-all duration-500 flex items-center gap-3 md:gap-4 rounded-xl md:rounded-2xl border border-cyan-500/30 hover:border-cyan-400 w-full lg:w-auto justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
+                  className="group relative overflow-hidden py-5 px-6 md:py-8 md:px-12 text-white font-black text-xl md:text-3xl xl:text-4xl leading-none uppercase tracking-[0.2em] transition-all duration-500 flex items-center gap-3 md:gap-4 rounded-xl md:rounded-2xl w-full lg:w-auto justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl md:rounded-2xl"></div>
+                  {/* Animated Border Background */}
+                  <div className="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2">
+                    <div className="w-full h-full animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_50%,#06b6d4_100%)]"></div>
+                  </div>
+                  
+                  {/* Inner Background to cover the middle */}
+                  <div className="absolute inset-[2px] bg-slate-950 rounded-[calc(0.75rem-2px)] md:rounded-[calc(1rem-2px)] z-0 transition-colors duration-500 group-hover:bg-slate-900"></div>
+
+                  {/* Hover Gradient Overlay */}
+                  <div className="absolute inset-[2px] bg-gradient-to-r from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[calc(0.75rem-2px)] md:rounded-[calc(1rem-2px)] z-0"></div>
+                  
                   <span className="relative z-10 flex items-center gap-3 md:gap-4 whitespace-nowrap">
                     <div className="relative animate-spin-x flex items-center justify-center h-[1.2em]">
                       <span className="block backface-hidden" style={{ transform: 'rotateX(0deg) translateZ(0.6em)' }}>{translations.discover}</span>

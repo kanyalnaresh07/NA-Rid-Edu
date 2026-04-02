@@ -83,24 +83,12 @@ const App: React.FC = () => {
     document.addEventListener('selectstart', handleSelectStart);
     document.addEventListener('keydown', handleKeyDown);
 
-    // Deter DevTools usage with debugger loop
-    const deterDevTools = setInterval(() => {
-      const startTime = performance.now();
-      debugger;
-      const endTime = performance.now();
-      if (endTime - startTime > 100) {
-        // DevTools is likely open
-        // We could take action here, but the debugger itself is the deterrent
-      }
-    }, 1000);
-
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu);
       document.removeEventListener('copy', handleCopy);
       document.removeEventListener('dragstart', handleDragStart);
       document.removeEventListener('selectstart', handleSelectStart);
       document.removeEventListener('keydown', handleKeyDown);
-      clearInterval(deterDevTools);
     };
   }, []);
 
