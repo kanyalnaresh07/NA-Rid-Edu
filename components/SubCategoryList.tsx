@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Search, Settings, Lightbulb, Rocket, BarChart, Target, Factory, ShieldCheck, Wrench, CalendarClock, Box, Truck, Users, DollarSign, Monitor, ShieldAlert } from 'lucide-react';
 import { GlossaryTerm, Language, DepartmentDetail } from '../types';
 import { getTermDefinition } from '../services/geminiService';
 import T5SDetail from './T5SDetail';
@@ -49,180 +50,149 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
 }) => {
   const [selectedSubItem, setSelectedSubItem] = useState<string | null>(initialSubItem);
   const [selectedPoint, setSelectedPoint] = useState<string | null>(initialPoint);
+  const [activeDeepDive, setActiveDeepDive] = useState<string | null>(null);
+  const [pointData, setPointData] = useState<{ title: string; definition: string; category: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   
   // Use effect to handle initial deep dives if provided
   React.useEffect(() => {
-    if (initialSubItem) {
-      handleSubItemClick(initialSubItem);
-    }
-    if (initialPoint) {
-      handlePointClick(initialPoint);
-    }
+    const fetchInitialData = async () => {
+      if (initialPoint) {
+        setIsLoading(true);
+        try {
+          const data = await getTermDefinition(initialPoint, lang);
+          setPointData(data);
+        } catch (err) {
+          console.error("Error fetching point detail:", err);
+          setPointData({
+            title: initialPoint,
+            definition: lang === 'hi' ? 'क्षमा करें, इस बिंदु का विवरण अभी उपलब्ध नहीं है।' : 'Sorry, the detailed explanation for this point is currently unavailable.',
+            category: category.category
+          });
+        } finally {
+          setIsLoading(false);
+        }
+      }
+      
+      // Check if there's a deep dive in the current history state
+      const state = window.history.state;
+      if (state && state.deepDive) {
+        setActiveDeepDive(state.deepDive);
+      }
+    };
+    
+    fetchInitialData();
   }, []);
-  const [showT5SDeepDive, setShowT5SDeepDive] = useState(false);
-  const [showPPEDeepDive, setShowPPEDeepDive] = useState(false);
-  const [showWIDeepDive, setShowWIDeepDive] = useState(false);
-  const [showTimeDeepDive, setShowTimeDeepDive] = useState(false);
-  const [showProductivityDeepDive, setShowProductivityDeepDive] = useState(false);
-  const [showQualityDeepDive, setShowQualityDeepDive] = useState(false);
-  const [showManpowerDeepDive, setShowManpowerDeepDive] = useState(false);
-  const [showMaterialDeepDive, setShowMaterialDeepDive] = useState(false);
-  const [showSLEDeepDive, setShowSLEDeepDive] = useState(false);
-  const [showOEEDeepDive, setShowOEEDeepDive] = useState(false);
-  const [showLOBDeepDive, setShowLOBDeepDive] = useState(false);
-  const [showLossDeepDive, setShowLossDeepDive] = useState(false);
-  const [showVADeepDive, setShowVADeepDive] = useState(false);
-  const [showPrinciplesDeepDive, setShowPrinciplesDeepDive] = useState(false);
-  const [showQualityDeptDeepDive, setShowQualityDeptDeepDive] = useState(false);
-  const [showKaizenDeepDive, setShowKaizenDeepDive] = useState(false);
-  const [showFMEADeepDive, setShowFMEADeepDive] = useState(false);
-  const [showControlPlanDeepDive, setShowControlPlanDeepDive] = useState(false);
-  const [showAPQPPPAPDeepDive, setShowAPQPPPAPDeepDive] = useState(false);
-  const [showProcessEngDeepDive, setShowProcessEngDeepDive] = useState(false);
-  const [showMaintenanceDeepDive, setShowMaintenanceDeepDive] = useState(false);
-  const [showPlanningDeepDive, setShowPlanningDeepDive] = useState(false);
-  const [showStoreDeepDive, setShowStoreDeepDive] = useState(false);
-  const [showPurchaseDeepDive, setShowPurchaseDeepDive] = useState(false);
-  const [showLogisticsDeepDive, setShowLogisticsDeepDive] = useState(false);
-  const [showRDDeepDive, setShowRDDeepDive] = useState(false);
-  const [showHRDeepDive, setShowHRDeepDive] = useState(false);
-  const [showFinanceDeepDive, setShowFinanceDeepDive] = useState(false);
-  const [showITDeepDive, setShowITDeepDive] = useState(false);
-  const [showEHSDeepDive, setShowEHSDeepDive] = useState(false);
-  const [pointData, setPointData] = useState<{ title: string; definition: string; category: string } | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+
+  React.useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      const state = event.state;
+      if (state && state.view === 'CATEGORY_DETAIL') {
+        setSelectedSubItem(state.subItem || null);
+        
+        const newPoint = state.point || null;
+        setSelectedPoint(newPoint);
+        setActiveDeepDive(state.deepDive || null);
+        
+        if (newPoint && newPoint !== selectedPoint) {
+           // Fetch data for the new point if it changed via popstate
+           setIsLoading(true);
+           getTermDefinition(newPoint, lang).then(data => {
+             setPointData(data);
+             setIsLoading(false);
+           }).catch(err => {
+             console.error("Error fetching point detail:", err);
+             setPointData({
+               title: newPoint,
+               definition: lang === 'hi' ? 'क्षमा करें, इस बिंदु का विवरण अभी उपलब्ध नहीं है।' : 'Sorry, the detailed explanation for this point is currently unavailable.',
+               category: category.category
+             });
+             setIsLoading(false);
+           });
+        } else if (!newPoint) {
+           setPointData(null);
+        }
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [lang, selectedPoint, category.category]);
+
+  const pushHistoryState = (updates: any) => {
+    const currentState = window.history.state || {};
+    const newState = {
+      ...currentState,
+      view: 'CATEGORY_DETAIL',
+      subItem: updates.subItem !== undefined ? updates.subItem : selectedSubItem,
+      point: updates.point !== undefined ? updates.point : selectedPoint,
+      deepDive: updates.deepDive !== undefined ? updates.deepDive : activeDeepDive,
+    };
+    
+    let url = `?view=CATEGORY_DETAIL`;
+    if (newState.subItem) url += `&subItem=${encodeURIComponent(newState.subItem)}`;
+    if (newState.point) url += `&point=${encodeURIComponent(newState.point)}`;
+    
+    window.history.pushState(newState, '', url);
+  };
 
   const handleSubItemClick = (item: string) => {
     // Specialized Routing
-    if (item.includes('Quality') || item.includes('क्वालिटी')) {
-      setShowQualityDeptDeepDive(true);
+    let deepDive = null;
+    if (item.includes('Quality') || item.includes('क्वालिटी')) deepDive = 'QualityDept';
+    else if (item.includes('Process Engineering') || item.includes('प्रोसेस इंजीनियरिंग')) deepDive = 'ProcessEng';
+    else if (item.includes('Maintenance') || item.includes('मेंटेनेंस')) deepDive = 'Maintenance';
+    else if (item.includes('Planning') || item.includes('प्लानिंग')) deepDive = 'Planning';
+    else if (item.includes('Store') || item.includes('Inventory') || item.includes('Warehouse')) deepDive = 'Store';
+    else if (item.includes('Purchase') || item.includes('Procurement') || item.includes('परचेज')) deepDive = 'Purchase';
+    else if (item.includes('Logistics') || item.includes('Dispatch') || item.includes('लॉजिस्टिक्स')) deepDive = 'Logistics';
+    else if (item.includes('R&D') || item.includes('Design') || item.includes('डिज़ाइन')) deepDive = 'RD';
+    else if (item.includes('HR') || item.includes('Admin') || item.includes('एडमिन')) deepDive = 'HR';
+    else if (item.includes('Finance') || item.includes('Accounts') || item.includes('फाइनेंस')) deepDive = 'Finance';
+    else if (item.includes('IT') || item.includes('Systems') || item.includes('MIS')) deepDive = 'IT';
+    else if (item.includes('EHS') || item.includes('Safety') || item.includes('सुरक्षा')) deepDive = 'EHS';
+
+    if (deepDive) {
+      setActiveDeepDive(deepDive);
+      pushHistoryState({ deepDive });
       return;
     }
-    if (item.includes('Process Engineering') || item.includes('प्रोसेस इंजीनियरिंग')) {
-      setShowProcessEngDeepDive(true);
-      return;
-    }
-    if (item.includes('Maintenance') || item.includes('मेंटेनेंस')) {
-      setShowMaintenanceDeepDive(true);
-      return;
-    }
-    if (item.includes('Planning') || item.includes('प्लानिंग')) {
-      setShowPlanningDeepDive(true);
-      return;
-    }
-    if (item.includes('Store') || item.includes('Inventory') || item.includes('Warehouse')) {
-      setShowStoreDeepDive(true);
-      return;
-    }
-    if (item.includes('Purchase') || item.includes('Procurement') || item.includes('परचेज')) {
-      setShowPurchaseDeepDive(true);
-      return;
-    }
-    if (item.includes('Logistics') || item.includes('Dispatch') || item.includes('लॉजिस्टिक्स')) {
-      setShowLogisticsDeepDive(true);
-      return;
-    }
-    if (item.includes('R&D') || item.includes('Design') || item.includes('डिज़ाइन')) {
-      setShowRDDeepDive(true);
-      return;
-    }
-    if (item.includes('HR') || item.includes('Admin') || item.includes('एडमिन')) {
-      setShowHRDeepDive(true);
-      return;
-    }
-    if (item.includes('Finance') || item.includes('Accounts') || item.includes('फाइनेंस')) {
-      setShowFinanceDeepDive(true);
-      return;
-    }
-    if (item.includes('IT') || item.includes('Systems') || item.includes('MIS')) {
-      setShowITDeepDive(true);
-      return;
-    }
-    if (item.includes('EHS') || item.includes('Safety') || item.includes('सुरक्षा')) {
-      setShowEHSDeepDive(true);
-      return;
-    }
+
     setSelectedSubItem(item);
     setSelectedPoint(null);
     setPointData(null);
+    pushHistoryState({ subItem: item, point: null, deepDive: null });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handlePointClick = async (point: string) => {
-    if (point.includes('T5S')) {
-      setShowT5SDeepDive(true);
-      return;
-    }
-    if (point.includes('PPE')) {
-      setShowPPEDeepDive(true);
-      return;
-    }
-    if (point.includes('Work Instruction') || point.includes('Work Standard') || point.includes('OPL')) {
-      setShowWIDeepDive(true);
-      return;
-    }
-    if (point.includes('Time Management') || point.includes('Cycle Time') || point.includes('Takt Time') || point.includes('Lead Time') || point.includes('Bottle Neck')) {
-      setShowTimeDeepDive(true);
-      return;
-    }
-    if (point.includes('UPH') || point.includes('UPPH') || point.includes('Idle Time')) {
-      setShowProductivityDeepDive(true);
-      return;
-    }
-    if (point.includes('Rejection') || point.includes('Rework') || point.includes('SSI')) {
-      setShowQualityDeepDive(true);
-      return;
-    }
-    if (point.includes('Manpower Handling') || point.includes('Attendance') || point.includes('Skill Mapping')) {
-      setShowManpowerDeepDive(true);
-      return;
-    }
-    if (point.includes('Material Handling') || point.includes('Inventory') || point.includes('FIFO')) {
-      setShowMaterialDeepDive(true);
-      return;
-    }
-    if (point.includes('4M') || point.includes('SLE-50') || point.includes('Loss Elimination') || point.includes('Safety improvement')) {
-      setShowSLEDeepDive(true);
-      return;
-    }
-    if (point.includes('OEE') || point.includes('Overall Equipment Effectiveness')) {
-      setShowOEEDeepDive(true);
-      return;
-    }
-    if (point.includes('LOB') || point.includes('Line of Balancing')) {
-      setShowLOBDeepDive(true);
-      return;
-    }
-    if (point.includes('Manufacturing Loss') || point.includes('Wastages') || point.includes('Waste Management')) {
-      setShowLossDeepDive(true);
-      return;
-    }
-    if (point.includes('Value Analysis') || point.includes('VA') || point.includes('ENVA') || point.includes('NVA')) {
-      setShowVADeepDive(true);
-      return;
-    }
-    if (point.includes('Four Principles of Improvement') || point.includes('सुधार के चार सिद्धांत')) {
-      setShowPrinciplesDeepDive(true);
-      return;
-    }
-    if (point.includes('Kaizen') || point.includes('Poka-Yoke') || point.includes('काइज़न') || point.includes('पोका-योक')) {
-      setShowKaizenDeepDive(true);
-      return;
-    }
-    if (point.includes('FMEA') || point.includes('DMAIC')) {
-      setShowFMEADeepDive(true);
-      return;
-    }
-    if (point.includes('Control Plan')) {
-      setShowControlPlanDeepDive(true);
-      return;
-    }
-    if (point.includes('APQP') || point.includes('PPAP')) {
-      setShowAPQPPPAPDeepDive(true);
+    let deepDive = null;
+    if (point.includes('T5S')) deepDive = 'T5S';
+    else if (point.includes('PPE')) deepDive = 'PPE';
+    else if (point.includes('Work Instruction') || point.includes('Work Standard') || point.includes('OPL')) deepDive = 'WI';
+    else if (point.includes('Time Management') || point.includes('Cycle Time') || point.includes('Takt Time') || point.includes('Lead Time') || point.includes('Bottle Neck')) deepDive = 'Time';
+    else if (point.includes('UPH') || point.includes('UPPH') || point.includes('Idle Time')) deepDive = 'Productivity';
+    else if (point.includes('Rejection') || point.includes('Rework') || point.includes('SSI')) deepDive = 'Quality';
+    else if (point.includes('Manpower Handling') || point.includes('Attendance') || point.includes('Skill Mapping')) deepDive = 'Manpower';
+    else if (point.includes('Material Handling') || point.includes('Inventory') || point.includes('FIFO')) deepDive = 'Material';
+    else if (point.includes('4M') || point.includes('SLE-50') || point.includes('Loss Elimination') || point.includes('Safety improvement')) deepDive = 'SLE';
+    else if (point.includes('OEE') || point.includes('Overall Equipment Effectiveness')) deepDive = 'OEE';
+    else if (point.includes('LOB') || point.includes('Line of Balancing')) deepDive = 'LOB';
+    else if (point.includes('Manufacturing Loss') || point.includes('Wastages') || point.includes('Waste Management')) deepDive = 'Loss';
+    else if (point.includes('Value Analysis') || point.includes('VA') || point.includes('ENVA') || point.includes('NVA')) deepDive = 'VA';
+    else if (point.includes('Four Principles of Improvement') || point.includes('सुधार के चार सिद्धांत')) deepDive = 'Principles';
+    else if (point.includes('Kaizen') || point.includes('Poka-Yoke') || point.includes('काइज़न') || point.includes('पोका-योक')) deepDive = 'Kaizen';
+    else if (point.includes('FMEA') || point.includes('DMAIC')) deepDive = 'FMEA';
+    else if (point.includes('Control Plan')) deepDive = 'ControlPlan';
+    else if (point.includes('APQP') || point.includes('PPAP')) deepDive = 'APQPPPAP';
+
+    if (deepDive) {
+      setActiveDeepDive(deepDive);
+      pushHistoryState({ deepDive });
       return;
     }
 
     setSelectedPoint(point);
+    pushHistoryState({ point, deepDive: null });
     setIsLoading(true);
     setPointData(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -242,36 +212,58 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
     }
   };
 
-  if (showT5SDeepDive) return <T5SDetail onBack={() => setShowT5SDeepDive(false)} lang={lang} />;
-  if (showPPEDeepDive) return <PPEDetail onBack={() => setShowPPEDeepDive(false)} lang={lang} />;
-  if (showWIDeepDive) return <WIDetail onBack={() => setShowWIDeepDive(false)} lang={lang} />;
-  if (showTimeDeepDive) return <TimeManagementDetail onBack={() => setShowTimeDeepDive(false)} lang={lang} />;
-  if (showProductivityDeepDive) return <ProductivityDetail onBack={() => setShowProductivityDeepDive(false)} lang={lang} />;
-  if (showQualityDeepDive) return <QualityDetail onBack={() => setShowQualityDeepDive(false)} lang={lang} />;
-  if (showManpowerDeepDive) return <ManpowerDetail onBack={() => setShowManpowerDeepDive(false)} lang={lang} />;
-  if (showMaterialDeepDive) return <MaterialHandlingDetail onBack={() => setShowMaterialDeepDive(false)} lang={lang} />;
-  if (showSLEDeepDive) return <SLEDetail onBack={() => setShowSLEDeepDive(false)} lang={lang} />;
-  if (showOEEDeepDive) return <OEEDetail onBack={() => setShowOEEDeepDive(false)} lang={lang} />;
-  if (showLOBDeepDive) return <LOBDetail onBack={() => setShowLOBDeepDive(false)} lang={lang} />;
-  if (showLossDeepDive) return <ManufacturingLossDetail onBack={() => setShowLossDeepDive(false)} lang={lang} />;
-  if (showVADeepDive) return <ValueAnalysisDetail onBack={() => setShowVADeepDive(false)} lang={lang} />;
-  if (showPrinciplesDeepDive) return <FourPrinciplesDetail onBack={() => setShowPrinciplesDeepDive(false)} lang={lang} />;
-  if (showQualityDeptDeepDive) return <QualityManagementDetail onBack={() => setShowQualityDeptDeepDive(false)} lang={lang} />;
-  if (showKaizenDeepDive) return <KaizenPokaYokeDetail onBack={() => setShowKaizenDeepDive(false)} lang={lang} />;
-  if (showFMEADeepDive) return <FMEADMAICDetail onBack={() => setShowFMEADeepDive(false)} lang={lang} />;
-  if (showControlPlanDeepDive) return <ControlPlanDetail onBack={() => setShowControlPlanDeepDive(false)} lang={lang} />;
-  if (showAPQPPPAPDeepDive) return <APQPPPAPDetail onBack={() => setShowAPQPPPAPDeepDive(false)} lang={lang} />;
-  if (showProcessEngDeepDive) return <ProcessEngineeringDetail onBack={() => setShowProcessEngDeepDive(false)} lang={lang} />;
-  if (showMaintenanceDeepDive) return <MaintenanceDetail onBack={() => setShowMaintenanceDeepDive(false)} lang={lang} />;
-  if (showPlanningDeepDive) return <PlanningDetail onBack={() => setShowPlanningDeepDive(false)} lang={lang} />;
-  if (showStoreDeepDive) return <StoreInventoryDetail onBack={() => setShowStoreDeepDive(false)} lang={lang} />;
-  if (showPurchaseDeepDive) return <PurchaseProcurementDetail onBack={() => setShowPurchaseDeepDive(false)} lang={lang} />;
-  if (showLogisticsDeepDive) return <LogisticsDetail onBack={() => setShowLogisticsDeepDive(false)} lang={lang} />;
-  if (showRDDeepDive) return <RDDesignDetail onBack={() => setShowRDDeepDive(false)} lang={lang} />;
-  if (showHRDeepDive) return <HRAdminDetail onBack={() => setShowHRDeepDive(false)} lang={lang} />;
-  if (showFinanceDeepDive) return <FinanceDetail onBack={() => setShowFinanceDeepDive(false)} lang={lang} />;
-  if (showITDeepDive) return <ITSystemsDetail onBack={() => setShowITDeepDive(false)} lang={lang} />;
-  if (showEHSDeepDive) return <EHSDetail onBack={() => setShowEHSDeepDive(false)} lang={lang} />;
+  const handleBackFromDeepDive = () => {
+    window.history.back();
+  };
+
+  if (activeDeepDive === 'T5S') return <T5SDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'PPE') return <PPEDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'WI') return <WIDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Time') return <TimeManagementDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Productivity') return <ProductivityDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Quality') return <QualityDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Manpower') return <ManpowerDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Material') return <MaterialHandlingDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'SLE') return <SLEDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'OEE') return <OEEDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'LOB') return <LOBDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Loss') return <ManufacturingLossDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'VA') return <ValueAnalysisDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Principles') return <FourPrinciplesDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'QualityDept') return <QualityManagementDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Kaizen') return <KaizenPokaYokeDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'FMEA') return <FMEADMAICDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'ControlPlan') return <ControlPlanDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'APQPPPAP') return <APQPPPAPDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'ProcessEng') return <ProcessEngineeringDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Maintenance') return <MaintenanceDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Planning') return <PlanningDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Store') return <StoreInventoryDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Purchase') return <PurchaseProcurementDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Logistics') return <LogisticsDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'RD') return <RDDesignDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'HR') return <HRAdminDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Finance') return <FinanceDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'IT') return <ITSystemsDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'EHS') return <EHSDetail onBack={handleBackFromDeepDive} lang={lang} />;
+
+  const getIconForSubItem = (item: string) => {
+    const lowerItem = item.toLowerCase();
+    if (lowerItem.includes('production') || lowerItem.includes('प्रोडक्शन')) return Factory;
+    if (lowerItem.includes('quality') || lowerItem.includes('क्वालिटी')) return ShieldCheck;
+    if (lowerItem.includes('process') || lowerItem.includes('प्रोसेस')) return Settings;
+    if (lowerItem.includes('maintenance') || lowerItem.includes('मेंटेनेंस')) return Wrench;
+    if (lowerItem.includes('planning') || lowerItem.includes('प्लानिंग')) return CalendarClock;
+    if (lowerItem.includes('store') || lowerItem.includes('inventory') || lowerItem.includes('स्टोर')) return Box;
+    if (lowerItem.includes('purchase') || lowerItem.includes('खरीद')) return DollarSign;
+    if (lowerItem.includes('logistics') || lowerItem.includes('लॉजिस्टिक्स')) return Truck;
+    if (lowerItem.includes('r&d') || lowerItem.includes('design') || lowerItem.includes('डिज़ाइन')) return Lightbulb;
+    if (lowerItem.includes('hr') || lowerItem.includes('admin') || lowerItem.includes('एडमिन')) return Users;
+    if (lowerItem.includes('finance') || lowerItem.includes('accounts') || lowerItem.includes('फाइनेंस')) return BarChart;
+    if (lowerItem.includes('it') || lowerItem.includes('systems')) return Monitor;
+    if (lowerItem.includes('ehs') || lowerItem.includes('safety') || lowerItem.includes('सुरक्षा')) return ShieldAlert;
+    return Target;
+  };
 
   const selectedDetail = selectedSubItem && category.details ? category.details[selectedSubItem] : null;
 
@@ -293,13 +285,13 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
       <div className="mb-4 md:mb-8 flex items-center gap-2 md:gap-3 text-[7px] md:text-[8px] font-black uppercase tracking-[0.2em] md:tracking-[0.5em] bg-slate-950/80 w-fit max-w-full px-3 py-1.5 md:px-4 md:py-2 rounded-lg border border-white/10 shadow-2xl backdrop-blur-md relative z-10 overflow-x-auto no-scrollbar whitespace-nowrap">
         <button onClick={onBack} className="text-slate-500 hover:text-white transition-colors flex-shrink-0 focus:outline-none focus-visible:text-white focus-visible:underline">{category.category}</button>
         <span className="text-slate-800">/</span>
-        <button onClick={() => { setSelectedSubItem(null); setSelectedPoint(null); }} className={`transition-colors flex-shrink-0 focus:outline-none focus-visible:underline ${!selectedSubItem ? 'text-cyan-400' : 'text-slate-500 hover:text-white'}`}>
+        <button onClick={() => { setSelectedSubItem(null); setSelectedPoint(null); pushHistoryState({ subItem: null, point: null, deepDive: null }); }} className={`transition-colors flex-shrink-0 focus:outline-none focus-visible:underline ${!selectedSubItem ? 'text-cyan-400' : 'text-slate-500 hover:text-white'}`}>
             {category.title}
         </button>
         {selectedSubItem && (
             <>
                 <span className="text-slate-800">/</span>
-                <button onClick={() => setSelectedPoint(null)} className={`transition-colors flex-shrink-0 focus:outline-none focus-visible:underline ${!selectedPoint ? 'text-cyan-400' : 'text-slate-500 hover:text-white'}`}>
+                <button onClick={() => { setSelectedPoint(null); pushHistoryState({ point: null, deepDive: null }); }} className={`transition-colors flex-shrink-0 focus:outline-none focus-visible:underline ${!selectedPoint ? 'text-cyan-400' : 'text-slate-500 hover:text-white'}`}>
                     {selectedSubItem}
                 </button>
             </>
@@ -487,42 +479,61 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                     <span className="text-cyan-500 text-[8px] font-black uppercase tracking-widest">Active Units</span>
                 </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-                {category.subItems.map((item, idx) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-8 mt-8">
+                {category.subItems.map((item, idx) => {
+                    const Icon = getIconForSubItem(item);
+                    const cardColors = [
+                      { border: 'border-cyan-400', bg: 'bg-cyan-400', text: 'text-cyan-400' },
+                      { border: 'border-blue-500', bg: 'bg-blue-500', text: 'text-blue-500' },
+                      { border: 'border-indigo-500', bg: 'bg-indigo-500', text: 'text-indigo-500' },
+                      { border: 'border-purple-500', bg: 'bg-purple-500', text: 'text-purple-500' },
+                      { border: 'border-fuchsia-500', bg: 'bg-fuchsia-500', text: 'text-fuchsia-500' },
+                    ];
+                    const color = cardColors[idx % cardColors.length];
+                    
+                    return (
                     <motion.button
                         key={item}
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.05 }}
-                        whileHover={{ scale: 1.02, y: -2 }}
-                        whileTap={{ scale: 0.98 }}
+                        transition={{ delay: idx * 0.1 }}
+                        whileHover={{ y: -5 }}
+                        whileTap={{ scale: 0.95 }}
                         onClick={() => handleSubItemClick(item)}
-                        className="group relative bg-slate-900/40 border border-white/5 p-4 md:p-6 rounded-xl md:rounded-2xl text-left hover:border-cyan-500/40 hover:bg-slate-800/60 transition-all duration-500 shadow-xl backdrop-blur-md flex flex-col min-h-[90px] md:min-h-[140px] justify-between overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
+                        className={`group relative flex flex-col items-center bg-[#020617] rounded-[2rem] border-[3px] ${color.border} pt-16 pb-8 px-4 hover:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] transition-all duration-300 focus:outline-none`}
                     >
-                        <div className="absolute top-0 right-0 w-16 h-16 md:w-24 md:h-24 bg-cyan-500/5 blur-[30px] md:blur-[40px] rounded-full group-hover:bg-cyan-500/15 transition-all"></div>
-                        <div className="absolute -bottom-2 -right-2 md:-bottom-4 md:-right-4 text-5xl md:text-7xl font-black text-white/[0.03] leading-none select-none">
-                            {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
+                        {/* Solid Top-Left Corner */}
+                        <div className={`absolute top-[-3px] left-[-3px] w-16 h-12 ${color.bg} rounded-tl-[2rem] rounded-br-[1.5rem] z-0`}></div>
+
+                        {/* Top Pill (Option A/B/C) */}
+                        <div className={`absolute top-[-3px] left-1/2 -translate-x-1/2 bg-[#020617] border-[3px] ${color.border} border-t-0 rounded-b-2xl px-6 py-2 z-10`}>
+                            <span className={`text-[10px] md:text-xs font-black uppercase tracking-widest ${color.text}`}>
+                                UNIT {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
+                            </span>
                         </div>
-                        <div className="relative z-10">
-                            <div className="flex items-center gap-2 mb-2 md:mb-4 opacity-40 group-hover:opacity-100 transition-opacity">
-                                <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-cyan-500 rounded-full shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span>
-                                <span className="text-[6px] md:text-[7px] font-black text-cyan-500 uppercase tracking-[0.2em] md:tracking-[0.3em]">UNIT: {idx + 800}</span>
-                            </div>
-                            <h4 className="text-sm md:text-xl font-black text-white uppercase tracking-tight mb-1 md:mb-2 group-hover:text-cyan-400 transition-colors leading-tight">
-                                {item}
-                            </h4>
+
+                        {/* Icon */}
+                        <div className="mb-6 text-white group-hover:scale-110 transition-transform duration-300 relative z-10">
+                            <Icon className="w-12 h-12 md:w-14 md:h-14" strokeWidth={1.2} />
                         </div>
-                        <div className="relative z-10 flex items-center justify-between">
-                            <div className="flex items-center gap-2 text-cyan-400 text-[7px] md:text-[8px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] group-hover:gap-4 transition-all">
-                                {lang === 'hi' ? 'एक्सेस' : 'Access Unit'}
-                                <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                            </div>
-                            <div className="w-4 h-[1px] bg-white/10 group-hover:w-8 md:group-hover:w-12 group-hover:bg-cyan-500 transition-all"></div>
+
+                        {/* Title */}
+                        <h4 className="text-sm md:text-base font-black text-white uppercase tracking-tight mb-3 text-center px-2 relative z-10">
+                            {item}
+                        </h4>
+
+                        {/* Subtitle / Access Unit */}
+                        <div className="flex items-center justify-center gap-2 text-slate-400 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] group-hover:text-white transition-colors relative z-10">
+                            {lang === 'hi' ? 'एक्सेस' : 'Access Unit'}
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
                         </div>
+
+                        {/* Bottom Dot */}
+                        <div className={`absolute -bottom-[7.5px] right-8 w-3 h-3 rounded-full ${color.bg}`}></div>
                     </motion.button>
-                ))}
+                )})}
             </div>
           </motion.div>
         )}

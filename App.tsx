@@ -12,7 +12,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import LanguageModal from './components/LanguageModal';
 import NetworkBackground from './components/NetworkBackground';
 import { PageView, Language, GlossaryTerm } from './types';
-import { TRANSLATIONS, AIRFOCUS_LOGO } from './constants';
+import { TRANSLATIONS, AIRFOCUS_LOGO, GLOSSARY_TERMS } from './constants';
 
 const App: React.FC = () => {
   const [view, setView] = useState<PageView>(PageView.HOME);
@@ -93,9 +93,36 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    // Initialize history state to prevent immediate exit on mobile
+    if (!window.history.state) {
+      window.history.replaceState({ view: PageView.HOME, isFallback: true }, '', `?view=${PageView.HOME}`);
+      window.history.pushState({ view: PageView.HOME }, '', `?view=${PageView.HOME}`);
+    }
+
     const handlePopState = (event: PopStateEvent) => {
-      const targetView = event.state?.view || PageView.HOME;
+      const state = event.state;
+      
+      if (!state || state.isFallback) {
+        // Prevent exit by pushing state again and going to HOME
+        setView(PageView.HOME);
+        window.history.pushState({ view: PageView.HOME }, '', `?view=${PageView.HOME}`);
+        return;
+      }
+
+      const targetView = state.view || PageView.HOME;
       setView(targetView);
+      
+      // Handle category restoration
+      if (state.categoryId) {
+        const cat = GLOSSARY_TERMS.find(c => c.id === state.categoryId);
+        if (cat) setSelectedCategory(cat);
+      } else if (targetView === PageView.GLOSSARY || targetView === PageView.HOME) {
+        setSelectedCategory(null);
+      }
+      
+      // Handle subItem and point restoration
+      setInitialSubItem(state.subItem || null);
+      setInitialPoint(state.point || null);
       
       setViewHistory(prev => {
         if (prev.length > 1 && prev[prev.length - 2] === targetView) {
@@ -103,34 +130,34 @@ const App: React.FC = () => {
         }
         return [...prev, targetView];
       });
-
-      if (targetView === PageView.GLOSSARY || targetView === PageView.HOME) {
-        setSelectedCategory(null);
-      }
     };
 
     window.addEventListener('popstate', handlePopState);
-    window.history.replaceState({ view: PageView.HOME }, '', `?view=${PageView.HOME}`);
-
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
   }, []);
 
-  const navigateTo = (targetView: PageView) => {
-    if (targetView !== view) {
+  const navigateTo = (targetView: PageView, additionalState: any = {}) => {
+    if (targetView !== view || Object.keys(additionalState).length > 0) {
       setViewHistory(prev => [...prev, targetView]);
       setView(targetView);
-      window.history.pushState({ view: targetView }, '', `?view=${targetView}`);
+      
+      const newState = { view: targetView, ...additionalState };
+      let url = `?view=${targetView}`;
+      if (additionalState.subItem) url += `&subItem=${encodeURIComponent(additionalState.subItem)}`;
+      if (additionalState.point) url += `&point=${encodeURIComponent(additionalState.point)}`;
+      
+      window.history.pushState(newState, '', url);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleBack = () => {
-    if (viewHistory.length > 1) {
-      window.history.back();
-    } else {
+    if (window.history.state?.isFallback || window.history.length <= 2) {
       navigateTo(PageView.HOME);
+    } else {
+      window.history.back();
     }
   };
 
@@ -162,7 +189,7 @@ const App: React.FC = () => {
     setSelectedCategory(category);
     setInitialSubItem(subItem || null);
     setInitialPoint(point || null);
-    navigateTo(PageView.CATEGORY_DETAIL);
+    navigateTo(PageView.CATEGORY_DETAIL, { categoryId: category.id, subItem: subItem || null, point: point || null });
   };
 
   const handleBackToGlossary = () => {
