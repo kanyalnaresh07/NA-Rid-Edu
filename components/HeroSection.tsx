@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'motion/react';
 import { PageView, Language } from '../types';
 import { AIRFOCUS_LOGO } from '../constants';
-import { X, Zap, Wrench, CheckCircle2, ChevronRight } from 'lucide-react';
+import { X, Zap, Wrench, CheckCircle2, ChevronRight, Target, Lightbulb } from 'lucide-react';
 
 interface HeroProps {
   title: string;
@@ -108,9 +108,10 @@ const HeroSection: React.FC<HeroProps> = ({
       <motion.div 
         className="flex-grow flex flex-col justify-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 z-20 py-8 md:py-16 w-full max-w-[100vw]"
       >
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 md:gap-12 w-full">
+        <div className="flex flex-col w-full">
           
-          <div className="flex flex-col gap-5 w-full lg:flex-1 lg:max-w-[60%] xl:max-w-[65%]">
+          {/* Title Area */}
+          <div className="flex flex-col gap-5 w-full mb-8 md:mb-12">
               <div className="relative">
                 {/* Decorative background glow for title */}
                 <div className="absolute -left-10 -top-10 md:-left-20 md:-top-20 w-40 h-40 md:w-80 md:h-80 bg-cyan-500/10 blur-[80px] md:blur-[120px] rounded-full pointer-events-none animate-pulse"></div>
@@ -157,68 +158,101 @@ const HeroSection: React.FC<HeroProps> = ({
                   <div className="h-1 md:h-2.5 w-16 md:w-32 bg-cyan-500 rounded-full shrink-0"></div>
                   <div className="h-[1px] w-full max-w-[12rem] md:max-w-md bg-cyan-500/20"></div>
               </motion.div>
+          </div>
+
+          {/* Description and Buttons Row */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 md:gap-12 w-full">
               
+              {/* Description Box - Premium Merged Card */}
               <motion.div 
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 1.2 }}
-                className="mt-2 md:mt-8 w-full max-w-xl relative"
+                className="w-full lg:max-w-2xl xl:max-w-3xl relative group pb-6 md:pb-8 pt-2"
               >
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-500 rounded-full"></div>
-                <div className="bg-slate-950/60 backdrop-blur-xl p-5 md:p-10 rounded-r-2xl md:rounded-r-3xl border border-white/5 shadow-2xl ml-0 w-full">
-                  <p className="text-slate-200 text-sm md:text-lg font-bold leading-relaxed">
-                    {description}
-                  </p>
+                {/* Colored Tray Background */}
+                <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-cyan-950/80 border border-cyan-500/20 rounded-b-3xl rounded-t-xl z-0 transition-transform duration-300 group-hover:translate-y-2">
+                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 h-8 md:h-10 bg-cyan-900 rounded-b-xl flex items-center justify-center shadow-lg border border-cyan-500/30">
+                    <span className="text-cyan-400 font-black text-xs md:text-sm tracking-widest uppercase">Overview</span>
+                  </div>
+                </div>
+                
+                {/* Dark Card */}
+                <div className="relative bg-slate-900/80 backdrop-blur-xl rounded-2xl p-6 md:p-8 shadow-[0_10px_40px_rgba(0,0,0,0.5)] flex flex-col sm:flex-row gap-8 md:gap-10 z-10 mx-2 md:mx-4 mb-6 md:mb-8 border border-white/10 transition-transform duration-300 group-hover:-translate-y-2">
+                  
+                  {/* Left: Manufacturing Hub */}
+                  <div className="flex-1 flex flex-col items-center text-center sm:border-r border-white/10 sm:pr-8 md:pr-10 pb-8 sm:pb-0 border-b sm:border-b-0">
+                    <div className="mb-3 md:mb-4 text-amber-400 bg-amber-500/10 p-3 rounded-full border border-amber-500/20">
+                      <Target className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
+                    </div>
+                    <h3 className="text-white font-black text-base md:text-lg tracking-widest uppercase mb-3 md:mb-4">Manufacturing Hub</h3>
+                    <p className="text-slate-300 text-sm md:text-base leading-relaxed font-medium">
+                      A manufacturing hub is a centralized industrial ecosystem where production, supply chain, skilled workforce, and infrastructure come together to enable efficient, large-scale, and cost-effective manufacturing.
+                    </p>
+                  </div>
+
+                  {/* Right: Vision */}
+                  <div className="flex-1 flex flex-col items-center text-center sm:pl-2 md:pl-0">
+                    <div className="mb-3 md:mb-4 text-blue-400 bg-blue-500/10 p-3 rounded-full border border-blue-500/20">
+                      <Lightbulb className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
+                    </div>
+                    <h3 className="text-white font-black text-base md:text-lg tracking-widest uppercase mb-3 md:mb-4">Vision</h3>
+                    <p className="text-slate-300 text-sm md:text-base leading-relaxed font-medium">
+                      Build a smart, sustainable, and globally competitive manufacturing learning systems that drives innovation, creates opportunity, and delivers skilled manpower with high quality knowledge.
+                    </p>
+                  </div>
+
                 </div>
               </motion.div>
-          </div>
 
-          <div className="flex flex-col sm:flex-row lg:flex-col gap-4 md:gap-6 items-stretch lg:items-end w-full lg:w-auto shrink-0 mt-8 lg:mt-12 lg:translate-x-4 xl:translate-x-8">
-            <motion.button 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.5, delay: 1.5 }}
-              onClick={onGlossaryClick}
-              className="group relative py-4 px-6 md:py-8 md:px-12 bg-slate-950/80 text-white font-black text-sm md:text-xl xl:text-2xl uppercase tracking-[0.2em] transition-all duration-500 flex items-center gap-3 md:gap-4 rounded-xl md:rounded-2xl border border-cyan-500/30 hover:border-cyan-400 w-full sm:flex-1 lg:w-auto justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl md:rounded-2xl"></div>
-              <span className="relative z-10 flex items-center gap-3 md:gap-4 whitespace-nowrap">
-                <div className="relative animate-spin-x flex items-center justify-center h-[1.2em]">
-                  <span className="block backface-hidden" style={{ transform: 'rotateX(0deg) translateZ(0.6em)' }}>{translations.discover}</span>
-                  <span className="absolute inset-0 flex items-center justify-center backface-hidden" style={{ transform: 'rotateX(90deg) translateZ(0.6em)' }}>{translations.discover}</span>
-                  <span className="absolute inset-0 flex items-center justify-center backface-hidden" style={{ transform: 'rotateX(180deg) translateZ(0.6em)' }}>{translations.discover}</span>
-                  <span className="absolute inset-0 flex items-center justify-center backface-hidden" style={{ transform: 'rotateX(270deg) translateZ(0.6em)' }}>{translations.discover}</span>
-                </div>
-                <svg 
-                  className="w-5 h-5 md:w-8 md:h-8 text-cyan-400 transform group-hover:translate-x-2 transition-transform shrink-0" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-4 md:gap-6 items-stretch w-full lg:w-auto shrink-0">
+                <motion.button 
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.5, delay: 1.5 }}
+                  onClick={onGlossaryClick}
+                  className="group relative py-5 px-6 md:py-8 md:px-12 bg-slate-950/80 text-white font-black text-xl md:text-3xl xl:text-4xl leading-none uppercase tracking-[0.2em] transition-all duration-500 flex items-center gap-3 md:gap-4 rounded-xl md:rounded-2xl border border-cyan-500/30 hover:border-cyan-400 w-full lg:w-auto justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </span>
-            </motion.button>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl md:rounded-2xl"></div>
+                  <span className="relative z-10 flex items-center gap-3 md:gap-4 whitespace-nowrap">
+                    <div className="relative animate-spin-x flex items-center justify-center h-[1.2em]">
+                      <span className="block backface-hidden" style={{ transform: 'rotateX(0deg) translateZ(0.6em)' }}>{translations.discover}</span>
+                      <span className="absolute inset-0 flex items-center justify-center backface-hidden" style={{ transform: 'rotateX(90deg) translateZ(0.6em)' }}>{translations.discover}</span>
+                      <span className="absolute inset-0 flex items-center justify-center backface-hidden" style={{ transform: 'rotateX(180deg) translateZ(0.6em)' }}>{translations.discover}</span>
+                      <span className="absolute inset-0 flex items-center justify-center backface-hidden" style={{ transform: 'rotateX(270deg) translateZ(0.6em)' }}>{translations.discover}</span>
+                    </div>
+                    <svg 
+                      className="w-6 h-6 md:w-8 md:h-8 text-cyan-400 transform group-hover:translate-x-2 transition-transform shrink-0" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                </motion.button>
 
-            <motion.button 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1.8 }}
-              whileHover={{ scale: 1.05, backgroundColor: "rgba(6,182,212,0.05)" }}
-              whileTap={{ scale: 0.98 }}
-              onClick={onAboutClick}
-              className="group relative py-4 px-6 md:py-6 md:px-10 bg-transparent text-cyan-400 font-black text-xs md:text-base xl:text-lg uppercase tracking-[0.3em] transition-all duration-500 flex items-center gap-3 rounded-xl md:rounded-2xl border border-cyan-500/20 hover:border-cyan-400 w-full sm:flex-1 lg:w-auto justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
-            >
-              <div className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 bg-cyan-500 rounded-full"></div>
-              <span className="relative z-10 flex items-center gap-3 whitespace-nowrap">
-                <svg className="w-4 h-4 md:w-6 md:h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {translations.navAbout}
-              </span>
-            </motion.button>
+                <motion.button 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 1.8 }}
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(6,182,212,0.05)" }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={onAboutClick}
+                  className="group relative py-5 px-6 md:py-6 md:px-10 bg-transparent text-cyan-400 font-black text-base md:text-lg xl:text-xl leading-none uppercase tracking-[0.3em] transition-all duration-500 flex items-center gap-3 rounded-xl md:rounded-2xl border border-cyan-500/20 hover:border-cyan-400 w-full lg:w-auto justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
+                >
+                  <div className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 bg-cyan-500 rounded-full"></div>
+                  <span className="relative z-10 flex items-center gap-3 whitespace-nowrap">
+                    <svg className="w-4 h-4 md:w-6 md:h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {translations.navAbout}
+                  </span>
+                </motion.button>
+              </div>
           </div>
         </div>
       </motion.div>

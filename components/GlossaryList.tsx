@@ -459,16 +459,32 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-4 xl:gap-8 px-0 md:px-4"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-6 lg:gap-4 xl:gap-8 px-0 md:px-4"
             >
               {filteredTerms.map((term, index) => {
                 const color = circleColors[index % circleColors.length];
                 const Icon = circleIcons[index % circleIcons.length];
                 
+                // Update connector logic for 5 items per row
+                const getConnectorClassesFor5 = (index: number, total: number) => {
+                  if (index === total - 1) return 'hidden'; // Last item never has a connector
+                  
+                  // Mobile (1 column): hide all connectors
+                  const mobileClass = 'hidden sm:flex';
+                  
+                  // Tablet (2 columns): hide on every 2nd item
+                  const tabletClass = (index + 1) % 2 === 0 ? 'sm:hidden lg:flex' : '';
+                  
+                  // Desktop (5 columns): hide on every 5th item
+                  const desktopClass = (index + 1) % 5 === 0 ? 'lg:hidden' : '';
+                  
+                  return `${mobileClass} ${tabletClass} ${desktopClass}`;
+                };
+
                 return (
                   <div key={term.id} className="relative flex justify-center items-center w-full">
                     {/* Connector Lines */}
-                    <div className={`absolute top-1/2 -right-4 sm:-right-6 lg:-right-4 xl:-right-8 w-4 sm:w-6 lg:w-4 xl:w-8 h-4 -translate-y-1/2 z-0 flex-col justify-center gap-1.5 ${getConnectorClasses(index, filteredTerms.length)}`}>
+                    <div className={`absolute top-1/2 -right-4 sm:-right-6 lg:-right-4 xl:-right-8 w-4 sm:w-6 lg:w-4 xl:w-8 h-4 -translate-y-1/2 z-0 flex-col justify-center gap-1.5 ${getConnectorClassesFor5(index, filteredTerms.length)}`}>
                       <div className={`w-full h-[3px] md:h-[4px] ${color.line}`}></div>
                       <div className={`w-full h-[3px] md:h-[4px] ${color.line}`}></div>
                     </div>
@@ -483,6 +499,22 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       onClick={() => onCategorySelect(term)}
                       className={`relative w-full max-w-[320px] lg:max-w-full aspect-square rounded-full border-[8px] md:border-[12px] ${color.border} bg-white flex flex-col items-center justify-center p-6 md:p-8 text-center group z-10 shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50`}
                     >
+                      {/* Premium Loader Animation Rings */}
+                      <div 
+                        className={`absolute inset-[-12px] md:inset-[-18px] rounded-full border-[2px] md:border-[3px] border-transparent ${color.text} opacity-60 animate-[spin_3s_linear_infinite] pointer-events-none`}
+                        style={{ borderTopColor: 'currentColor', borderRightColor: 'currentColor' }}
+                      ></div>
+                      <div 
+                        className={`absolute inset-[-16px] md:inset-[-24px] rounded-full border-[1px] border-dashed ${color.text} opacity-30 animate-[spin_8s_linear_infinite_reverse] pointer-events-none`}
+                        style={{ borderColor: 'currentColor' }}
+                      ></div>
+                      <div 
+                        className={`absolute inset-[-20px] md:inset-[-30px] rounded-full border-[1px] border-transparent ${color.text} opacity-40 animate-[spin_5s_linear_infinite] pointer-events-none`}
+                        style={{ borderBottomColor: 'currentColor', borderLeftColor: 'currentColor' }}
+                      >
+                        <div className={`absolute bottom-[14%] right-[14%] w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${color.line} shadow-[0_0_8px_currentColor]`}></div>
+                      </div>
+
                       {/* Inner dashed ring */}
                       <div className="absolute inset-1 border border-dashed border-slate-200 rounded-full pointer-events-none"></div>
 

@@ -104,28 +104,45 @@ const App: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      const targetView = event.state?.view || PageView.HOME;
+      setView(targetView);
+      
+      setViewHistory(prev => {
+        if (prev.length > 1 && prev[prev.length - 2] === targetView) {
+          return prev.slice(0, -1);
+        }
+        return [...prev, targetView];
+      });
+
+      if (targetView === PageView.GLOSSARY || targetView === PageView.HOME) {
+        setSelectedCategory(null);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    window.history.replaceState({ view: PageView.HOME }, '', `?view=${PageView.HOME}`);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
   const navigateTo = (targetView: PageView) => {
     if (targetView !== view) {
       setViewHistory(prev => [...prev, targetView]);
       setView(targetView);
+      window.history.pushState({ view: targetView }, '', `?view=${targetView}`);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleBack = () => {
     if (viewHistory.length > 1) {
-      const newHistory = [...viewHistory];
-      newHistory.pop(); // Remove current
-      const prevView = newHistory[newHistory.length - 1];
-      setViewHistory(newHistory);
-      setView(prevView);
-      if (prevView === PageView.GLOSSARY) {
-        setSelectedCategory(null);
-      }
+      window.history.back();
     } else {
-      setView(PageView.HOME);
-      setViewHistory([PageView.HOME]);
-      setSelectedCategory(null);
+      navigateTo(PageView.HOME);
     }
   };
 
@@ -150,9 +167,7 @@ const App: React.FC = () => {
   };
 
   const handleBackHome = () => {
-    setView(PageView.HOME);
-    setViewHistory([PageView.HOME]);
-    setSelectedCategory(null);
+    navigateTo(PageView.HOME);
   };
 
   const handleCategorySelect = (category: GlossaryTerm, subItem?: string, point?: string) => {
