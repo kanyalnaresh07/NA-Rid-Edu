@@ -500,38 +500,45 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                         whileHover={{ y: -5 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => handleSubItemClick(item)}
-                        className={`group relative flex flex-col items-center bg-white rounded-[2rem] border-[3px] ${color.border} pt-16 pb-8 px-4 hover:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.1)] transition-all duration-300 focus:outline-none`}
+                        className={`group relative flex flex-col items-center h-full bg-white rounded-[1.5rem] md:rounded-[2rem] border-[3px] ${color.border} pt-12 pb-6 px-4 md:pt-16 md:pb-8 hover:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.1)] transition-all duration-300 focus:outline-none`}
                     >
                         {/* Solid Top-Left Corner */}
-                        <div className={`absolute top-[-3px] left-[-3px] w-16 h-12 ${color.bg} rounded-tl-[2rem] rounded-br-[1.5rem] z-0`}></div>
+                        <div className={`absolute top-[-3px] left-[-3px] w-12 h-10 md:w-16 md:h-12 ${color.bg} rounded-tl-[1.5rem] md:rounded-tl-[2rem] rounded-br-[1rem] md:rounded-br-[1.5rem] z-0`}></div>
 
                         {/* Top Pill (Option A/B/C) */}
-                        <div className={`absolute top-[-3px] left-1/2 -translate-x-1/2 bg-white border-[3px] ${color.border} border-t-0 rounded-b-2xl px-6 py-2 z-10`}>
+                        <div className={`absolute top-[-3px] left-1/2 -translate-x-1/2 bg-white border-[3px] ${color.border} border-t-0 rounded-b-xl md:rounded-b-2xl px-4 py-1.5 md:px-6 md:py-2 z-10`}>
                             <span className={`text-[10px] md:text-xs font-black uppercase tracking-widest ${color.text}`}>
                                 UNIT {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
                             </span>
                         </div>
 
                         {/* Icon */}
-                        <div className="mb-6 text-slate-800 group-hover:scale-110 transition-transform duration-300 relative z-10">
-                            <Icon className="w-12 h-12 md:w-14 md:h-14" strokeWidth={1.2} />
+                        <div className="mb-4 md:mb-6 mt-2 md:mt-0 text-slate-800 group-hover:scale-110 transition-transform duration-300 relative z-10">
+                            <Icon className="w-10 h-10 md:w-14 md:h-14" strokeWidth={1.2} />
                         </div>
 
                         {/* Title */}
-                        <h4 className="text-sm md:text-base font-black text-slate-900 uppercase tracking-tight mb-3 text-center px-2 relative z-10">
+                        <h4 className="text-base md:text-lg font-black text-slate-900 uppercase tracking-tight mb-2 text-center px-2 relative z-10">
                             {item}
                         </h4>
 
+                        {/* Description / Role */}
+                        {category.details && category.details[item] && (
+                            <p className="text-sm md:text-base text-slate-600 font-medium text-center px-2 mb-4 md:mb-6 line-clamp-4 relative z-10">
+                                {category.details[item].role}
+                            </p>
+                        )}
+
                         {/* Subtitle / Access Unit */}
-                        <div className="flex items-center justify-center gap-2 text-slate-500 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] group-hover:text-slate-900 transition-colors relative z-10">
+                        <div className="mt-auto flex items-center justify-center gap-2 text-slate-500 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] group-hover:text-slate-900 transition-colors relative z-10">
                             {lang === 'hi' ? 'एक्सेस' : 'Access Unit'}
-                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
                         </div>
 
                         {/* Bottom Dot */}
-                        <div className={`absolute -bottom-[7.5px] right-8 w-3 h-3 rounded-full ${color.bg}`}></div>
+                        <div className={`absolute -bottom-[7.5px] right-6 md:right-8 w-3 h-3 rounded-full ${color.bg}`}></div>
                     </motion.button>
                 )})}
             </div>
