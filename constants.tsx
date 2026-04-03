@@ -328,6 +328,9 @@ export const getGlossaryTerms = (lang: 'en' | 'hi'): GlossaryTerm[] => [
   {
     id: 'core-main-departments',
     title: lang === 'hi' ? 'मुख्य विभाग (Main Departments)' : 'Core Departments',
+    description: lang === 'hi' 
+      ? 'एक मुख्य विभाग (Core Department) किसी संगठन की प्राथमिक कार्यात्मक इकाई है जो सीधे उसकी मुख्य व्यावसायिक गतिविधि और मूल्य निर्माण में योगदान देती है। यह प्रमुख आउटपुट (उत्पाद या सेवा) के उत्पादन के लिए जिम्मेदार है जो संगठन के उद्देश्य को परिभाषित करता है।'
+      : 'A core department is the primary functional unit of an organization that directly contributes to its main business activity and value creation. It is responsible for producing the key output (product or service) that defines the purpose of the organization.',
     category: lang === 'hi' ? 'ऑर्गनाइज़ेशन' : 'Organization',
     subItems: lang === 'hi' ? ['Production (प्रोडक्शन)', 'Quality (क्वालिटी)', 'Process Engineering (प्रोसेस)', 'Maintenance (मेंटेनेंस)', 'Planning (प्लानिंग)'] : ['Production', 'Quality (QC)', 'Process Engineering', 'Maintenance', 'Planning (PPC)'],
     details: {
@@ -444,6 +447,9 @@ export const getGlossaryTerms = (lang: 'en' | 'hi'): GlossaryTerm[] => [
   {
     id: 'support-supply-chain',
     title: lang === 'hi' ? 'सपोर्ट और सप्लाई चेन' : 'Support & Supply Chain',
+    description: lang === 'hi'
+      ? 'सपोर्ट और सप्लाई चेन विभाग उत्पादन के लिए आवश्यक सामग्री, सूचना और संसाधनों का सुचारू प्रवाह सुनिश्चित करते हैं। वे कच्चे माल की सोर्सिंग से लेकर ग्राहकों तक अंतिम उत्पाद पहुंचाने तक सब कुछ प्रबंधित करते हैं।'
+      : 'Support and Supply Chain departments ensure the smooth flow of materials, information, and resources required for production. They manage everything from sourcing raw materials to delivering the final product to customers.',
     category: lang === 'hi' ? 'सपोर्ट' : 'Support',
     subItems: lang === 'hi' ? ['Store / Inventory (स्टोर)', 'Purchase (खरीद)', 'Logistics (लॉजिस्टिक्स)', 'R&D (डिज़ाइन)'] : ['Store / Inventory / Warehouse', 'Purchase / Procurement', 'Logistics / Dispatch', 'R&D / Design'],
     details: {
@@ -521,6 +527,9 @@ export const getGlossaryTerms = (lang: 'en' | 'hi'): GlossaryTerm[] => [
   {
     id: 'admin-corporate',
     title: lang === 'hi' ? 'एडमिन और कॉर्पोरेट' : 'Admin & Corporate',
+    description: lang === 'hi'
+      ? 'एडमिन और कॉर्पोरेट विभाग संगठन के समग्र प्रबंधन, मानव संसाधन, वित्तीय स्वास्थ्य और रणनीतिक दिशा को संभालते हैं। वे अन्य सभी विभागों को प्रभावी ढंग से कार्य करने के लिए आवश्यक बुनियादी ढांचा और सहायता प्रदान करते हैं।'
+      : 'Admin and Corporate departments handle the overarching management, human resources, financial health, and strategic direction of the organization. They provide the necessary infrastructure and support for all other departments to function effectively.',
     category: lang === 'hi' ? 'मैनेजमेंट' : 'Management',
     subItems: ['HR / Admin', 'Finance / Accounts', 'IT / Systems', 'EHS / Safety'],
     details: {
@@ -597,6 +606,9 @@ export const getGlossaryTerms = (lang: 'en' | 'hi'): GlossaryTerm[] => [
   {
     id: 'quality-compliance',
     title: lang === 'hi' ? 'क्वालिटी और कंप्लायंस' : 'Quality & Compliance',
+    description: lang === 'hi'
+      ? 'क्वालिटी और कंप्लायंस विभाग यह सुनिश्चित करने के लिए जिम्मेदार हैं कि उत्पाद, सेवाएं और प्रक्रियाएं स्थापित मानकों, नियमों और ग्राहकों की अपेक्षाओं को पूरा करती हैं। वे निरंतर सुधार, जोखिम शमन, और सुरक्षा और पर्यावरण दिशानिर्देशों के पालन पर ध्यान केंद्रित करते हैं।'
+      : 'Quality and Compliance departments are responsible for ensuring that products, services, and processes meet established standards, regulations, and customer expectations. They focus on continuous improvement, risk mitigation, and adherence to safety and environmental guidelines.',
     category: lang === 'hi' ? 'क्वालिटी' : 'Quality',
     subItems: ['Customer Quality', 'Compliance / ISO'],
     details: {

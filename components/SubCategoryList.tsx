@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, Settings, Lightbulb, Rocket, BarChart, Target, Factory, ShieldCheck, Wrench, CalendarClock, Box, Truck, Users, DollarSign, Monitor, ShieldAlert } from 'lucide-react';
+import { Search, Settings, Lightbulb, Rocket, BarChart, Target, Factory, ShieldCheck, Wrench, CalendarClock, Box, Truck, Users, DollarSign, Monitor, ShieldAlert, Info } from 'lucide-react';
 import { GlossaryTerm, Language, DepartmentDetail } from '../types';
 import { getTermDefinition } from '../services/geminiService';
 import T5SDetail from './T5SDetail';
@@ -479,15 +479,43 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                     <span className="text-cyan-500 text-[8px] font-black uppercase tracking-widest">Active Units</span>
                 </div>
             </div>
+
+            {category.description && (
+                <div className="flex items-center mb-10 relative drop-shadow-xl group">
+                    {/* Hexagon Container */}
+                    <div className="relative z-10 w-24 h-28 md:w-28 md:h-32 shrink-0">
+                        {/* White Border Hexagon */}
+                        <div className="absolute inset-0 bg-white" style={{ clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' }}></div>
+                        {/* Inner Cyan Hexagon */}
+                        <div className="absolute inset-[3px] md:inset-[4px] bg-cyan-500 flex items-center justify-center transition-transform duration-300 group-hover:scale-105" style={{ clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', perspective: '1000px' }}>
+                            <div className="transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)]">
+                                <Info className="text-white w-8 h-8 md:w-10 md:h-10" strokeWidth={2} />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {/* Right Banner */}
+                    <div className="relative z-0 -ml-8 md:-ml-10 flex-1 bg-cyan-500 flex flex-col justify-center py-5 md:py-8 pr-10 md:pr-16 pl-14 md:pl-20 min-h-[6rem] md:min-h-[8rem]"
+                         style={{ clipPath: 'polygon(0% 0%, calc(100% - 32px) 0%, 100% 50%, calc(100% - 32px) 100%, 0% 100%)' }}>
+                        <h3 className="text-slate-900 font-black text-lg md:text-xl uppercase mb-2 tracking-wider">
+                            {lang === 'hi' ? 'परिचय' : 'Introduction'}
+                        </h3>
+                        <p className="text-slate-900 font-semibold text-sm md:text-base leading-relaxed">
+                            {category.description}
+                        </p>
+                    </div>
+                </div>
+            )}
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-8 mt-8">
                 {category.subItems.map((item, idx) => {
                     const Icon = getIconForSubItem(item);
                     const cardColors = [
-                      { border: 'border-cyan-400', bg: 'bg-cyan-400', text: 'text-cyan-400' },
-                      { border: 'border-blue-500', bg: 'bg-blue-500', text: 'text-blue-500' },
-                      { border: 'border-indigo-500', bg: 'bg-indigo-500', text: 'text-indigo-500' },
-                      { border: 'border-purple-500', bg: 'bg-purple-500', text: 'text-purple-500' },
-                      { border: 'border-fuchsia-500', bg: 'bg-fuchsia-500', text: 'text-fuchsia-500' },
+                      { bg: 'bg-[#1a9b6c]' },
+                      { bg: 'bg-[#00669e]' },
+                      { bg: 'bg-[#c2a31d]' },
+                      { bg: 'bg-[#c91a4d]' },
+                      { bg: 'bg-[#673ab7]' },
                     ];
                     const color = cardColors[idx % cardColors.length];
                     
@@ -497,48 +525,38 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: idx * 0.1 }}
-                        whileHover={{ y: -5 }}
-                        whileTap={{ scale: 0.95 }}
+                        whileHover={{ y: -5, scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                         onClick={() => handleSubItemClick(item)}
-                        className={`group relative flex flex-col items-center h-full bg-white rounded-[1.5rem] md:rounded-[2rem] border-[3px] ${color.border} pt-12 pb-6 px-4 md:pt-16 md:pb-8 hover:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.1)] transition-all duration-300 focus:outline-none`}
+                        className={`group relative flex flex-col items-center justify-center w-full h-full min-h-[260px] py-8 md:py-10 ${color.bg} overflow-hidden transition-all duration-300 focus:outline-none shadow-lg`}
                     >
-                        {/* Solid Top-Left Corner */}
-                        <div className={`absolute top-[-3px] left-[-3px] w-12 h-10 md:w-16 md:h-12 ${color.bg} rounded-tl-[1.5rem] md:rounded-tl-[2rem] rounded-br-[1rem] md:rounded-br-[1.5rem] z-0`}></div>
+                        {/* Background Image Overlay */}
+                        <div 
+                            className="absolute inset-0 opacity-30 mix-blend-overlay bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
+                            style={{ backgroundImage: `url(https://picsum.photos/seed/${item.replace(/\s+/g, '')}/400/400)` }}
+                        ></div>
+                        
+                        {/* Gradient Overlay for better text readability */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
 
-                        {/* Top Pill (Option A/B/C) */}
-                        <div className={`absolute top-[-3px] left-1/2 -translate-x-1/2 bg-white border-[3px] ${color.border} border-t-0 rounded-b-xl md:rounded-b-2xl px-4 py-1.5 md:px-6 md:py-2 z-10`}>
-                            <span className={`text-[10px] md:text-xs font-black uppercase tracking-widest ${color.text}`}>
-                                UNIT {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
-                            </span>
+                        <div className="relative z-10 flex flex-col items-center justify-center h-full p-4 md:p-6 w-full" style={{ perspective: '1000px' }}>
+                            {/* Icon */}
+                            <div className="mb-4 md:mb-5 text-white transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)_scale(1.1)]">
+                                <Icon className="w-14 h-14 md:w-16 md:h-16 drop-shadow-md" strokeWidth={1.5} />
+                            </div>
+
+                            {/* Title */}
+                            <h4 className="text-lg md:text-xl font-bold text-white uppercase tracking-wide text-center mb-2 md:mb-3">
+                                {item}
+                            </h4>
+
+                            {/* Description / Role */}
+                            {category.details && category.details[item] && (
+                                <p className="text-xs md:text-sm text-white/90 font-medium text-center line-clamp-4">
+                                    {category.details[item].role}
+                                </p>
+                            )}
                         </div>
-
-                        {/* Icon */}
-                        <div className="mb-4 md:mb-6 mt-2 md:mt-0 text-slate-800 group-hover:scale-110 transition-transform duration-300 relative z-10">
-                            <Icon className="w-10 h-10 md:w-14 md:h-14" strokeWidth={1.2} />
-                        </div>
-
-                        {/* Title */}
-                        <h4 className="text-base md:text-lg font-black text-slate-900 uppercase tracking-tight mb-2 text-center px-2 relative z-10">
-                            {item}
-                        </h4>
-
-                        {/* Description / Role */}
-                        {category.details && category.details[item] && (
-                            <p className="text-sm md:text-base text-slate-600 font-medium text-center px-2 mb-4 md:mb-6 line-clamp-4 relative z-10">
-                                {category.details[item].role}
-                            </p>
-                        )}
-
-                        {/* Subtitle / Access Unit */}
-                        <div className="mt-auto flex items-center justify-center gap-2 text-slate-500 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] group-hover:text-slate-900 transition-colors relative z-10">
-                            {lang === 'hi' ? 'एक्सेस' : 'Access Unit'}
-                            <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </div>
-
-                        {/* Bottom Dot */}
-                        <div className={`absolute -bottom-[7.5px] right-6 md:right-8 w-3 h-3 rounded-full ${color.bg}`}></div>
                     </motion.button>
                 )})}
             </div>
