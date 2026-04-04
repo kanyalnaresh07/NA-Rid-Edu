@@ -283,90 +283,6 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
     <div className="relative z-10">
       <div className="max-w-[1600px] mx-auto px-2 md:px-4 lg:px-6 py-4 md:py-8">
         
-        {/* Intro Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-6 md:mb-8"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            {/* Point 1 */}
-            <div className="relative bg-slate-900/60 backdrop-blur-xl border border-emerald-500/20 rounded-xl p-4 md:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] ml-5 md:ml-6 hover:border-emerald-500/50 transition-colors group">
-              {/* Ribbon */}
-              <div className="absolute -left-5 md:-left-6 top-4 w-5 md:w-6 h-24 bg-emerald-500 rounded-l-md flex items-center justify-center shadow-lg">
-                <span className="transform -rotate-90 text-slate-950 font-black text-[8px] md:text-[10px] tracking-[0.2em] whitespace-nowrap">
-                  OPTION 01
-                </span>
-                {/* Top Fold */}
-                <div className="absolute -top-1.5 right-0 w-0 h-0 border-b-[6px] border-b-emerald-700 border-l-[6px] border-l-transparent"></div>
-                {/* Bottom Fold */}
-                <div className="absolute -bottom-1.5 right-0 w-0 h-0 border-t-[6px] border-t-emerald-700 border-l-[6px] border-l-transparent"></div>
-              </div>
-
-              {/* Content */}
-              <div className="pl-2 flex flex-col items-center text-center">
-                <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                  <BookOpen className="w-4 h-4 text-emerald-400" />
-                </div>
-                <h3 className="text-xs md:text-sm font-black text-white uppercase tracking-wider mb-2">Manufacturing Education Hub</h3>
-                <p className="text-[10px] md:text-xs text-slate-400 leading-snug">
-                  NA-RID Education Hub is a modern digital platform that explains the concepts of manufacturing, industrial processes, and operational excellence in a simple and structured way. The main objective of this platform is to make real-world industrial knowledge easily accessible to students, engineers, and professionals.
-                </p>
-              </div>
-            </div>
-
-            {/* Point 2 */}
-            <div className="relative bg-slate-900/60 backdrop-blur-xl border border-cyan-500/20 rounded-xl p-4 md:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] ml-5 md:ml-6 hover:border-cyan-500/50 transition-colors group">
-              {/* Ribbon */}
-              <div className="absolute -left-5 md:-left-6 top-4 w-5 md:w-6 h-24 bg-cyan-500 rounded-l-md flex items-center justify-center shadow-lg">
-                <span className="transform -rotate-90 text-slate-950 font-black text-[8px] md:text-[10px] tracking-[0.2em] whitespace-nowrap">
-                  OPTION 02
-                </span>
-                {/* Top Fold */}
-                <div className="absolute -top-1.5 right-0 w-0 h-0 border-b-[6px] border-b-cyan-700 border-l-[6px] border-l-transparent"></div>
-                {/* Bottom Fold */}
-                <div className="absolute -bottom-1.5 right-0 w-0 h-0 border-t-[6px] border-t-cyan-700 border-l-[6px] border-l-transparent"></div>
-              </div>
-
-              {/* Content */}
-              <div className="pl-2 flex flex-col items-center text-center">
-                <div className="w-8 h-8 rounded-full bg-cyan-500/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                  <Lightbulb className="w-4 h-4 text-cyan-400" />
-                </div>
-                <h3 className="text-xs md:text-sm font-black text-white uppercase tracking-wider mb-2">What You Will Learn</h3>
-                <p className="text-[10px] md:text-xs text-slate-400 leading-snug">
-                  On this website, you will find detailed information about core departments such as Production, Quality, Planning, and Maintenance. Each section explains practical concepts, tools, and methodologies that are used in real industries.
-                </p>
-              </div>
-            </div>
-
-            {/* Point 3 */}
-            <div className="relative bg-slate-900/60 backdrop-blur-xl border border-blue-500/20 rounded-xl p-4 md:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] ml-5 md:ml-6 hover:border-blue-500/50 transition-colors group">
-              {/* Ribbon */}
-              <div className="absolute -left-5 md:-left-6 top-4 w-5 md:w-6 h-24 bg-blue-500 rounded-l-md flex items-center justify-center shadow-lg">
-                <span className="transform -rotate-90 text-slate-950 font-black text-[8px] md:text-[10px] tracking-[0.2em] whitespace-nowrap">
-                  OPTION 03
-                </span>
-                {/* Top Fold */}
-                <div className="absolute -top-1.5 right-0 w-0 h-0 border-b-[6px] border-b-blue-700 border-l-[6px] border-l-transparent"></div>
-                {/* Bottom Fold */}
-                <div className="absolute -bottom-1.5 right-0 w-0 h-0 border-t-[6px] border-t-blue-700 border-l-[6px] border-l-transparent"></div>
-              </div>
-
-              {/* Content */}
-              <div className="pl-2 flex flex-col items-center text-center">
-                <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                  <Target className="w-4 h-4 text-blue-400" />
-                </div>
-                <h3 className="text-xs md:text-sm font-black text-white uppercase tracking-wider mb-2">Why This Platform</h3>
-                <p className="text-[10px] md:text-xs text-slate-400 leading-snug">
-                  In today's time, industrial knowledge is often scattered. NA-RID Education Hub provides a centralized platform where you can engage in structured learning. This platform is especially useful for those who want to build their career in the manufacturing and process improvement fields.
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-4 md:mb-6">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
@@ -497,19 +413,19 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       whileTap={{ scale: 0.95 }}
                       transition={{ type: "spring", damping: 20, stiffness: 100, delay: index * 0.05 }}
                       onClick={() => onCategorySelect(term)}
-                      className={`relative w-full max-w-[320px] lg:max-w-full aspect-square rounded-full border-[8px] md:border-[12px] ${color.border} bg-white flex flex-col items-center justify-center p-6 md:p-8 text-center group z-10 shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50`}
+                      className={`relative w-[180px] md:w-[240px] lg:w-full aspect-square rounded-full border-[6px] md:border-[10px] ${color.border} bg-white flex flex-col items-center justify-center p-4 md:p-6 text-center group z-10 shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50`}
                     >
                       {/* Premium Loader Animation Rings */}
                       <div 
-                        className={`absolute inset-[-12px] md:inset-[-18px] rounded-full border-[2px] md:border-[3px] border-transparent ${color.text} opacity-60 animate-[spin_3s_linear_infinite] pointer-events-none`}
+                        className={`absolute inset-[-8px] md:inset-[-12px] rounded-full border-[2px] md:border-[3px] border-transparent ${color.text} opacity-60 animate-[spin_3s_linear_infinite] pointer-events-none`}
                         style={{ borderTopColor: 'currentColor', borderRightColor: 'currentColor' }}
                       ></div>
                       <div 
-                        className={`absolute inset-[-16px] md:inset-[-24px] rounded-full border-[1px] border-dashed ${color.text} opacity-30 animate-[spin_8s_linear_infinite_reverse] pointer-events-none`}
+                        className={`absolute inset-[-12px] md:inset-[-18px] rounded-full border-[1px] border-dashed ${color.text} opacity-30 animate-[spin_8s_linear_infinite_reverse] pointer-events-none`}
                         style={{ borderColor: 'currentColor' }}
                       ></div>
                       <div 
-                        className={`absolute inset-[-20px] md:inset-[-30px] rounded-full border-[1px] border-transparent ${color.text} opacity-40 animate-[spin_5s_linear_infinite] pointer-events-none`}
+                        className={`absolute inset-[-16px] md:inset-[-24px] rounded-full border-[1px] border-transparent ${color.text} opacity-40 animate-[spin_5s_linear_infinite] pointer-events-none`}
                         style={{ borderBottomColor: 'currentColor', borderLeftColor: 'currentColor' }}
                       >
                         <div className={`absolute bottom-[14%] right-[14%] w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${color.line} shadow-[0_0_8px_currentColor]`}></div>
@@ -518,19 +434,13 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       {/* Inner dashed ring */}
                       <div className="absolute inset-1 border border-dashed border-slate-200 rounded-full pointer-events-none"></div>
 
-                      <div className={`mb-2 md:mb-4 ${color.text} group-hover:scale-110 transition-transform duration-300`}>
-                        <Icon className="w-10 h-10 md:w-12 md:h-12" strokeWidth={1.5} />
+                      <div className={`mb-2 md:mb-4 ${color.text} transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)_scale(1.1)]`} style={{ perspective: '1000px' }}>
+                        <Icon className="w-12 h-12 md:w-16 md:h-16" strokeWidth={1.5} />
                       </div>
                       
-                      <h3 className="text-slate-900 font-black text-sm md:text-base uppercase tracking-widest mb-2 md:mb-3 line-clamp-2 px-2">
+                      <h3 className="text-slate-900 font-black text-base md:text-xl uppercase tracking-widest mb-0 line-clamp-2 px-2">
                         {term.title}
                       </h3>
-                      
-                      <div className="w-12 h-[2px] bg-slate-200 mb-2 md:mb-3"></div>
-                      
-                      <p className="text-xs md:text-sm text-slate-500 leading-relaxed line-clamp-4 px-2 md:px-4 font-medium">
-                        {term.subItems.join(', ')}
-                      </p>
                     </motion.button>
                   </div>
                 );
