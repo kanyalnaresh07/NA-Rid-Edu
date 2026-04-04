@@ -15,7 +15,16 @@ import { PageView, Language, GlossaryTerm } from './types';
 import { TRANSLATIONS, AIRFOCUS_LOGO, GLOSSARY_TERMS } from './constants';
 
 const App: React.FC = () => {
-  const [view, setView] = useState<PageView>(PageView.HOME);
+  const [view, setView] = useState<PageView>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const viewParam = params.get('view') as PageView;
+      if (viewParam && Object.values(PageView).includes(viewParam)) {
+        return viewParam;
+      }
+    }
+    return PageView.HOME;
+  });
   const [lang, setLang] = useState<Language>(() => {
     const saved = localStorage.getItem('app_lang');
     return (saved as Language) || 'en';
@@ -93,11 +102,18 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Initialize history state to prevent immediate exit on mobile
-    if (!window.history.state) {
-      window.history.replaceState({ view: PageView.HOME, isFallback: true }, '', `?view=${PageView.HOME}`);
-      window.history.pushState({ view: PageView.HOME }, '', `?view=${PageView.HOME}`);
+    // Determine initial view from URL, default to HOME
+    const currentUrl = new URL(window.location.href);
+    const viewParam = currentUrl.searchParams.get('view');
+    let initialView = PageView.HOME;
+    
+    if (viewParam && Object.values(PageView).includes(viewParam as PageView)) {
+      initialView = viewParam as PageView;
     }
+
+    // Force replace the history state on load to clear any stale state from iframe reloads
+    window.history.replaceState({ view: initialView, isFallback: true }, '', `?view=${initialView}`);
+    setView(initialView);
 
     const handlePopState = (event: PopStateEvent) => {
       const state = event.state;

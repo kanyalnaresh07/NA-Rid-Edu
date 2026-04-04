@@ -59,9 +59,9 @@ const Photos: React.FC<PhotosProps> = ({ translations, lang }) => {
       <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6">
         {/* 
           MOBILE: flex-col (Top to Bottom stacking)
-          DESKTOP: flex-row with flex-wrap (Wraps nicely without scrolling)
+          DESKTOP: flex-row (Fits all 5 cards without zooming out)
         */}
-        <div className="flex flex-col xl:flex-row xl:flex-wrap items-center justify-center gap-y-16 xl:gap-x-12 py-12">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-y-12 lg:gap-x-4 xl:gap-x-8 py-12">
           {DIVISIONS.map((division, idx) => {
             const Icon = division.icon;
             const colors = colorMap[division.color as keyof typeof colorMap];
@@ -72,8 +72,8 @@ const Photos: React.FC<PhotosProps> = ({ translations, lang }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                // Increased size significantly for better text visibility
-                className="relative shrink-0 group cursor-pointer w-[280px] h-[280px] md:w-[320px] md:h-[320px]"
+                // Responsive sizing to fit 5 cards on desktop without zooming out
+                className="relative shrink-0 group cursor-pointer w-[280px] h-[280px] lg:w-[190px] lg:h-[190px] xl:w-[230px] xl:h-[230px] 2xl:w-[280px] 2xl:h-[280px]"
               >
                 {/* Bottom floor shadow */}
                 <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-32 h-4 bg-black/60 blur-xl rounded-[100%] transition-all duration-300 group-hover:w-24 group-hover:bg-black/80"></div>
@@ -104,21 +104,21 @@ const Photos: React.FC<PhotosProps> = ({ translations, lang }) => {
                       
                       {/* Top Icon Area */}
                       <div className="flex justify-center text-white/90 transition-transform duration-500 group-hover:scale-110">
-                        <Icon className="w-10 h-10 md:w-12 md:h-12 drop-shadow-md" strokeWidth={1.5} />
+                        <Icon className="w-10 h-10 lg:w-8 lg:h-8 xl:w-10 xl:h-10 2xl:w-12 2xl:h-12 drop-shadow-md" strokeWidth={1.5} />
                       </div>
 
                       {/* Middle Text Area */}
-                      <div className="w-[60%] mx-auto flex flex-col items-center justify-center pointer-events-auto">
-                        <h3 className="text-white font-bold text-[12px] md:text-[14px] uppercase tracking-wider leading-snug mb-2 text-center w-full break-words drop-shadow-lg">
+                      <div className="w-[65%] mx-auto flex flex-col items-center justify-center pointer-events-auto">
+                        <h3 className="text-white font-bold text-[12px] lg:text-[9px] xl:text-[11px] 2xl:text-[14px] uppercase tracking-wider leading-snug mb-1 2xl:mb-2 text-center w-full break-words drop-shadow-lg">
                           {lang === 'hi' ? division.titleHi : division.title}
                         </h3>
-                        <p className={`text-[10px] md:text-[11px] ${colors.text} italic text-center opacity-90 group-hover:opacity-100 transition-opacity font-medium tracking-wide`}>
+                        <p className={`text-[10px] lg:text-[8px] xl:text-[9px] 2xl:text-[11px] ${colors.text} italic text-center opacity-90 group-hover:opacity-100 transition-opacity font-medium tracking-wide`}>
                           {lang === 'hi' ? 'तस्वीरें देखें' : 'View Photos'}
                         </p>
                       </div>
 
                       {/* Bottom Number Area */}
-                      <div className="flex justify-center text-white/90 font-light text-3xl md:text-4xl tracking-widest">
+                      <div className="flex justify-center text-white/90 font-light text-3xl lg:text-2xl xl:text-3xl 2xl:text-4xl tracking-widest">
                         0{idx + 1}
                       </div>
                     </div>
