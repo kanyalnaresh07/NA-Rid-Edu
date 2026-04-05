@@ -22,9 +22,6 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ translations }) => {
         <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter italic mb-4">
           {t.title}
         </h1>
-        <p className="text-slate-400 text-sm md:text-base font-bold tracking-widest uppercase">
-          {t.lastUpdated}
-        </p>
       </motion.div>
 
       <motion.div 

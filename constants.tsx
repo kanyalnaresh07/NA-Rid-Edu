@@ -189,7 +189,6 @@ export const TRANSLATIONS = {
     },
     privacy: {
       title: "Privacy Policy",
-      lastUpdated: "Last updated: April 2026",
       sections: [
         {
           heading: "1. Information Collection",
@@ -306,7 +305,6 @@ export const TRANSLATIONS = {
     },
     privacy: {
       title: "गोपनीयता नीति",
-      lastUpdated: "अंतिम अपडेट: अप्रैल 2026",
       sections: [
         {
           heading: "1. जानकारी का संग्रह",
@@ -386,7 +384,26 @@ export const getGlossaryTerms = (lang: 'en' | 'hi'): GlossaryTerm[] => [
         role: lang === 'hi' ? 'तय समय पर सही क्वालिटी का सामान बनाना।' : 'Manufacturing and assembly of products as per schedule.',
         responsibilities: [
           {
-            items: [
+            items: lang === 'hi' ? [
+              'T5S (5S, 3R & VM)',
+              'PPE (Safety Gear)',
+              'Work Instruction / OPL',
+              'Time Management',
+              'Productivity (UPH/UPPH)',
+              'JIT / Kanban / Pull System',
+              'SMED (Quick Changeover)',
+              'Andon / Visual Management',
+              'Rejection & Rework',
+              'Manpower Handling',
+              'Material Handling',
+              '4M / SLE-50 (Loss reduction)',
+              'OEE (Machine Efficiency)',
+              'LOB (Line Balancing)',
+              'Manufacturing Loss',
+              'Value Analysis (VA/NVA)',
+              'सुधार सिद्धांत (Improvement Principles)',
+              'Kaizen / Poka-Yoke'
+            ] : [
               'T5S (5S, 3R & VM)',
               'PPE (Safety Gear)',
               'Work Instruction / OPL',

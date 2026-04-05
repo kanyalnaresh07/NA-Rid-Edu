@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, Settings, Lightbulb, Rocket, BarChart, Target, Factory, ShieldCheck, Wrench, CalendarClock, Box, Truck, Users, DollarSign, Monitor, ShieldAlert, Info } from 'lucide-react';
-import { GlossaryTerm, Language, DepartmentDetail } from '../types';
+import { GlossaryTerm, Language, DepartmentDetail, PageView } from '../types';
 import { getTermDefinition } from '../services/geminiService';
 import T5SDetail from './T5SDetail';
 import PPEDetail from './PPEDetail';
@@ -34,6 +34,10 @@ import HRAdminDetail from './HRAdminDetail';
 import FinanceDetail from './FinanceDetail';
 import ITSystemsDetail from './ITSystemsDetail';
 import EHSDetail from './EHSDetail';
+import SMEDDetail from './SMEDDetail';
+import AndonDetail from './AndonDetail';
+import JITKanbanPullDetail from './JITKanbanPullDetail';
+import ImprovementPrincipleDetail from './ImprovementPrincipleDetail';
 
 interface SubCategoryListProps {
   category: GlossaryTerm;
@@ -87,14 +91,14 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
   React.useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
       const state = event.state;
-      if (state && state.view === 'CATEGORY_DETAIL') {
+      if (state && (state.view === PageView.CATEGORY_DETAIL || state.view === 'CATEGORY_DETAIL')) {
         setSelectedSubItem(state.subItem || null);
         
         const newPoint = state.point || null;
         setSelectedPoint(newPoint);
         setActiveDeepDive(state.deepDive || null);
         
-        if (newPoint && newPoint !== selectedPoint) {
+        if (newPoint) {
            // Fetch data for the new point if it changed via popstate
            setIsLoading(true);
            getTermDefinition(newPoint, lang).then(data => {
@@ -109,26 +113,33 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
              });
              setIsLoading(false);
            });
-        } else if (!newPoint) {
+        } else {
            setPointData(null);
         }
+      } else if (!state || state.view === PageView.GLOSSARY || state.view === PageView.HOME) {
+        // If we go back to a state that doesn't have CATEGORY_DETAIL, 
+        // App.tsx will handle it, but we should clear our local state just in case
+        setSelectedPoint(null);
+        setActiveDeepDive(null);
+        setPointData(null);
       }
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, [lang, selectedPoint, category.category]);
+  }, [lang, category.category]); // Removed selectedPoint from dependencies
 
   const pushHistoryState = (updates: any) => {
     const currentState = window.history.state || {};
     const newState = {
       ...currentState,
-      view: 'CATEGORY_DETAIL',
+      view: PageView.CATEGORY_DETAIL,
+      categoryId: category.id, // Ensure categoryId is always preserved
       subItem: updates.subItem !== undefined ? updates.subItem : selectedSubItem,
       point: updates.point !== undefined ? updates.point : selectedPoint,
       deepDive: updates.deepDive !== undefined ? updates.deepDive : activeDeepDive,
     };
     
-    let url = `?view=CATEGORY_DETAIL`;
+    let url = `?view=${PageView.CATEGORY_DETAIL}&categoryId=${category.id}`;
     if (newState.subItem) url += `&subItem=${encodeURIComponent(newState.subItem)}`;
     if (newState.point) url += `&point=${encodeURIComponent(newState.point)}`;
     
@@ -184,6 +195,10 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
     else if (point.includes('FMEA') || point.includes('DMAIC')) deepDive = 'FMEA';
     else if (point.includes('Control Plan')) deepDive = 'ControlPlan';
     else if (point.includes('APQP') || point.includes('PPAP')) deepDive = 'APQPPPAP';
+    else if (point.includes('SMED')) deepDive = 'SMED';
+    else if (point.includes('Andon')) deepDive = 'Andon';
+    else if (point.includes('JIT') || point.includes('Kanban') || point.includes('Pull System')) deepDive = 'JIT';
+    else if (point.includes('Improvement Principle') || point.includes('सुधार सिद्धांत')) deepDive = 'Improvement';
 
     if (deepDive) {
       setActiveDeepDive(deepDive);
@@ -235,6 +250,10 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
   if (activeDeepDive === 'FMEA') return <FMEADMAICDetail onBack={handleBackFromDeepDive} lang={lang} />;
   if (activeDeepDive === 'ControlPlan') return <ControlPlanDetail onBack={handleBackFromDeepDive} lang={lang} />;
   if (activeDeepDive === 'APQPPPAP') return <APQPPPAPDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'SMED') return <SMEDDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Andon') return <AndonDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'JIT') return <JITKanbanPullDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  if (activeDeepDive === 'Improvement') return <ImprovementPrincipleDetail onBack={handleBackFromDeepDive} lang={lang} />;
   if (activeDeepDive === 'ProcessEng') return <ProcessEngineeringDetail onBack={handleBackFromDeepDive} lang={lang} />;
   if (activeDeepDive === 'Maintenance') return <MaintenanceDetail onBack={handleBackFromDeepDive} lang={lang} />;
   if (activeDeepDive === 'Planning') return <PlanningDetail onBack={handleBackFromDeepDive} lang={lang} />;
@@ -291,7 +310,14 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
         {selectedSubItem && (
             <>
                 <span className="text-slate-800">/</span>
-                <button onClick={() => { setSelectedPoint(null); pushHistoryState({ point: null, deepDive: null }); }} className={`transition-colors flex-shrink-0 focus:outline-none focus-visible:underline ${!selectedPoint ? 'text-cyan-400' : 'text-slate-500 hover:text-white'}`}>
+                <button onClick={() => { 
+                  if (selectedPoint || activeDeepDive) {
+                    window.history.back();
+                  } else {
+                    setSelectedPoint(null); 
+                    pushHistoryState({ point: null, deepDive: null }); 
+                  }
+                }} className={`transition-colors flex-shrink-0 focus:outline-none focus-visible:underline ${!selectedPoint ? 'text-cyan-400' : 'text-slate-500 hover:text-white'}`}>
                     {selectedSubItem}
                 </button>
             </>

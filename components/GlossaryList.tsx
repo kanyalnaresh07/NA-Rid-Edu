@@ -286,26 +286,24 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
       <div className="max-w-[1600px] mx-auto px-2 md:px-4 lg:px-6 py-4 md:py-8">
         
         {!searchQuery.trim() && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-1 mb-12">
             {/* Card 1 */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="relative bg-slate-900/40 border border-white/5 rounded-2xl p-6 md:p-8 flex flex-col items-center text-center group hover:bg-slate-800/50 transition-colors"
+              className="relative bg-slate-950/40 backdrop-blur-md border border-white/5 p-8 md:p-12 flex flex-col items-center text-center group hover:bg-slate-900/60 transition-all overflow-hidden"
             >
-              <div className="absolute left-[-1px] top-1/2 -translate-y-1/2 w-8 h-24 bg-emerald-500 rounded-r-md flex items-center justify-center">
-                <span className="text-slate-950 font-black text-[10px] tracking-widest uppercase -rotate-90 whitespace-nowrap">Option 01</span>
+              <div className="absolute left-0 top-0 w-1 h-full bg-emerald-500 opacity-40 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-emerald-500/50"></div>
+              
+              <div className="w-14 h-14 border border-emerald-500/20 flex items-center justify-center mb-8 mx-auto group-hover:bg-emerald-500/10 transition-all">
+                <BookOpen size={24} className="text-emerald-400" />
               </div>
-              <div className="pl-6">
-                <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center mb-4 mx-auto border border-emerald-500/20 text-emerald-400">
-                  <BookOpen size={20} />
-                </div>
-                <h3 className="text-white font-black text-sm md:text-base tracking-widest uppercase mb-4">Manufacturing Education Hub</h3>
-                <p className="text-slate-400 text-xs md:text-sm leading-relaxed">
-                  NA-RID Education Hub is a modern digital platform that explains the concepts of manufacturing, industrial processes, and operational excellence in a simple and structured way. The main objective of this platform is to make real-world industrial knowledge easily accessible to students, engineers, and professionals.
-                </p>
-              </div>
+              <h3 className="text-white font-black text-sm md:text-lg tracking-[0.2em] uppercase mb-6">{translations.heroCards.card1.title}</h3>
+              <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-medium">
+                {translations.heroCards.card1.desc}
+              </p>
             </motion.div>
 
             {/* Card 2 */}
@@ -313,20 +311,18 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="relative bg-slate-900/40 border border-white/5 rounded-2xl p-6 md:p-8 flex flex-col items-center text-center group hover:bg-slate-800/50 transition-colors"
+              className="relative bg-slate-950/40 backdrop-blur-md border border-white/5 p-8 md:p-12 flex flex-col items-center text-center group hover:bg-slate-900/60 transition-all overflow-hidden"
             >
-              <div className="absolute left-[-1px] top-1/2 -translate-y-1/2 w-8 h-24 bg-cyan-500 rounded-r-md flex items-center justify-center">
-                <span className="text-slate-950 font-black text-[10px] tracking-widest uppercase -rotate-90 whitespace-nowrap">Option 02</span>
+              <div className="absolute left-0 top-0 w-1 h-full bg-cyan-500 opacity-40 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-cyan-500/50"></div>
+              
+              <div className="w-14 h-14 border border-cyan-500/20 flex items-center justify-center mb-8 mx-auto group-hover:bg-cyan-500/10 transition-all">
+                <Lightbulb size={24} className="text-cyan-400" />
               </div>
-              <div className="pl-6">
-                <div className="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-4 mx-auto border border-cyan-500/20 text-cyan-400">
-                  <Lightbulb size={20} />
-                </div>
-                <h3 className="text-white font-black text-sm md:text-base tracking-widest uppercase mb-4">What You Will Learn</h3>
-                <p className="text-slate-400 text-xs md:text-sm leading-relaxed">
-                  On this website, you will find detailed information about core departments such as Production, Quality, Planning, and Maintenance. Each section explains practical concepts, tools, and methodologies that are used in real industries.
-                </p>
-              </div>
+              <h3 className="text-white font-black text-sm md:text-lg tracking-[0.2em] uppercase mb-6">{translations.heroCards.card2.title}</h3>
+              <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-medium">
+                {translations.heroCards.card2.desc}
+              </p>
             </motion.div>
 
             {/* Card 3 */}
@@ -334,20 +330,18 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="relative bg-slate-900/40 border border-white/5 rounded-2xl p-6 md:p-8 flex flex-col items-center text-center group hover:bg-slate-800/50 transition-colors"
+              className="relative bg-slate-950/40 backdrop-blur-md border border-white/5 p-8 md:p-12 flex flex-col items-center text-center group hover:bg-slate-900/60 transition-all overflow-hidden"
             >
-              <div className="absolute left-[-1px] top-1/2 -translate-y-1/2 w-8 h-24 bg-blue-500 rounded-r-md flex items-center justify-center">
-                <span className="text-slate-950 font-black text-[10px] tracking-widest uppercase -rotate-90 whitespace-nowrap">Option 03</span>
+              <div className="absolute left-0 top-0 w-1 h-full bg-blue-500 opacity-40 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-blue-500/50"></div>
+              
+              <div className="w-14 h-14 border border-blue-500/20 flex items-center justify-center mb-8 mx-auto group-hover:bg-blue-500/10 transition-all">
+                <Target size={24} className="text-blue-400" />
               </div>
-              <div className="pl-6">
-                <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-4 mx-auto border border-blue-500/20 text-blue-400">
-                  <Target size={20} />
-                </div>
-                <h3 className="text-white font-black text-sm md:text-base tracking-widest uppercase mb-4">Why This Platform</h3>
-                <p className="text-slate-400 text-xs md:text-sm leading-relaxed">
-                  In today's time, industrial knowledge is often scattered. NA-RID Education Hub provides a centralized platform where you can engage in structured learning. This platform is especially useful for those who want to build their career in the manufacturing and process improvement fields.
-                </p>
-              </div>
+              <h3 className="text-white font-black text-sm md:text-lg tracking-[0.2em] uppercase mb-6">{translations.heroCards.card3.title}</h3>
+              <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-medium">
+                {translations.heroCards.card3.desc}
+              </p>
             </motion.div>
           </div>
         )}
