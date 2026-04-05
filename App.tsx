@@ -314,7 +314,7 @@ const App: React.FC = () => {
                       {AIRFOCUS_LOGO}
                   </div>
                   <nav className="flex items-center gap-1.5 md:gap-6 overflow-x-auto no-scrollbar whitespace-nowrap min-w-0 pr-4 h-full">
-                    <button onClick={handleBackHome} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.HOME ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navHome}</button>
+                    <button onClick={handleBackHome} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors hover:text-cyan-400`}>{t.navHome}</button>
                     <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
                     <button onClick={handleQuizClick} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.QUIZ ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navQuiz}</button>
                     <span className="text-white/10 md:text-white/20 text-[7px]">/</span>

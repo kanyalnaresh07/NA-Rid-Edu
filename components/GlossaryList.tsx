@@ -268,15 +268,17 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
 
   const circleIcons = [Search, Settings, Lightbulb, Rocket, BarChart, Target];
 
-  const getConnectorClasses = (index: number, total: number) => {
-    if (index === total - 1) return 'hidden';
-    const isSmEnd = (index + 1) % 2 === 0;
-    const isLgEnd = (index + 1) % 4 === 0;
+  const handleAISearch = () => {
+    if (searchQuery.trim()) {
+      const url = `https://chatgpt.com/?q=${encodeURIComponent(searchQuery)}`;
+      window.open(url, '_blank');
+    }
+  };
 
-    if (isSmEnd && isLgEnd) return 'hidden sm:hidden lg:hidden';
-    if (isSmEnd && !isLgEnd) return 'hidden sm:hidden lg:flex';
-    if (!isSmEnd && isLgEnd) return 'hidden sm:flex lg:hidden';
-    return 'hidden sm:flex lg:flex';
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleAISearch();
+    }
   };
 
   return (
@@ -359,6 +361,54 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
             <h2 className="text-[10px] md:text-xs font-black text-slate-400 tracking-[0.3em] uppercase leading-none">{translations.browseTerms}</h2>
             <div className="w-6 md:w-10 h-0.5 bg-cyan-500 mt-2"></div>
           </motion.div>
+
+          {/* Search Bar */}
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="w-full md:w-96 relative group"
+            >
+              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                <Search className={`w-4 h-4 transition-colors duration-300 ${searchQuery ? 'text-cyan-400' : 'text-slate-500 group-focus-within:text-cyan-400'}`} />
+              </div>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder={translations.searchPlaceholder}
+                className="w-full bg-slate-900/60 border border-white/10 rounded-2xl py-3 pl-12 pr-12 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50 focus:bg-slate-800/80 transition-all shadow-lg"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute inset-y-0 right-4 flex items-center text-slate-500 hover:text-white transition-colors"
+                >
+                  <div className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10">
+                    <span className="text-xs font-bold">×</span>
+                  </div>
+                </button>
+              )}
+            </motion.div>
+
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleAISearch}
+              disabled={!searchQuery.trim()}
+              className={`whitespace-nowrap px-6 py-3 rounded-2xl font-black text-[10px] tracking-widest uppercase transition-all flex items-center gap-2 shadow-lg ${
+                searchQuery.trim() 
+                  ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:shadow-cyan-500/20 border border-cyan-400/30' 
+                  : 'bg-slate-800 text-slate-500 border border-white/5 cursor-not-allowed'
+              }`}
+            >
+              <Rocket size={14} className={searchQuery.trim() ? 'animate-pulse' : ''} />
+              {translations.searchWithAI}
+            </motion.button>
+          </div>
         </div>
 
         <AnimatePresence mode="wait">
@@ -442,24 +492,24 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-8 xl:gap-12 px-0 md:px-4"
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 md:gap-16 lg:gap-20 px-4 md:px-8 max-w-[1400px] mx-auto"
             >
               {filteredTerms.map((term, index) => {
                 const color = circleColors[index % circleColors.length];
                 const Icon = circleIcons[index % circleIcons.length];
                 
-                // Update connector logic for 4 items per row
-                const getConnectorClassesFor4 = (index: number, total: number) => {
-                  if (index === total - 1) return 'hidden'; // Last item never has a connector
+                // Update connector logic for 3 items per row
+                const getConnectorClassesFor3 = (index: number, total: number) => {
+                  if (index === total - 1) return 'hidden';
                   
                   // Mobile (1 column): hide all connectors
-                  const mobileClass = 'hidden sm:flex';
+                  const mobileClass = 'hidden md:flex';
                   
                   // Tablet (2 columns): hide on every 2nd item
-                  const tabletClass = (index + 1) % 2 === 0 ? 'sm:hidden lg:flex' : '';
+                  const tabletClass = (index + 1) % 2 === 0 ? 'md:hidden xl:flex' : '';
                   
-                  // Desktop (4 columns): hide on every 4th item
-                  const desktopClass = (index + 1) % 4 === 0 ? 'lg:hidden' : '';
+                  // Desktop (3 columns): hide on every 3rd item
+                  const desktopClass = (index + 1) % 3 === 0 ? 'xl:hidden' : '';
                   
                   return `${mobileClass} ${tabletClass} ${desktopClass}`;
                 };
@@ -467,9 +517,9 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                 return (
                   <div key={term.id} className="relative flex justify-center items-center w-full">
                     {/* Connector Lines */}
-                    <div className={`absolute top-1/2 -right-4 sm:-right-6 lg:-right-4 xl:-right-8 w-4 sm:w-6 lg:w-4 xl:w-8 h-4 -translate-y-1/2 z-0 flex-col justify-center gap-1.5 ${getConnectorClassesFor4(index, filteredTerms.length)}`}>
-                      <div className={`w-full h-[3px] md:h-[4px] ${color.line}`}></div>
-                      <div className={`w-full h-[3px] md:h-[4px] ${color.line}`}></div>
+                    <div className={`absolute top-1/2 -right-8 md:-right-10 lg:-right-12 xl:-right-14 w-8 md:w-10 lg:w-12 xl:w-14 h-6 -translate-y-1/2 z-0 flex-col justify-center gap-2 ${getConnectorClassesFor3(index, filteredTerms.length)}`}>
+                      <div className={`w-full h-[4px] md:h-[5px] ${color.line} opacity-40`}></div>
+                      <div className={`w-full h-[4px] md:h-[5px] ${color.line} opacity-40`}></div>
                     </div>
 
                     <motion.button 
@@ -480,36 +530,38 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       whileTap={{ scale: 0.95 }}
                       transition={{ type: "spring", damping: 20, stiffness: 100, delay: index * 0.05 }}
                       onClick={() => onCategorySelect(term)}
-                      className={`relative w-[220px] md:w-[260px] lg:w-full aspect-square rounded-full border-[6px] md:border-[10px] ${color.border} bg-white flex flex-col items-center justify-center p-4 md:p-6 text-center group z-10 shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50`}
+                      className={`relative w-[280px] sm:w-[320px] md:w-[340px] lg:w-[380px] aspect-square rounded-full border-[8px] md:border-[12px] ${color.border} bg-white flex flex-col items-center justify-center p-8 md:p-10 text-center group z-10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50`}
                     >
                       {/* Premium Loader Animation Rings */}
                       <div 
-                        className={`absolute inset-[-8px] md:inset-[-12px] rounded-full border-[2px] md:border-[3px] border-transparent ${color.text} opacity-60 animate-[spin_3s_linear_infinite] pointer-events-none`}
+                        className={`absolute inset-[-12px] md:inset-[-18px] rounded-full border-[3px] md:border-[4px] border-transparent ${color.text} opacity-60 animate-[spin_4s_linear_infinite] pointer-events-none`}
                         style={{ borderTopColor: 'currentColor', borderRightColor: 'currentColor' }}
                       ></div>
                       <div 
-                        className={`absolute inset-[-12px] md:inset-[-18px] rounded-full border-[1px] border-dashed ${color.text} opacity-30 animate-[spin_8s_linear_infinite_reverse] pointer-events-none`}
+                        className={`absolute inset-[-18px] md:inset-[-26px] rounded-full border-[1.5px] border-dashed ${color.text} opacity-30 animate-[spin_10s_linear_infinite_reverse] pointer-events-none`}
                         style={{ borderColor: 'currentColor' }}
                       ></div>
                       <div 
-                        className={`absolute inset-[-16px] md:inset-[-24px] rounded-full border-[1px] border-transparent ${color.text} opacity-40 animate-[spin_5s_linear_infinite] pointer-events-none`}
+                        className={`absolute inset-[-24px] md:inset-[-34px] rounded-full border-[2px] border-transparent ${color.text} opacity-40 animate-[spin_6s_linear_infinite] pointer-events-none`}
                         style={{ borderBottomColor: 'currentColor', borderLeftColor: 'currentColor' }}
                       >
-                        <div className={`absolute bottom-[14%] right-[14%] w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${color.line} shadow-[0_0_8px_currentColor]`}></div>
+                        <div className={`absolute bottom-[14%] right-[14%] w-2 h-2 md:w-3 md:h-3 rounded-full ${color.line} shadow-[0_0_12px_currentColor]`}></div>
                       </div>
 
                       {/* Inner dashed ring */}
-                      <div className="absolute inset-1 border border-dashed border-slate-200 rounded-full pointer-events-none"></div>
+                      <div className="absolute inset-2 border-2 border-dashed border-slate-100 rounded-full pointer-events-none"></div>
 
-                      <div className={`mb-2 md:mb-4 ${color.text} transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)_scale(1.1)]`} style={{ perspective: '1000px' }}>
-                        <Icon className="w-10 h-10 md:w-12 md:h-12" strokeWidth={1.5} />
+                      <div className={`mb-4 md:mb-6 ${color.text} transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)_scale(1.15)]`} style={{ perspective: '1000px' }}>
+                        <Icon className="w-12 h-12 md:w-16 md:h-16" strokeWidth={1.2} />
                       </div>
                       
-                      <h3 className="text-slate-900 font-black text-sm md:text-base uppercase tracking-widest mb-2 line-clamp-2 px-2 leading-tight">
+                      <h3 className="text-slate-900 font-black text-lg md:text-2xl uppercase tracking-widest mb-3 line-clamp-2 px-4 leading-tight">
                         {term.title}
                       </h3>
                       
-                      <p className="text-slate-500 text-[9px] md:text-[10px] font-medium px-4 line-clamp-3 leading-relaxed">
+                      <div className="w-12 h-1 bg-slate-200 mb-4 rounded-full group-hover:w-20 group-hover:bg-cyan-500 transition-all duration-500"></div>
+
+                      <p className="text-slate-500 text-[11px] md:text-[13px] font-bold px-6 line-clamp-3 leading-relaxed tracking-wide">
                         {term.subItems.join(', ')}
                       </p>
                     </motion.button>

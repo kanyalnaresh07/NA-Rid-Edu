@@ -42,7 +42,7 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
       rotateX: 0,
       transition: {
         delay: i * 0.02,
-        ease: "easeOut"
+        ease: "easeOut" as any
       }
     })
   };
@@ -127,7 +127,7 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
                       {lang === 'hi' ? (
                         <motion.span
                           custom={wordIndex * 10}
-                          variants={letterVariants}
+                          variants={letterVariants as any}
                           initial="initial"
                           animate="animate"
                           className="inline-block relative"
@@ -139,7 +139,7 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
                           <motion.span
                             key={charIndex}
                             custom={wordIndex * 10 + charIndex}
-                            variants={letterVariants}
+                            variants={letterVariants as any}
                             initial="initial"
                             animate="animate"
                             className="inline-block relative"

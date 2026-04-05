@@ -155,6 +155,11 @@ export const TRANSLATIONS = {
     navContact: "CONTACT",
     navPrivacy: "PRIVACY POLICY",
     updates: "What's New",
+    searchPlaceholder: "Search categories, departments, or topics...",
+    searchNoResults: "No results found for",
+    searchClear: "Clear Search",
+    searchWithAI: "Search with AI",
+    searchAILabel: "Ask ChatGPT about this topic",
     copyright: "Kanyal Excellence",
     footerText: "© 2026 All Rights Reserved",
     contact: {
@@ -267,6 +272,11 @@ export const TRANSLATIONS = {
     navContact: "संपर्क",
     navPrivacy: "गोपनीयता नीति",
     updates: "नया क्या है?",
+    searchPlaceholder: "कैटेगरी, विभाग या विषय खोजें...",
+    searchNoResults: "के लिए कोई परिणाम नहीं मिला",
+    searchClear: "खोज साफ़ करें",
+    searchWithAI: "AI के साथ खोजें",
+    searchAILabel: "ChatGPT से इस विषय के बारे में पूछें",
     copyright: "कनयाल एक्सीलेंस",
     footerText: "© 2026 सभी अधिकार सुरक्षित",
     contact: {
