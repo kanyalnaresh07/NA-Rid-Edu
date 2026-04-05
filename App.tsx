@@ -29,6 +29,7 @@ const App: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<GlossaryTerm | null>(null);
   const [initialSubItem, setInitialSubItem] = useState<string | null>(null);
   const [initialPoint, setInitialPoint] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewHistory, setViewHistory] = useState<PageView[]>([PageView.HOME]);
   const [showSecurityAlert, setShowSecurityAlert] = useState(false);
 
@@ -96,15 +97,24 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Force the app to always start at HOME on initial load
-    const initialView = PageView.HOME;
+    // Check URL parameters for initial view and state
+    const params = new URLSearchParams(window.location.search);
+    const viewParam = params.get('view') as PageView;
+    const qParam = params.get('q');
+    const catIdParam = params.get('categoryId');
+    const subItemParam = params.get('subItem');
+    const pointParam = params.get('point');
+
+    const initialView = Object.values(PageView).includes(viewParam) ? viewParam : PageView.HOME;
     
-    try {
-      // Replace the history state and URL to ensure we start fresh
-      window.history.replaceState({ view: initialView, isFallback: true }, '', `?view=${initialView}`);
-    } catch (e) {
-      console.warn("History API not available:", e);
+    if (qParam) setSearchQuery(qParam);
+    if (subItemParam) setInitialSubItem(subItemParam);
+    if (pointParam) setInitialPoint(pointParam);
+    if (catIdParam) {
+      const cat = GLOSSARY_TERMS.find(c => c.id === catIdParam);
+      if (cat) setSelectedCategory(cat);
     }
+
     setView(initialView);
 
     const handlePopState = (event: PopStateEvent) => {
@@ -157,6 +167,8 @@ const App: React.FC = () => {
       
       const newState = { view: targetView, ...additionalState };
       let url = `?view=${targetView}`;
+      if (additionalState.q) url += `&q=${encodeURIComponent(additionalState.q)}`;
+      if (additionalState.categoryId) url += `&categoryId=${encodeURIComponent(additionalState.categoryId)}`;
       if (additionalState.subItem) url += `&subItem=${encodeURIComponent(additionalState.subItem)}`;
       if (additionalState.point) url += `&point=${encodeURIComponent(additionalState.point)}`;
       
@@ -345,6 +357,15 @@ const App: React.FC = () => {
                         translations={t} 
                         lang={lang} 
                         onCategorySelect={handleCategorySelect} 
+                        initialSearchQuery={searchQuery}
+                        onSearchChange={(q) => {
+                          setSearchQuery(q);
+                          // Update URL without full navigation
+                          const url = new URL(window.location.href);
+                          if (q) url.searchParams.set('q', q);
+                          else url.searchParams.delete('q');
+                          window.history.replaceState(window.history.state, '', url.toString());
+                        }}
                       />
                     </motion.div>
                   )}

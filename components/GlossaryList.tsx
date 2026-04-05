@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, AlertCircle, BookOpen, Lightbulb, Target, Settings, Rocket, BarChart, Puzzle, Megaphone, X, Loader2, Sparkles } from 'lucide-react';
 import { getGlossaryTerms } from '../constants';
@@ -12,6 +12,8 @@ interface GlossaryListProps {
   translations: any;
   lang: Language;
   onCategorySelect: (category: GlossaryTerm, subItem?: string, point?: string) => void;
+  initialSearchQuery?: string;
+  onSearchChange?: (query: string) => void;
 }
 
 const SYNONYMS: Record<string, string[]> = {
@@ -85,18 +87,47 @@ const HighlightText = ({ text, highlight, className = "" }: { text: string; high
   );
 };
 
-const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCategorySelect }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+const normalizeQuery = (query: string): string => {
+  const stopWords = [
+    'kya', 'hai', 'kaise', 'kab', 'kyun', 'kahan', 'kis', 'ko', 'ka', 'ki', 'ke', 'batao', 'dikhao', 'samjhao',
+    'what', 'is', 'how', 'why', 'where', 'when', 'which', 'who', 'whom', 'whose',
+    'define', 'meaning', 'about', 'of', 'the', 'a', 'an', 'in', 'on', 'at', 'to', 'for', 'tell', 'me', 'show', 'explain'
+  ];
+  
+  let cleaned = query.toLowerCase().trim();
+  cleaned = cleaned.replace(/[?.,!]/g, '');
+  
+  const words = cleaned.split(/\s+/);
+  const filteredWords = words.filter(word => !stopWords.includes(word));
+  
+  return filteredWords.length === 0 ? cleaned : filteredWords.join(' ');
+};
+
+const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCategorySelect, initialSearchQuery = '', onSearchChange }) => {
+  const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
   const [aiResponse, setAiResponse] = useState<string | null>(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [showAiModal, setShowAiModal] = useState(false);
   const isHi = lang === 'hi';
   
   const allTerms = getGlossaryTerms(lang);
+
+  // Sync with prop if it changes externally
+  useEffect(() => {
+    if (initialSearchQuery !== searchQuery) {
+      setSearchQuery(initialSearchQuery);
+    }
+  }, [initialSearchQuery]);
+
+  const handleSearchChangeLocal = (val: string) => {
+    setSearchQuery(val);
+    if (onSearchChange) onSearchChange(val);
+  };
   
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) return [];
-    const query = searchQuery.toLowerCase().trim();
+    const rawQuery = searchQuery.toLowerCase().trim();
+    const query = normalizeQuery(rawQuery);
     const results: { 
       type: 'category' | 'department' | 'point'; 
       term: GlossaryTerm; 
@@ -224,7 +255,8 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
 
   const filteredTerms = useMemo(() => {
     if (!searchQuery.trim()) return allTerms;
-    const query = searchQuery.toLowerCase();
+    const rawQuery = searchQuery.toLowerCase().trim();
+    const query = normalizeQuery(rawQuery);
     
     return allTerms.filter(term => {
       // 1. Check main term properties
@@ -486,14 +518,14 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               <input
                 type="text"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleSearchChangeLocal(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={translations.searchPlaceholder}
                 className="w-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-2xl py-4 pl-14 pr-14 text-base text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50 focus:bg-slate-800/90 transition-all shadow-2xl relative z-0"
               />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery('')}
+                  onClick={() => handleSearchChangeLocal('')}
                   className="absolute inset-y-0 right-4 flex items-center text-slate-500 hover:text-white transition-colors z-10"
                 >
                   <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 border border-white/10">
@@ -617,7 +649,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                 />
                 <div className="mt-4 text-center">
                   <button 
-                    onClick={() => setSearchQuery('')}
+                    onClick={() => handleSearchChangeLocal('')}
                     className="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-widest hover:text-white transition-colors"
                   >
                     {isHi ? 'खोज साफ़ करें' : 'Clear Search'}
