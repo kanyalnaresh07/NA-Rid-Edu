@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'motion/react';
-import { PageView, Language } from '../types';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { AIRFOCUS_LOGO } from '../constants';
-import { X, Zap, Wrench, CheckCircle2, ChevronRight, Target, Lightbulb } from 'lucide-react';
+import { Language } from '../types';
+import { ChevronRight, Target, Lightbulb, CheckCircle2, Wrench, Sparkles } from 'lucide-react';
 
 interface HeroProps {
   title: string;
@@ -10,43 +10,37 @@ interface HeroProps {
   onGlossaryClick: () => void;
   onAboutClick: () => void;
   lang: Language;
-  setLang: (l: Language) => void;
+  setLang: (lang: Language) => void;
   translations: any;
 }
 
-const HeroSection: React.FC<HeroProps> = ({ 
-  title, description, onGlossaryClick, onAboutClick, 
-  lang, setLang, translations 
-}) => {
+const changelog = {
+  major: [
+    { title: "New Glossary Structure", desc: "Redesigned the glossary layout for better navigation." },
+    { title: "Multi-language Support", desc: "Added full Hindi language support." }
+  ],
+  minor: [
+    { title: "UI Improvements", desc: "Enhanced animations and visual feedback." },
+    { title: "Performance", desc: "Optimized rendering for smoother experience." }
+  ],
+  fixes: [
+    { title: "Fixed navigation bugs" },
+    { title: "Resolved layout issues on mobile" }
+  ]
+};
+
+const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick, onAboutClick, lang, setLang, translations }) => {
   const [showChangelog, setShowChangelog] = useState(false);
+  const words = (title || "").split(' ');
   const isHi = lang === 'hi';
 
-  const changelog = {
-    version: "V.1.2.6",
-    major: [
-      { title: isHi ? "स्मार्ट सर्च इंजन" : "Smart Search Engine", desc: isHi ? "समानार्थी शब्दों और शॉर्ट फॉर्म के साथ उन्नत खोज" : "Advanced search with synonyms and short-form mapping" },
-      { title: isHi ? "ग्लॉसरी और डिपार्टमेंट सिस्टम" : "Glossary & Department System", desc: isHi ? "विस्तृत औद्योगिक ज्ञान आधार" : "Comprehensive industrial knowledge base" }
-    ],
-    minor: [
-      { title: isHi ? "प्रीमियम लोगो एनिमेशन" : "Premium Logo Animation", desc: isHi ? "निरंतर मोशन और शाइन इफेक्ट" : "Continuous motion and shimmer effects" },
-      { title: isHi ? "हिंदी भाषा समर्थन" : "Hindi Language Support", desc: isHi ? "पूर्ण देवनागरी टाइपोग्राफी" : "Full Devanagari typography" }
-    ],
-    fixes: [
-      { title: isHi ? "सर्च एरर फिक्स" : "Search Error Fix", desc: isHi ? "सर्च क्रैश और रेफरेंस एरर को ठीक किया गया" : "Resolved search crashes and reference errors" },
-      { title: isHi ? "फोटो फिट फिक्स" : "Photo Fit Fix", desc: isHi ? "प्रोफाइल फोटो को सर्कल के अनुसार फिक्स किया गया" : "Fixed profile photo alignment in circle" },
-      { title: isHi ? "हिंदी रेंडरिंग" : "Hindi Rendering", desc: isHi ? "अनुवाद और फोंट डिस्प्ले में सुधार" : "Improved translation and font display" }
-    ]
-  };
-  const words = title.split(' ');
-
-  // Animation variants for letters - simplified 2D
-  const letterVariants: any = {
-    initial: { y: 20, opacity: 0 },
+  const letterVariants = {
+    initial: { opacity: 0, y: 50, rotateX: -90 },
     animate: (i: number) => ({
-      y: 0,
       opacity: 1,
+      y: 0,
+      rotateX: 0,
       transition: {
-        duration: 0.5,
         delay: i * 0.02,
         ease: "easeOut"
       }
@@ -85,7 +79,18 @@ const HeroSection: React.FC<HeroProps> = ({
            {AIRFOCUS_LOGO}
         </div>
 
-        <div className="flex items-center gap-4 shrink-0">
+        <div className="flex items-center gap-2 md:gap-4 shrink-0">
+          {/* Updates Button */}
+          <button 
+            onClick={() => setShowChangelog(true)}
+            className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 hover:bg-cyan-500/20 transition-all duration-300 group/updates shadow-[0_0_15px_rgba(6,182,212,0.1)]"
+          >
+            <Sparkles size={14} className="animate-pulse group-hover/updates:scale-110 transition-transform" />
+            <span className="text-[9px] md:text-[10px] font-black tracking-widest uppercase hidden sm:inline">
+              {translations.updates}
+            </span>
+          </button>
+
           {/* Language Change Option */}
           <div className="flex items-center gap-1 bg-slate-950/40 backdrop-blur-xl p-1 rounded-lg border border-white/10 shadow-2xl">
             <button 
@@ -249,89 +254,60 @@ const HeroSection: React.FC<HeroProps> = ({
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 1.8 }}
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(6,182,212,0.05)" }}
-                  whileTap={{ scale: 0.98 }}
                   onClick={onAboutClick}
-                  className="group relative py-5 px-6 md:py-6 md:px-10 bg-transparent text-cyan-400 font-black text-base md:text-lg xl:text-xl leading-none uppercase tracking-[0.3em] transition-all duration-500 flex items-center gap-3 rounded-xl md:rounded-2xl border border-cyan-500/20 hover:border-cyan-400 w-full lg:w-auto justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
+                  className="py-4 px-6 md:py-5 md:px-8 text-slate-400 font-bold text-xs md:text-sm uppercase tracking-widest hover:text-white transition-colors flex items-center justify-center gap-2 w-full lg:w-auto"
                 >
-                  <div className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 bg-cyan-500 rounded-full"></div>
-                  <span className="relative z-10 flex items-center gap-3 whitespace-nowrap">
-                    <svg className="w-4 h-4 md:w-6 md:h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    {translations.navAbout}
-                  </span>
+                  {isHi ? 'हमारे बारे में' : 'About Us'}
+                </motion.button>
+
+                <motion.button 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 2.0 }}
+                  onClick={() => setShowChangelog(true)}
+                  className="py-4 px-6 md:py-5 md:px-8 text-cyan-500/80 font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] hover:text-cyan-400 transition-all flex items-center justify-center gap-2 w-full lg:w-auto border border-cyan-500/10 rounded-xl bg-cyan-500/5 hover:bg-cyan-500/10"
+                >
+                  <Sparkles size={14} className="animate-pulse" />
+                  {translations.updates}
                 </motion.button>
               </div>
           </div>
         </div>
       </motion.div>
-      
-      {/* Version Indicator (Replaces Scroll) */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2.5, duration: 1 }}
-        className="relative pb-8 w-full flex flex-col items-center gap-2 z-30 mt-auto"
-      >
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setShowChangelog(true)}
-          className="flex flex-col items-center gap-2 group focus:outline-none bg-slate-950/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/5"
-        >
-          <div className="w-5 h-8 md:w-6 md:h-10 border-2 border-cyan-500/30 rounded-full flex justify-center p-1 group-hover:border-cyan-400/60 transition-colors">
-            <motion.div 
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              className="w-1 h-1.5 md:h-2 bg-cyan-400 rounded-full shadow-[0_0_8px_rgba(6,182,212,0.8)]"
-            />
-          </div>
-          <span className="text-[8px] md:text-[10px] font-black text-cyan-500/60 uppercase tracking-[0.3em] group-hover:text-cyan-400 transition-colors">
-            version.{changelog.version}
-          </span>
-        </motion.button>
-      </motion.div>
 
       {/* Changelog Modal */}
       <AnimatePresence>
         {showChangelog && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6">
-            <motion.div
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
               onClick={() => setShowChangelog(false)}
-              className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
             />
-            
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-2xl bg-slate-900/90 border border-white/10 rounded-[32px] overflow-hidden shadow-2xl"
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-2xl bg-slate-900 border border-cyan-500/20 rounded-3xl shadow-[0_0_50px_rgba(6,182,212,0.15)] overflow-hidden"
             >
               {/* Header */}
-              <div className="p-6 md:p-8 border-b border-white/5 flex items-center justify-between bg-gradient-to-r from-cyan-500/10 to-transparent">
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter italic">
-                    {isHi ? 'अपडेट लॉग' : 'Update Log'}
-                  </h2>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="px-2 py-0.5 bg-cyan-500 text-slate-950 text-[10px] font-black rounded uppercase">
-                      {changelog.version}
-                    </span>
-                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                      {isHi ? 'स्थिर बिल्ड' : 'Stable Build'}
-                    </span>
+              <div className="p-6 md:p-8 border-b border-white/5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-[60px] rounded-full -translate-y-1/2 translate-x-1/2" />
+                <div className="relative z-10 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                    <Sparkles size={24} />
+                  </div>
+                  <div>
+                    <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight">
+                      {isHi ? 'नया क्या है?' : 'What\'s New?'}
+                    </h2>
+                    <p className="text-sm font-bold text-cyan-500 uppercase tracking-widest mt-1">
+                      {isHi ? 'संस्करण 2.0.0' : 'Version 2.0.0'}
+                    </p>
                   </div>
                 </div>
-                <button 
-                  onClick={() => setShowChangelog(false)}
-                  className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-white/10 hover:text-white transition-all"
-                >
-                  <X size={20} />
-                </button>
               </div>
 
               {/* Content */}
@@ -340,12 +316,12 @@ const HeroSection: React.FC<HeroProps> = ({
                   {/* Major */}
                   <section>
                     <div className="flex items-center gap-2 mb-4">
-                      <Zap className="text-cyan-400" size={16} />
-                      <h3 className="text-xs font-black text-cyan-500 uppercase tracking-[0.3em]">
+                      <Target className="text-cyan-400" size={18} />
+                      <h3 className="text-sm font-black text-cyan-500 uppercase tracking-[0.3em]">
                         {isHi ? 'प्रमुख अपडेट्स' : 'Major Updates'}
                       </h3>
                     </div>
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                       {changelog.major.map((item, i) => (
                         <div key={i} className="flex gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
                           <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full mt-1.5 shrink-0" />

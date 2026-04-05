@@ -154,6 +154,7 @@ export const TRANSLATIONS = {
     navPhotos: "PHOTOS",
     navContact: "CONTACT",
     navPrivacy: "PRIVACY POLICY",
+    updates: "What's New",
     copyright: "Kanyal Excellence",
     footerText: "© 2026 All Rights Reserved",
     contact: {
@@ -203,6 +204,23 @@ export const TRANSLATIONS = {
         }
       ]
     },
+    heroCards: {
+      card1: {
+        tag: "OPTION 01",
+        title: "MANUFACTURING EDUCATION HUB",
+        desc: "NA-RID Education Hub is a modern digital platform that explains the concepts of manufacturing, industrial processes, and operational excellence in a simple and structured way. The main objective of this platform is to make real-world industrial knowledge easily accessible to students, engineers, and professionals."
+      },
+      card2: {
+        tag: "OPTION 02",
+        title: "WHAT YOU WILL LEARN",
+        desc: "On this website, you will find detailed information about core departments such as Production, Quality, Planning, and Maintenance. Each section explains practical concepts, tools, and methodologies that are used in real industries."
+      },
+      card3: {
+        tag: "OPTION 03",
+        title: "WHY THIS PLATFORM",
+        desc: "In today's time, industrial knowledge is often scattered. NA-RID Education Hub provides a centralized platform where you can engage in structured learning. This platform is especially useful for those who want to build their career in the manufacturing and process improvement fields."
+      }
+    },
     about: {
       hero: "Empowering the Industrial Workforce",
       mission: "Our Mission",
@@ -248,6 +266,7 @@ export const TRANSLATIONS = {
     navPhotos: "फोटो",
     navContact: "संपर्क",
     navPrivacy: "गोपनीयता नीति",
+    updates: "नया क्या है?",
     copyright: "कनयाल एक्सीलेंस",
     footerText: "© 2026 सभी अधिकार सुरक्षित",
     contact: {
@@ -296,6 +315,23 @@ export const TRANSLATIONS = {
           content: "यदि आपके पास इस गोपनीयता नीति, इस साइट की प्रथाओं, या इस साइट के साथ आपके व्यवहार के बारे में कोई प्रश्न हैं, तो कृपया संपर्क पृष्ठ के माध्यम से हमसे संपर्क करें।"
         }
       ]
+    },
+    heroCards: {
+      card1: {
+        tag: "विकल्प 01",
+        title: "मैन्युफैक्चरिंग एजुकेशन हब",
+        desc: "NA-RID एजुकेशन हब एक आधुनिक डिजिटल प्लेटफॉर्म है जो मैन्युफैक्चरिंग, औद्योगिक प्रक्रियाओं और परिचालन उत्कृष्टता की अवधारणाओं को सरल और संरचित तरीके से समझाता है। इस प्लेटफॉर्म का मुख्य उद्देश्य छात्रों, इंजीनियरों और पेशेवरों के लिए वास्तविक दुनिया के औद्योगिक ज्ञान को आसानी से सुलभ बनाना है।"
+      },
+      card2: {
+        tag: "विकल्प 02",
+        title: "आप क्या सीखेंगे",
+        desc: "इस वेबसाइट पर, आपको उत्पादन, गुणवत्ता, योजना और रखरखाव जैसे मुख्य विभागों के बारे में विस्तृत जानकारी मिलेगी। प्रत्येक अनुभाग व्यावहारिक अवधारणाओं, उपकरणों और कार्यप्रणाली की व्याख्या करता है जिनका उपयोग वास्तविक उद्योगों में किया जाता है।"
+      },
+      card3: {
+        tag: "विकल्प 03",
+        title: "यह प्लेटफॉर्म क्यों",
+        desc: "आज के समय में, औद्योगिक ज्ञान अक्सर बिखरा हुआ होता है। NA-RID एजुकेशन हब एक केंद्रीकृत मंच प्रदान करता है जहां आप संरचित शिक्षा में संलग्न हो सकते हैं। यह प्लेटफॉर्म विशेष रूप से उन लोगों के लिए उपयोगी है जो मैन्युफैक्चरिंग और प्रक्रिया सुधार क्षेत्रों में अपना करियर बनाना चाहते हैं।"
+      }
     },
     about: {
       hero: "औद्योगिक कार्यबल का सशक्तिकरण",

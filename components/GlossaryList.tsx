@@ -283,6 +283,73 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
     <div className="relative z-10">
       <div className="max-w-[1600px] mx-auto px-2 md:px-4 lg:px-6 py-4 md:py-8">
         
+        {!searchQuery.trim() && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {/* Card 1 */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="relative bg-slate-900/40 border border-white/5 rounded-2xl p-6 md:p-8 flex flex-col items-center text-center group hover:bg-slate-800/50 transition-colors"
+            >
+              <div className="absolute left-[-1px] top-1/2 -translate-y-1/2 w-8 h-24 bg-emerald-500 rounded-r-md flex items-center justify-center">
+                <span className="text-slate-950 font-black text-[10px] tracking-widest uppercase -rotate-90 whitespace-nowrap">Option 01</span>
+              </div>
+              <div className="pl-6">
+                <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center mb-4 mx-auto border border-emerald-500/20 text-emerald-400">
+                  <BookOpen size={20} />
+                </div>
+                <h3 className="text-white font-black text-sm md:text-base tracking-widest uppercase mb-4">Manufacturing Education Hub</h3>
+                <p className="text-slate-400 text-xs md:text-sm leading-relaxed">
+                  NA-RID Education Hub is a modern digital platform that explains the concepts of manufacturing, industrial processes, and operational excellence in a simple and structured way. The main objective of this platform is to make real-world industrial knowledge easily accessible to students, engineers, and professionals.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Card 2 */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="relative bg-slate-900/40 border border-white/5 rounded-2xl p-6 md:p-8 flex flex-col items-center text-center group hover:bg-slate-800/50 transition-colors"
+            >
+              <div className="absolute left-[-1px] top-1/2 -translate-y-1/2 w-8 h-24 bg-cyan-500 rounded-r-md flex items-center justify-center">
+                <span className="text-slate-950 font-black text-[10px] tracking-widest uppercase -rotate-90 whitespace-nowrap">Option 02</span>
+              </div>
+              <div className="pl-6">
+                <div className="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-4 mx-auto border border-cyan-500/20 text-cyan-400">
+                  <Lightbulb size={20} />
+                </div>
+                <h3 className="text-white font-black text-sm md:text-base tracking-widest uppercase mb-4">What You Will Learn</h3>
+                <p className="text-slate-400 text-xs md:text-sm leading-relaxed">
+                  On this website, you will find detailed information about core departments such as Production, Quality, Planning, and Maintenance. Each section explains practical concepts, tools, and methodologies that are used in real industries.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Card 3 */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="relative bg-slate-900/40 border border-white/5 rounded-2xl p-6 md:p-8 flex flex-col items-center text-center group hover:bg-slate-800/50 transition-colors"
+            >
+              <div className="absolute left-[-1px] top-1/2 -translate-y-1/2 w-8 h-24 bg-blue-500 rounded-r-md flex items-center justify-center">
+                <span className="text-slate-950 font-black text-[10px] tracking-widest uppercase -rotate-90 whitespace-nowrap">Option 03</span>
+              </div>
+              <div className="pl-6">
+                <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-4 mx-auto border border-blue-500/20 text-blue-400">
+                  <Target size={20} />
+                </div>
+                <h3 className="text-white font-black text-sm md:text-base tracking-widest uppercase mb-4">Why This Platform</h3>
+                <p className="text-slate-400 text-xs md:text-sm leading-relaxed">
+                  In today's time, industrial knowledge is often scattered. NA-RID Education Hub provides a centralized platform where you can engage in structured learning. This platform is especially useful for those who want to build their career in the manufacturing and process improvement fields.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-4 md:mb-6">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
@@ -375,14 +442,14 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-6 lg:gap-4 xl:gap-8 px-0 md:px-4"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-8 xl:gap-12 px-0 md:px-4"
             >
               {filteredTerms.map((term, index) => {
                 const color = circleColors[index % circleColors.length];
                 const Icon = circleIcons[index % circleIcons.length];
                 
-                // Update connector logic for 5 items per row
-                const getConnectorClassesFor5 = (index: number, total: number) => {
+                // Update connector logic for 4 items per row
+                const getConnectorClassesFor4 = (index: number, total: number) => {
                   if (index === total - 1) return 'hidden'; // Last item never has a connector
                   
                   // Mobile (1 column): hide all connectors
@@ -391,8 +458,8 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                   // Tablet (2 columns): hide on every 2nd item
                   const tabletClass = (index + 1) % 2 === 0 ? 'sm:hidden lg:flex' : '';
                   
-                  // Desktop (5 columns): hide on every 5th item
-                  const desktopClass = (index + 1) % 5 === 0 ? 'lg:hidden' : '';
+                  // Desktop (4 columns): hide on every 4th item
+                  const desktopClass = (index + 1) % 4 === 0 ? 'lg:hidden' : '';
                   
                   return `${mobileClass} ${tabletClass} ${desktopClass}`;
                 };
@@ -400,7 +467,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                 return (
                   <div key={term.id} className="relative flex justify-center items-center w-full">
                     {/* Connector Lines */}
-                    <div className={`absolute top-1/2 -right-4 sm:-right-6 lg:-right-4 xl:-right-8 w-4 sm:w-6 lg:w-4 xl:w-8 h-4 -translate-y-1/2 z-0 flex-col justify-center gap-1.5 ${getConnectorClassesFor5(index, filteredTerms.length)}`}>
+                    <div className={`absolute top-1/2 -right-4 sm:-right-6 lg:-right-4 xl:-right-8 w-4 sm:w-6 lg:w-4 xl:w-8 h-4 -translate-y-1/2 z-0 flex-col justify-center gap-1.5 ${getConnectorClassesFor4(index, filteredTerms.length)}`}>
                       <div className={`w-full h-[3px] md:h-[4px] ${color.line}`}></div>
                       <div className={`w-full h-[3px] md:h-[4px] ${color.line}`}></div>
                     </div>
@@ -413,7 +480,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       whileTap={{ scale: 0.95 }}
                       transition={{ type: "spring", damping: 20, stiffness: 100, delay: index * 0.05 }}
                       onClick={() => onCategorySelect(term)}
-                      className={`relative w-[180px] md:w-[240px] lg:w-full aspect-square rounded-full border-[6px] md:border-[10px] ${color.border} bg-white flex flex-col items-center justify-center p-4 md:p-6 text-center group z-10 shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50`}
+                      className={`relative w-[220px] md:w-[260px] lg:w-full aspect-square rounded-full border-[6px] md:border-[10px] ${color.border} bg-white flex flex-col items-center justify-center p-4 md:p-6 text-center group z-10 shadow-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50`}
                     >
                       {/* Premium Loader Animation Rings */}
                       <div 
@@ -435,12 +502,16 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       <div className="absolute inset-1 border border-dashed border-slate-200 rounded-full pointer-events-none"></div>
 
                       <div className={`mb-2 md:mb-4 ${color.text} transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)_scale(1.1)]`} style={{ perspective: '1000px' }}>
-                        <Icon className="w-12 h-12 md:w-16 md:h-16" strokeWidth={1.5} />
+                        <Icon className="w-10 h-10 md:w-12 md:h-12" strokeWidth={1.5} />
                       </div>
                       
-                      <h3 className="text-slate-900 font-black text-base md:text-xl uppercase tracking-widest mb-0 line-clamp-2 px-2">
+                      <h3 className="text-slate-900 font-black text-sm md:text-base uppercase tracking-widest mb-2 line-clamp-2 px-2 leading-tight">
                         {term.title}
                       </h3>
+                      
+                      <p className="text-slate-500 text-[9px] md:text-[10px] font-medium px-4 line-clamp-3 leading-relaxed">
+                        {term.subItems.join(', ')}
+                      </p>
                     </motion.button>
                   </div>
                 );

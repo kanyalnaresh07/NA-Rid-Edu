@@ -15,19 +15,13 @@ import { PageView, Language, GlossaryTerm } from './types';
 import { TRANSLATIONS, AIRFOCUS_LOGO, GLOSSARY_TERMS } from './constants';
 
 const App: React.FC = () => {
-  const [view, setView] = useState<PageView>(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const viewParam = params.get('view') as PageView;
-      if (viewParam && Object.values(PageView).includes(viewParam)) {
-        return viewParam;
-      }
-    }
-    return PageView.HOME;
-  });
+  const [view, setView] = useState<PageView>(PageView.HOME);
   const [lang, setLang] = useState<Language>(() => {
     const saved = localStorage.getItem('app_lang');
-    return (saved as Language) || 'en';
+    if (saved === 'en' || saved === 'hi') {
+      return saved as Language;
+    }
+    return 'en';
   });
   const [hasSelectedLang, setHasSelectedLang] = useState<boolean>(true);
   const [showLangModal, setShowLangModal] = useState<boolean>(false);
@@ -38,7 +32,7 @@ const App: React.FC = () => {
   const [viewHistory, setViewHistory] = useState<PageView[]>([PageView.HOME]);
   const [showSecurityAlert, setShowSecurityAlert] = useState(false);
 
-  const t = TRANSLATIONS[lang];
+  const t = TRANSLATIONS[lang] || TRANSLATIONS['en'];
 
   useEffect(() => {
     // Prevent right-click
@@ -102,17 +96,15 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Determine initial view from URL, default to HOME
-    const currentUrl = new URL(window.location.href);
-    const viewParam = currentUrl.searchParams.get('view');
-    let initialView = PageView.HOME;
+    // Force the app to always start at HOME on initial load
+    const initialView = PageView.HOME;
     
-    if (viewParam && Object.values(PageView).includes(viewParam as PageView)) {
-      initialView = viewParam as PageView;
+    try {
+      // Replace the history state and URL to ensure we start fresh
+      window.history.replaceState({ view: initialView, isFallback: true }, '', `?view=${initialView}`);
+    } catch (e) {
+      console.warn("History API not available:", e);
     }
-
-    // Force replace the history state on load to clear any stale state from iframe reloads
-    window.history.replaceState({ view: initialView, isFallback: true }, '', `?view=${initialView}`);
     setView(initialView);
 
     const handlePopState = (event: PopStateEvent) => {
@@ -121,7 +113,11 @@ const App: React.FC = () => {
       if (!state || state.isFallback) {
         // Prevent exit by pushing state again and going to HOME
         setView(PageView.HOME);
-        window.history.pushState({ view: PageView.HOME }, '', `?view=${PageView.HOME}`);
+        try {
+          window.history.pushState({ view: PageView.HOME }, '', `?view=${PageView.HOME}`);
+        } catch (e) {
+          console.warn("History API not available:", e);
+        }
         return;
       }
 
@@ -164,7 +160,11 @@ const App: React.FC = () => {
       if (additionalState.subItem) url += `&subItem=${encodeURIComponent(additionalState.subItem)}`;
       if (additionalState.point) url += `&point=${encodeURIComponent(additionalState.point)}`;
       
-      window.history.pushState(newState, '', url);
+      try {
+        window.history.pushState(newState, '', url);
+      } catch (e) {
+        console.warn("History API not available:", e);
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -314,7 +314,7 @@ const App: React.FC = () => {
                       {AIRFOCUS_LOGO}
                   </div>
                   <nav className="flex items-center gap-1.5 md:gap-6 overflow-x-auto no-scrollbar whitespace-nowrap min-w-0 pr-4 h-full">
-                    <button onClick={handleBackHome} className="text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors hover:text-cyan-400">{t.navHome}</button>
+                    <button onClick={handleBackHome} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.HOME ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navHome}</button>
                     <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
                     <button onClick={handleQuizClick} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.QUIZ ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navQuiz}</button>
                     <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
