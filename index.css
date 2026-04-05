@@ -36,6 +36,15 @@ img {
   }
 }
 
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
 /* 3D Cylinder Animation */
 @keyframes spinX {
   0% { transform: perspective(1000px) rotateX(0deg); }

@@ -223,6 +223,11 @@ export const TRANSLATIONS = {
         tag: "OPTION 03",
         title: "WHY THIS PLATFORM",
         desc: "In today's time, industrial knowledge is often scattered. NA-RID Education Hub provides a centralized platform where you can engage in structured learning. This platform is especially useful for those who want to build their career in the manufacturing and process improvement fields."
+      },
+      card4: {
+        tag: "OPTION 04",
+        title: "OUR VISION",
+        desc: "We aim to bridge the gap between theoretical knowledge and practical shop-floor expertise, creating a future where every industrial worker is an empowered expert in their field."
       }
     },
     about: {
@@ -339,6 +344,11 @@ export const TRANSLATIONS = {
         tag: "विकल्प 03",
         title: "यह प्लेटफॉर्म क्यों",
         desc: "आज के समय में, औद्योगिक ज्ञान अक्सर बिखरा हुआ होता है। NA-RID एजुकेशन हब एक केंद्रीकृत मंच प्रदान करता है जहां आप संरचित शिक्षा में संलग्न हो सकते हैं। यह प्लेटफॉर्म विशेष रूप से उन लोगों के लिए उपयोगी है जो मैन्युफैक्चरिंग और प्रक्रिया सुधार क्षेत्रों में अपना करियर बनाना चाहते हैं।"
+      },
+      card4: {
+        tag: "विकल्प 04",
+        title: "हमारा दृष्टिकोण",
+        desc: "हमारा लक्ष्य सैद्धांतिक ज्ञान और व्यावहारिक शॉप-फ्लोर विशेषज्ञता के बीच की दूरी को कम करना है, जिससे एक ऐसा भविष्य बने जहां हर औद्योगिक कार्यकर्ता अपने क्षेत्र में एक सशक्त विशेषज्ञ हो।"
       }
     },
     about: {
