@@ -1,10 +1,12 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, AlertCircle, BookOpen, Lightbulb, Target, Settings, Rocket, BarChart, Puzzle, Megaphone } from 'lucide-react';
+import { Search, AlertCircle, BookOpen, Lightbulb, Target, Settings, Rocket, BarChart, Puzzle, Megaphone, X, Loader2, Sparkles } from 'lucide-react';
 import { getGlossaryTerms } from '../constants';
 import { GlossaryTerm, Language } from '../types';
 import { EmptyState } from './ui/EmptyState';
+import { searchWithAI } from '../services/geminiService';
+import Markdown from 'react-markdown';
 
 interface GlossaryListProps {
   translations: any;
@@ -85,6 +87,9 @@ const HighlightText = ({ text, highlight, className = "" }: { text: string; high
 
 const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCategorySelect }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [aiResponse, setAiResponse] = useState<string | null>(null);
+  const [isAiLoading, setIsAiLoading] = useState(false);
+  const [showAiModal, setShowAiModal] = useState(false);
   const isHi = lang === 'hi';
   
   const allTerms = getGlossaryTerms(lang);
@@ -268,10 +273,19 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
 
   const circleIcons = [Search, Settings, Lightbulb, Rocket, BarChart, Target];
 
-  const handleAISearch = () => {
+  const handleAISearch = async () => {
     if (searchQuery.trim()) {
-      const url = `https://chatgpt.com/?q=${encodeURIComponent(searchQuery)}`;
-      window.open(url, '_blank');
+      setIsAiLoading(true);
+      setShowAiModal(true);
+      try {
+        const response = await searchWithAI(searchQuery, lang);
+        setAiResponse(response || null);
+      } catch (error) {
+        console.error("AI Search failed:", error);
+        setAiResponse(isHi ? "क्षमा करें, AI खोज विफल रही। कृपया पुनः प्रयास करें।" : "Sorry, AI search failed. Please try again.");
+      } finally {
+        setIsAiLoading(false);
+      }
     }
   };
 
@@ -285,8 +299,78 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
     <div className="relative z-10">
       <div className="max-w-[1600px] mx-auto px-2 md:px-4 lg:px-6 py-4 md:py-8">
         
+        {/* AI Search Modal */}
+        <AnimatePresence>
+          {showAiModal && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => !isAiLoading && setShowAiModal(false)}
+                className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
+              />
+              
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                className="relative w-full max-w-2xl bg-slate-900 border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
+              >
+                {/* Header */}
+                <div className="p-6 md:p-8 border-b border-white/5 flex items-center justify-between bg-slate-900/50">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                      <Sparkles size={20} className="animate-pulse" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-wider">AI {isHi ? 'खोज परिणाम' : 'Search Result'}</h3>
+                      <p className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest">{searchQuery}</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => setShowAiModal(false)}
+                    disabled={isAiLoading}
+                    className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-all"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 md:p-8 overflow-y-auto custom-scrollbar flex-grow">
+                  {isAiLoading ? (
+                    <div className="flex flex-col items-center justify-center py-12 gap-4">
+                      <Loader2 size={40} className="text-cyan-500 animate-spin" />
+                      <p className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] animate-pulse">
+                        {isHi ? 'AI जानकारी जुटा रहा है...' : 'AI is gathering information...'}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="prose prose-invert max-w-none">
+                      <div className="text-slate-300 leading-relaxed text-sm md:text-base font-medium space-y-4">
+                        <Markdown>{aiResponse}</Markdown>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Footer */}
+                <div className="p-6 md:p-8 border-t border-white/5 bg-slate-900/50 flex justify-end">
+                  <button 
+                    onClick={() => setShowAiModal(false)}
+                    className="px-8 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-[10px] uppercase tracking-widest border border-white/5 transition-all"
+                  >
+                    {isHi ? 'बंद करें' : 'Close'}
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
         {!searchQuery.trim() && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mb-12 max-w-5xl mx-auto">
             {/* Card 1 - Red/Rose */}
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
@@ -294,21 +378,21 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               transition={{ delay: 0.1 }}
               className="relative group h-full"
             >
-              <div className="absolute -inset-1 bg-rose-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem]"></div>
-              <div className="relative h-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl">
-                <div className="h-4 w-full bg-rose-500 relative">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-10 bg-slate-950 rounded-b-full border-x border-b border-white/10"></div>
+              <div className="absolute -inset-1 bg-rose-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-[2rem]"></div>
+              <div className="relative h-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-[2rem] overflow-hidden flex flex-col shadow-2xl">
+                <div className="h-3 w-full bg-rose-500 relative">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-8 bg-slate-950 rounded-b-full border-x border-b border-white/10"></div>
                 </div>
-                <div className="p-8 md:p-10 pt-12 flex flex-col md:flex-row gap-6 items-start h-full">
-                  <div className="shrink-0 w-20 h-20 rounded-3xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
-                    <Lightbulb size={40} strokeWidth={1.5} />
+                <div className="p-6 md:p-8 pt-10 flex flex-col md:flex-row gap-5 items-start h-full">
+                  <div className="shrink-0 w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                    <Lightbulb size={28} strokeWidth={1.5} />
                   </div>
                   <div className="flex flex-col h-full">
-                    <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight mb-4 text-white group-hover:text-rose-400 transition-colors">{translations.heroCards.card1.title}</h3>
-                    <p className="text-slate-400 text-sm md:text-base leading-relaxed font-medium mb-8">{translations.heroCards.card1.desc}</p>
-                    <div className="mt-auto flex gap-2">
+                    <h3 className="text-lg md:text-xl font-black uppercase tracking-tight mb-3 text-white group-hover:text-rose-400 transition-colors">{translations.heroCards.card1.title}</h3>
+                    <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-medium mb-6">{translations.heroCards.card1.desc}</p>
+                    <div className="mt-auto flex gap-1.5">
                       {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className="w-2 h-2 rounded-full bg-rose-500/30 group-hover:bg-rose-500 transition-all duration-300" style={{ transitionDelay: `${i * 100}ms` }}></div>
+                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-rose-500/30 group-hover:bg-rose-500 transition-all duration-300" style={{ transitionDelay: `${i * 100}ms` }}></div>
                       ))}
                     </div>
                   </div>
@@ -323,21 +407,21 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               transition={{ delay: 0.2 }}
               className="relative group h-full"
             >
-              <div className="absolute -inset-1 bg-blue-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem]"></div>
-              <div className="relative h-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl">
-                <div className="h-4 w-full bg-blue-500 relative">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-10 bg-slate-950 rounded-b-full border-x border-b border-white/10"></div>
+              <div className="absolute -inset-1 bg-blue-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-[2rem]"></div>
+              <div className="relative h-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-[2rem] overflow-hidden flex flex-col shadow-2xl">
+                <div className="h-3 w-full bg-blue-500 relative">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-8 bg-slate-950 rounded-b-full border-x border-b border-white/10"></div>
                 </div>
-                <div className="p-8 md:p-10 pt-12 flex flex-col md:flex-row gap-6 items-start h-full">
-                  <div className="shrink-0 w-20 h-20 rounded-3xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
-                    <Puzzle size={40} strokeWidth={1.5} />
+                <div className="p-6 md:p-8 pt-10 flex flex-col md:flex-row gap-5 items-start h-full">
+                  <div className="shrink-0 w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                    <Puzzle size={28} strokeWidth={1.5} />
                   </div>
                   <div className="flex flex-col h-full">
-                    <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight mb-4 text-white group-hover:text-blue-400 transition-colors">{translations.heroCards.card2.title}</h3>
-                    <p className="text-slate-400 text-sm md:text-base leading-relaxed font-medium mb-8">{translations.heroCards.card2.desc}</p>
-                    <div className="mt-auto flex gap-2">
+                    <h3 className="text-lg md:text-xl font-black uppercase tracking-tight mb-3 text-white group-hover:text-blue-400 transition-colors">{translations.heroCards.card2.title}</h3>
+                    <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-medium mb-6">{translations.heroCards.card2.desc}</p>
+                    <div className="mt-auto flex gap-1.5">
                       {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className="w-2 h-2 rounded-full bg-blue-500/30 group-hover:bg-blue-500 transition-all duration-300" style={{ transitionDelay: `${i * 100}ms` }}></div>
+                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-500/30 group-hover:bg-blue-500 transition-all duration-300" style={{ transitionDelay: `${i * 100}ms` }}></div>
                       ))}
                     </div>
                   </div>
@@ -352,21 +436,21 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               transition={{ delay: 0.3 }}
               className="relative group h-full"
             >
-              <div className="absolute -inset-1 bg-amber-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem]"></div>
-              <div className="relative h-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl">
-                <div className="h-4 w-full bg-amber-500 relative">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-10 bg-slate-950 rounded-b-full border-x border-b border-white/10"></div>
+              <div className="absolute -inset-1 bg-amber-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-[2rem]"></div>
+              <div className="relative h-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-[2rem] overflow-hidden flex flex-col shadow-2xl">
+                <div className="h-3 w-full bg-amber-500 relative">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-8 bg-slate-950 rounded-b-full border-x border-b border-white/10"></div>
                 </div>
-                <div className="p-8 md:p-10 pt-12 flex flex-col md:flex-row gap-6 items-start h-full">
-                  <div className="shrink-0 w-20 h-20 rounded-3xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
-                    <Megaphone size={40} strokeWidth={1.5} />
+                <div className="p-6 md:p-8 pt-10 flex flex-col md:flex-row gap-5 items-start h-full">
+                  <div className="shrink-0 w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                    <Megaphone size={28} strokeWidth={1.5} />
                   </div>
                   <div className="flex flex-col h-full">
-                    <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight mb-4 text-white group-hover:text-amber-400 transition-colors">{translations.heroCards.card3.title}</h3>
-                    <p className="text-slate-400 text-sm md:text-base leading-relaxed font-medium mb-8">{translations.heroCards.card3.desc}</p>
-                    <div className="mt-auto flex gap-2">
+                    <h3 className="text-lg md:text-xl font-black uppercase tracking-tight mb-3 text-white group-hover:text-amber-400 transition-colors">{translations.heroCards.card3.title}</h3>
+                    <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-medium mb-6">{translations.heroCards.card3.desc}</p>
+                    <div className="mt-auto flex gap-1.5">
                       {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className="w-2 h-2 rounded-full bg-amber-500/30 group-hover:bg-amber-500 transition-all duration-300" style={{ transitionDelay: `${i * 100}ms` }}></div>
+                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-amber-500/30 group-hover:bg-amber-500 transition-all duration-300" style={{ transitionDelay: `${i * 100}ms` }}></div>
                       ))}
                     </div>
                   </div>
@@ -421,24 +505,38 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
 
             <motion.button
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              animate={{ 
+                opacity: (searchQuery.trim() && searchResults.length === 0) ? 0 : 1, 
+                scale: (searchQuery.trim() && searchResults.length === 0) ? 0.9 : 1,
+                display: (searchQuery.trim() && searchResults.length === 0) ? 'none' : 'flex'
+              }}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleAISearch}
               disabled={!searchQuery.trim()}
               className={`whitespace-nowrap px-8 py-4 rounded-2xl font-black text-xs tracking-[0.2em] uppercase transition-all flex items-center gap-3 shadow-2xl relative overflow-hidden group/btn ${
                 searchQuery.trim() 
-                  ? 'bg-slate-900 text-white border border-cyan-500/50' 
+                  ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white border border-white/20' 
                   : 'bg-slate-800 text-slate-500 border border-white/5 cursor-not-allowed'
               }`}
             >
               {searchQuery.trim() && (
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/20 to-blue-600/20 opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>
+                <>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-400 opacity-0 group-hover/btn:opacity-20 transition-opacity"></div>
+                  <motion.div 
+                    animate={{ 
+                      opacity: [0.3, 0.6, 0.3],
+                      scale: [1, 1.1, 1]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="absolute inset-0 bg-cyan-400/10 blur-xl"
+                  />
+                </>
               )}
-              <Rocket size={16} className={searchQuery.trim() ? 'text-cyan-400 animate-bounce' : ''} />
+              <Rocket size={16} className={searchQuery.trim() ? 'text-white animate-bounce' : ''} />
               <span className="relative z-10">{translations.searchWithAI}</span>
               {searchQuery.trim() && (
-                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500"></div>
+                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white/30"></div>
               )}
             </motion.button>
           </div>
@@ -508,15 +606,23 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                 className="py-12 md:py-20"
               >
                 <EmptyState 
-                  icon={Search}
+                  icon={Rocket}
                   color="blue"
                   title={isHi ? 'कोई परिणाम नहीं मिला' : 'No Results Found'}
                   description={isHi 
-                    ? `"${searchQuery}" के लिए कोई शब्द नहीं मिला। कृपया कुछ और खोजें।` 
-                    : `We couldn't find any terms matching "${searchQuery}". Try a different keyword.`}
-                  actionLabel={isHi ? 'खोज साफ़ करें' : 'Clear Search'}
-                  onAction={() => setSearchQuery('')}
+                    ? `"${searchQuery}" के लिए कोई शब्द नहीं मिला। क्या आप AI के साथ खोजना चाहते हैं?` 
+                    : `We couldn't find any terms matching "${searchQuery}". Would you like to search with AI instead?`}
+                  actionLabel={isHi ? 'AI के साथ खोजें' : 'Search with AI'}
+                  onAction={handleAISearch}
                 />
+                <div className="mt-4 text-center">
+                  <button 
+                    onClick={() => setSearchQuery('')}
+                    className="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-widest hover:text-white transition-colors"
+                  >
+                    {isHi ? 'खोज साफ़ करें' : 'Clear Search'}
+                  </button>
+                </div>
               </motion.div>
             )
           ) : (

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Search, Settings, Lightbulb, Rocket, BarChart, Target, Factory, ShieldCheck, Wrench, CalendarClock, Box, Truck, Users, DollarSign, Monitor, ShieldAlert, Info } from 'lucide-react';
 import { GlossaryTerm, Language, DepartmentDetail, PageView } from '../types';
 import { getTermDefinition } from '../services/geminiService';
+import Markdown from 'react-markdown';
 import T5SDetail from './T5SDetail';
 import PPEDetail from './PPEDetail';
 import WIDetail from './WIDetail';
@@ -369,9 +370,9 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                     <div className="h-1 w-24 md:h-1.5 md:w-32 bg-gradient-to-r from-cyan-500 to-transparent mb-8 md:mb-12 rounded-full"></div>
                     
                     <div className="bg-white/5 p-6 md:p-12 rounded-2xl md:rounded-[32px] border border-white/10 shadow-inner">
-                       <p className="text-slate-100 text-lg md:text-2xl leading-relaxed font-bold">
-                          "{pointData.definition}"
-                       </p>
+                       <div className="text-slate-100 text-lg md:text-2xl leading-relaxed font-bold prose prose-invert max-w-none">
+                          <Markdown>{pointData.definition}</Markdown>
+                       </div>
                     </div>
                   </div>
                </div>
