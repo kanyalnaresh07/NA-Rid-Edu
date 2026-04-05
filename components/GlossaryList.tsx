@@ -286,7 +286,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
       <div className="max-w-[1600px] mx-auto px-2 md:px-4 lg:px-6 py-4 md:py-8">
         
         {!searchQuery.trim() && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
             {/* Card 1 - Red/Rose */}
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
@@ -367,35 +367,6 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                     <div className="mt-auto flex gap-2">
                       {[1, 2, 3, 4].map((i) => (
                         <div key={i} className="w-2 h-2 rounded-full bg-amber-500/30 group-hover:bg-amber-500 transition-all duration-300" style={{ transitionDelay: `${i * 100}ms` }}></div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Card 4 - Emerald/Green */}
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
-              className="relative group h-full"
-            >
-              <div className="absolute -inset-1 bg-emerald-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem]"></div>
-              <div className="relative h-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl">
-                <div className="h-4 w-full bg-emerald-500 relative">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-10 bg-slate-950 rounded-b-full border-x border-b border-white/10"></div>
-                </div>
-                <div className="p-8 md:p-10 pt-12 flex flex-col md:flex-row gap-6 items-start h-full">
-                  <div className="shrink-0 w-20 h-20 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
-                    <Target size={40} strokeWidth={1.5} />
-                  </div>
-                  <div className="flex flex-col h-full">
-                    <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight mb-4 text-white group-hover:text-emerald-400 transition-colors">{translations.heroCards.card4.title}</h3>
-                    <p className="text-slate-400 text-sm md:text-base leading-relaxed font-medium mb-8">{translations.heroCards.card4.desc}</p>
-                    <div className="mt-auto flex gap-2">
-                      {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className="w-2 h-2 rounded-full bg-emerald-500/30 group-hover:bg-emerald-500 transition-all duration-300" style={{ transitionDelay: `${i * 100}ms` }}></div>
                       ))}
                     </div>
                   </div>
@@ -554,7 +525,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-16 md:gap-20 lg:gap-24 px-4 md:px-8 max-w-[1500px] mx-auto"
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-20 md:gap-24 lg:gap-32 px-4 md:px-8 max-w-[1700px] mx-auto"
             >
               {filteredTerms.map((term, index) => {
                 const color = circleColors[index % circleColors.length];
@@ -604,19 +575,19 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       whileTap={{ scale: 0.95 }}
                       transition={{ type: "spring", damping: 20, stiffness: 100, delay: index * 0.05 }}
                       onClick={() => onCategorySelect(term)}
-                      className={`relative w-[300px] sm:w-[340px] md:w-[360px] lg:w-[400px] aspect-square rounded-full border-[12px] md:border-[16px] ${color.border} bg-white flex flex-col items-center justify-center p-10 md:p-12 text-center group z-10 shadow-[0_30px_60px_rgba(0,0,0,0.4)] focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50 overflow-visible`}
+                      className={`relative w-[340px] sm:w-[380px] md:w-[420px] lg:w-[460px] aspect-square rounded-full border-[14px] md:border-[20px] ${color.border} bg-white flex flex-col items-center justify-center p-12 md:p-16 text-center group z-10 shadow-[0_30px_60px_rgba(0,0,0,0.4)] focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50 overflow-visible`}
                     >
                       {/* Premium Loader Animation Rings */}
                       <div 
-                        className={`absolute inset-[-15px] md:inset-[-22px] rounded-full border-[4px] md:border-[6px] border-transparent ${color.text} opacity-60 animate-[spin_4s_linear_infinite] pointer-events-none`}
+                        className={`absolute inset-[-18px] md:inset-[-26px] rounded-full border-[4px] md:border-[6px] border-transparent ${color.text} opacity-60 animate-[spin_4s_linear_infinite] pointer-events-none`}
                         style={{ borderTopColor: 'currentColor', borderRightColor: 'currentColor' }}
                       ></div>
                       <div 
-                        className={`absolute inset-[-22px] md:inset-[-32px] rounded-full border-[2px] border-dashed ${color.text} opacity-30 animate-[spin_10s_linear_infinite_reverse] pointer-events-none`}
+                        className={`absolute inset-[-26px] md:inset-[-38px] rounded-full border-[2px] border-dashed ${color.text} opacity-30 animate-[spin_10s_linear_infinite_reverse] pointer-events-none`}
                         style={{ borderColor: 'currentColor' }}
                       ></div>
                       <div 
-                        className={`absolute inset-[-30px] md:inset-[-42px] rounded-full border-[3px] border-transparent ${color.text} opacity-40 animate-[spin_6s_linear_infinite] pointer-events-none`}
+                        className={`absolute inset-[-36px] md:inset-[-50px] rounded-full border-[3px] border-transparent ${color.text} opacity-40 animate-[spin_6s_linear_infinite] pointer-events-none`}
                         style={{ borderBottomColor: 'currentColor', borderLeftColor: 'currentColor' }}
                       >
                         <div className={`absolute bottom-[14%] right-[14%] w-3 h-3 md:w-4 md:h-4 rounded-full ${color.line} shadow-[0_0_15px_currentColor] animate-pulse`}></div>
@@ -626,16 +597,16 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       <div className="absolute inset-4 border-2 border-dashed border-slate-100 rounded-full pointer-events-none"></div>
 
                       <div className={`mb-6 md:mb-8 ${color.text} transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)_scale(1.2)]`} style={{ perspective: '1000px' }}>
-                        <Icon className="w-16 h-16 md:w-20 md:h-20" strokeWidth={1} />
+                        <Icon className="w-20 h-20 md:w-24 md:h-24" strokeWidth={1} />
                       </div>
                       
-                      <h3 className="text-slate-900 font-black text-xl md:text-3xl uppercase tracking-widest mb-4 line-clamp-2 px-6 leading-tight group-hover:text-cyan-600 transition-colors">
+                      <h3 className="text-slate-900 font-black text-2xl md:text-4xl uppercase tracking-widest mb-4 line-clamp-2 px-6 leading-tight group-hover:text-cyan-600 transition-colors">
                         {term.title}
                       </h3>
                       
                       <div className="w-16 h-1.5 bg-slate-200 mb-6 rounded-full group-hover:w-24 group-hover:bg-cyan-500 transition-all duration-500"></div>
 
-                      <p className="text-slate-500 text-[11px] md:text-[13px] font-bold px-6 line-clamp-3 leading-relaxed tracking-wide">
+                      <p className="text-slate-500 text-[13px] md:text-[15px] font-bold px-6 line-clamp-3 leading-relaxed tracking-wide">
                         {term.subItems.join(', ')}
                       </p>
                     </motion.button>
