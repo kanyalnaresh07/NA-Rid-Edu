@@ -12,8 +12,9 @@ const NetworkBackground: React.FC = () => {
 
     let animationFrameId: number;
     let particles: Particle[] = [];
-    const particleCount = Math.min(Math.floor(window.innerWidth / 15), 100);
-    const connectionDistance = 150;
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 20 : Math.min(Math.floor(window.innerWidth / 20), 60);
+    const connectionDistance = isMobile ? 100 : 150;
     const mouse = { x: -1000, y: -1000 };
 
     class Particle {
@@ -26,8 +27,8 @@ const NetworkBackground: React.FC = () => {
       constructor() {
         this.x = Math.random() * canvas!.width;
         this.y = Math.random() * canvas!.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
         this.radius = Math.random() * 1.5 + 1;
       }
 
@@ -44,10 +45,7 @@ const NetworkBackground: React.FC = () => {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = '#00eaff';
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#00eaff';
         ctx.fill();
-        ctx.shadowBlur = 0;
       }
     }
 

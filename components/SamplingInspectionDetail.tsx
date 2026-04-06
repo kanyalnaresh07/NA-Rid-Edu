@@ -277,6 +277,7 @@ const SamplingInspectionDetail: React.FC<SamplingInspectionDetailProps> = ({ onB
                         src="https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/www/public/placeholder.svg" 
                         alt="AQL MIL STD 105D Plan Chart" 
                         className="w-full h-full object-contain opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 pointer-events-none"
+                        loading="lazy"
                      />
                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/40 backdrop-blur-sm group-hover:backdrop-blur-none transition-all">
                         <span className="text-white font-black text-xl uppercase italic tracking-tighter drop-shadow-xl">Plan Reference Chart</span>

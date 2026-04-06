@@ -5,7 +5,8 @@ const apiKey = process.env.GEMINI_API_KEY;
 
 export const searchWithAI = async (query: string, lang: Language = 'en') => {
   if (!apiKey) {
-    throw new Error("Gemini API key is not configured.");
+    console.error("GEMINI_API_KEY is missing from environment variables.");
+    throw new Error("Gemini API key is not configured. Please set GEMINI_API_KEY in your environment.");
   }
   const ai = new GoogleGenAI({ apiKey });
 
@@ -15,8 +16,8 @@ export const searchWithAI = async (query: string, lang: Language = 'en') => {
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: query,
+      model: "gemini-flash-latest",
+      contents: [{ parts: [{ text: query }] }],
       config: {
         systemInstruction,
         temperature: 0.7,
@@ -26,15 +27,19 @@ export const searchWithAI = async (query: string, lang: Language = 'en') => {
     });
 
     return response.text;
-  } catch (error) {
-    console.error("AI Search Error:", error);
+  } catch (error: any) {
+    console.error("AI Search Error Details:", error);
+    if (error.message?.includes("API_KEY_INVALID")) {
+      throw new Error("Invalid API Key. Please check your GEMINI_API_KEY.");
+    }
     throw error;
   }
 };
 
 export const getTermDefinition = async (term: string, lang: Language = 'en') => {
   if (!apiKey) {
-    throw new Error("Gemini API key is not configured.");
+    console.error("GEMINI_API_KEY is missing from environment variables.");
+    throw new Error("Gemini API key is not configured. Please set GEMINI_API_KEY in your environment.");
   }
   const ai = new GoogleGenAI({ apiKey });
   
@@ -42,8 +47,8 @@ export const getTermDefinition = async (term: string, lang: Language = 'en') => 
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `Explain the technical term "${term}" ${languagePrompt} specifically in the context of a Manufacturing hub and industrial production. Focus on efficiency, quality control, or process optimization where relevant. Keep it professional and concise, like a glossary entry. Return the response in ${lang === 'hi' ? 'Hindi' : 'English'}.`,
+      model: "gemini-flash-latest",
+      contents: [{ parts: [{ text: `Explain the technical term "${term}" ${languagePrompt} specifically in the context of a Manufacturing hub and industrial production. Focus on efficiency, quality control, or process optimization where relevant. Keep it professional and concise, like a glossary entry. Return the response in ${lang === 'hi' ? 'Hindi' : 'English'}.` }] }],
       config: {
         responseMimeType: "application/json",
         responseSchema: {
@@ -62,8 +67,11 @@ export const getTermDefinition = async (term: string, lang: Language = 'en') => 
 
     const result = JSON.parse(response.text || "{}");
     return result;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error fetching definition:", error);
+    if (error.message?.includes("API_KEY_INVALID")) {
+      throw new Error("Invalid API Key. Please check your GEMINI_API_KEY.");
+    }
     throw error;
   }
 };

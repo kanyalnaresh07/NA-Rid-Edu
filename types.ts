@@ -9,7 +9,9 @@ export enum PageView {
   SIGNUP = 'signup',
   DASHBOARD = 'dashboard',
   CONTACT = 'contact',
-  PRIVACY = 'privacy'
+  PRIVACY = 'privacy',
+  VIDEOS = 'videos',
+  AI_HUB = 'ai_hub'
 }
 
 export type Language = 'en' | 'hi';

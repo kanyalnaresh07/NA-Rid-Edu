@@ -1,18 +1,22 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Hero from './components/HeroSection';
-import GlossaryList from './components/GlossaryList';
-import SubCategoryList from './components/SubCategoryList';
-import About from './components/About';
-import Quiz from './components/Quiz';
-import Photos from './components/Photos';
-import Contact from './components/Contact';
-import PrivacyPolicy from './components/PrivacyPolicy';
 import LanguageModal from './components/LanguageModal';
-import NetworkBackground from './components/NetworkBackground';
+import LoadingSkeleton from './components/LoadingSkeleton';
 import { PageView, Language, GlossaryTerm } from './types';
 import { TRANSLATIONS, AIRFOCUS_LOGO, GLOSSARY_TERMS } from './constants';
+
+const NetworkBackground = lazy(() => import('./components/NetworkBackground'));
+const GlossaryList = lazy(() => import('./components/GlossaryList'));
+const SubCategoryList = lazy(() => import('./components/SubCategoryList'));
+const About = lazy(() => import('./components/About'));
+const Quiz = lazy(() => import('./components/Quiz'));
+const Photos = lazy(() => import('./components/Photos'));
+const Videos = lazy(() => import('./components/Videos'));
+const AIHub = lazy(() => import('./components/AIHub'));
+const Contact = lazy(() => import('./components/Contact'));
+const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
 
 const App: React.FC = () => {
   const [view, setView] = useState<PageView>(PageView.HOME);
@@ -238,6 +242,14 @@ const App: React.FC = () => {
     navigateWithLangCheck(PageView.PHOTOS);
   };
 
+  const handleVideosClick = () => {
+    navigateWithLangCheck(PageView.VIDEOS);
+  };
+
+  const handleAiHubClick = () => {
+    navigateWithLangCheck(PageView.AI_HUB);
+  };
+
   const handleContactClick = () => {
     navigateWithLangCheck(PageView.CONTACT);
   };
@@ -271,7 +283,9 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#020617] relative overflow-x-hidden">
-      <NetworkBackground />
+      <Suspense fallback={null}>
+        {window.innerWidth >= 768 && <NetworkBackground />}
+      </Suspense>
 
       <div className="relative z-10">
         <LanguageModal isOpen={showLangModal} onSelect={handleLanguageSelect} />
@@ -332,6 +346,22 @@ const App: React.FC = () => {
                     <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
                     <button onClick={handlePhotosClick} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.PHOTOS ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navPhotos}</button>
                     <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
+                    <button onClick={handleVideosClick} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.VIDEOS ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navVideos}</button>
+                    <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
+                    <button 
+                      onClick={handleAiHubClick} 
+                      className={`relative px-2 py-1 md:px-3 md:py-1.5 rounded-md text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-all overflow-hidden group ${view === PageView.AI_HUB ? 'text-white' : 'text-indigo-200 hover:text-white'}`}
+                    >
+                      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 opacity-20 group-hover:opacity-40 transition-opacity rounded-md"></span>
+                      <span className="absolute inset-0 w-full h-full border border-indigo-500/50 rounded-md"></span>
+                      <span className="relative flex items-center gap-1.5">
+                        <svg className="w-3 h-3 md:w-4 md:h-4 text-cyan-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        {t.navAiHub}
+                      </span>
+                    </button>
+                    <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
                     <button onClick={handleAboutClick} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.ABOUT ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navAbout}</button>
                     <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
                     <button onClick={handleContactClick} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.CONTACT ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navContact}</button>
@@ -344,8 +374,9 @@ const App: React.FC = () => {
               </header>
 
               <main className="flex-grow">
-                <AnimatePresence mode="wait">
-                  {view === PageView.GLOSSARY && (
+                <Suspense fallback={<LoadingSkeleton />}>
+                  <AnimatePresence mode="wait">
+                    {view === PageView.GLOSSARY && (
                     <motion.div
                       key="glossary-list"
                       initial={{ opacity: 0, y: 20 }}
@@ -420,6 +451,28 @@ const App: React.FC = () => {
                       <Photos translations={t} lang={lang} />
                     </motion.div>
                   )}
+                  {view === PageView.VIDEOS && (
+                    <motion.div
+                      key="videos"
+                      initial={{ opacity: 0, filter: "blur(10px)" }}
+                      animate={{ opacity: 1, filter: "blur(0px)" }}
+                      exit={{ opacity: 0, filter: "blur(10px)" }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <Videos translations={t} lang={lang} />
+                    </motion.div>
+                  )}
+                  {view === PageView.AI_HUB && (
+                    <motion.div
+                      key="ai_hub"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 1.05 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <AIHub translations={t} lang={lang} />
+                    </motion.div>
+                  )}
                   {view === PageView.CONTACT && (
                     <motion.div
                       key="contact"
@@ -443,6 +496,7 @@ const App: React.FC = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
+                </Suspense>
               </main>
 
               <footer className="bg-slate-950 text-white py-12 px-6 border-t border-cyan-500/5 backdrop-blur-md">

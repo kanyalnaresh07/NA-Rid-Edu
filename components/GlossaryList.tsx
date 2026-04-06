@@ -91,7 +91,8 @@ const normalizeQuery = (query: string): string => {
   const stopWords = [
     'kya', 'hai', 'kaise', 'kab', 'kyun', 'kahan', 'kis', 'ko', 'ka', 'ki', 'ke', 'batao', 'dikhao', 'samjhao',
     'what', 'is', 'how', 'why', 'where', 'when', 'which', 'who', 'whom', 'whose',
-    'define', 'meaning', 'about', 'of', 'the', 'a', 'an', 'in', 'on', 'at', 'to', 'for', 'tell', 'me', 'show', 'explain'
+    'define', 'meaning', 'about', 'of', 'the', 'a', 'an', 'in', 'on', 'at', 'to', 'for', 'tell', 'me', 'show', 'explain',
+    'hota', 'hoti', 'hote', 'tha', 'thi', 'the', 'karo', 'karke', 'diye', 'gaye', 'gaya', 'gayi'
   ];
   
   let cleaned = query.toLowerCase().trim();
@@ -323,7 +324,10 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleAISearch();
+      // Only trigger AI search on Enter if there are NO local results
+      if (searchQuery.trim() && searchResults.length === 0) {
+        handleAISearch();
+      }
     }
   };
 

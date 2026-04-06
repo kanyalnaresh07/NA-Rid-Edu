@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { AIRFOCUS_LOGO } from '../constants';
 import { Language } from '../types';
 import { ChevronRight, Target, Lightbulb, CheckCircle2, Wrench, Sparkles } from 'lucide-react';
+import VantaBackground from './VantaBackground';
 
 interface HeroProps {
   title: string;
@@ -34,22 +35,10 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
   const words = (title || "").split(' ');
   const isHi = lang === 'hi';
 
-  const letterVariants = {
-    initial: { opacity: 0, y: 50, rotateX: -90 },
-    animate: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      rotateX: 0,
-      transition: {
-        delay: i * 0.02,
-        ease: "easeOut" as any
-      }
-    })
-  };
-
   return (
-    <div className="relative w-full min-h-screen overflow-x-hidden flex flex-col bg-transparent">
-      {/* Decorative vertical lines */}
+    <VantaBackground>
+      <div className="relative w-full min-h-screen overflow-x-hidden flex flex-col bg-transparent">
+        {/* Decorative vertical lines */}
       <div className="hidden md:block absolute top-1/2 -translate-y-1/2 right-4 md:right-12 space-y-4 md:space-y-8 z-20 pointer-events-none">
         {[...Array(3)].map((_, i) => (
           <motion.div 
@@ -113,165 +102,129 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
       <motion.div 
         className="flex-grow flex flex-col justify-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 z-20 py-8 md:py-16 w-full max-w-[100vw]"
       >
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 w-full max-w-7xl mx-auto">
           
-          {/* Title Area */}
-          <div className="flex flex-col gap-5 w-full mb-8 md:mb-12">
-              <div className="relative">
-                {/* Decorative background glow for title */}
-                <div className="absolute -left-10 -top-10 md:-left-20 md:-top-20 w-40 h-40 md:w-80 md:h-80 bg-cyan-500/10 blur-[80px] md:blur-[120px] rounded-full pointer-events-none animate-pulse"></div>
-                
-                <h1 className="text-[clamp(2.2rem,5.5vw,5.5rem)] xl:text-[clamp(3rem,6.5vw,7rem)] font-black text-white leading-[0.9] tracking-tighter uppercase drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] relative z-10 break-words">
-                  {words.map((word, wordIndex) => (
-                    <span key={wordIndex} className={`inline-block whitespace-nowrap ${wordIndex >= 1 ? "text-cyan-500" : ""}`}>
-                      {lang === 'hi' ? (
-                        <motion.span
-                          custom={wordIndex * 10}
-                          variants={letterVariants as any}
-                          initial="initial"
-                          animate="animate"
-                          className="inline-block relative"
-                        >
-                          {word}
-                        </motion.span>
-                      ) : (
-                        word.split('').map((char, charIndex) => (
-                          <motion.span
-                            key={charIndex}
-                            custom={wordIndex * 10 + charIndex}
-                            variants={letterVariants as any}
-                            initial="initial"
-                            animate="animate"
-                            className="inline-block relative"
-                          >
-                            {char}
-                          </motion.span>
-                        ))
-                      )}
-                      <span className="inline-block">&nbsp;</span>
-                    </span>
-                  ))}
-                </h1>
+          {/* Left Column */}
+          <div className="flex flex-col gap-6 w-full lg:w-[55%] xl:w-1/2 z-10">
+            {/* Badge */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 border border-cyan-500/30 backdrop-blur-sm w-fit"
+            >
+              <div className="text-cyan-400">
+                <Target size={16} />
               </div>
-              
-              <motion.div 
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: '100%', opacity: 1 }}
-                transition={{ duration: 1.2, delay: 0.8, ease: "circOut" }}
-                className="flex items-center gap-0 max-w-full"
+              <span className="text-white font-bold text-xs tracking-widest uppercase">
+                Manufacturing <span className="text-cyan-400">Hub</span>
+              </span>
+            </motion.div>
+
+            {/* Title */}
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight"
+            >
+              Future-ready<br />
+              Manufacturing Ecosystem
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-slate-300 text-lg md:text-xl max-w-2xl leading-relaxed"
+            >
+              Empowering the next generation of smart, sustainable, and globally competitive manufacturing.
+            </motion.p>
+
+            {/* Buttons */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-wrap items-center gap-4 mt-4"
+            >
+              <button 
+                onClick={onGlossaryClick}
+                className="group relative px-8 py-4 bg-cyan-500/10 border border-cyan-400 rounded-xl text-white font-bold text-sm tracking-wide overflow-hidden shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] transition-all"
               >
-                  <div className="h-1 md:h-2.5 w-16 md:w-32 bg-cyan-500 rounded-full shrink-0"></div>
-                  <div className="h-[1px] w-full max-w-[12rem] md:max-w-md bg-cyan-500/20"></div>
-              </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <span className="relative z-10 flex items-center gap-2">
+                  Explore Hub
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </button>
+
+              <button 
+                onClick={onAboutClick}
+                className="group px-8 py-4 bg-transparent border border-white/20 rounded-xl text-slate-300 hover:text-white hover:border-white/40 font-bold text-sm tracking-wide transition-all flex items-center gap-2"
+              >
+                Learn More
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </motion.div>
           </div>
 
-          {/* Description and Buttons Row */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 md:gap-12 w-full">
+          {/* Right Column (Card) */}
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="w-full lg:w-[45%] xl:w-[40%] z-10"
+          >
+            <div className="relative bg-slate-900/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col">
               
-              {/* Description Box - Premium Merged Card */}
-              <motion.div 
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 1.2 }}
-                className="w-full lg:max-w-2xl xl:max-w-3xl relative group pb-6 md:pb-8 pt-2"
-              >
-                {/* Colored Tray Background */}
-                <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-cyan-950/80 border border-cyan-500/20 rounded-b-3xl rounded-t-xl z-0 transition-transform duration-300 group-hover:translate-y-2">
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 h-8 md:h-10 bg-cyan-900 rounded-b-xl flex items-center justify-center shadow-lg border border-cyan-500/30">
-                    <span className="text-cyan-400 font-black text-xs md:text-sm tracking-widest uppercase">Overview</span>
+              {/* Top Section: Manufacturing Hub */}
+              <div className="p-8 pb-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="text-amber-400 bg-amber-500/10 p-2.5 rounded-full border border-amber-500/20">
+                    <Target className="w-6 h-6" strokeWidth={1.5} />
                   </div>
+                  <h3 className="text-white font-bold text-sm tracking-widest uppercase">
+                    Manufacturing <span className="text-cyan-400">Hub</span>
+                  </h3>
                 </div>
-                
-                {/* Dark Card */}
-                <div className="relative bg-slate-900/80 backdrop-blur-xl rounded-2xl p-6 md:p-8 shadow-[0_10px_40px_rgba(0,0,0,0.5)] flex flex-col sm:flex-row gap-8 md:gap-10 z-10 mx-2 md:mx-4 mb-6 md:mb-8 border border-white/10 transition-transform duration-300 group-hover:-translate-y-2">
-                  
-                  {/* Left: Manufacturing Hub */}
-                  <div className="flex-1 flex flex-col items-center text-center sm:border-r border-white/10 sm:pr-8 md:pr-10 pb-8 sm:pb-0 border-b sm:border-b-0">
-                    <div className="mb-3 md:mb-4 text-amber-400 bg-amber-500/10 p-3 rounded-full border border-amber-500/20">
-                      <Target className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
-                    </div>
-                    <h3 className="text-white font-black text-base md:text-lg tracking-widest uppercase mb-3 md:mb-4">Manufacturing Hub</h3>
-                    <p className="text-slate-300 text-sm md:text-base leading-relaxed font-medium">
-                      A manufacturing hub is a centralized industrial ecosystem where production, supply chain, skilled workforce, and infrastructure come together to enable efficient, large-scale, and cost-effective manufacturing.
-                    </p>
-                  </div>
-
-                  {/* Right: Vision */}
-                  <div className="flex-1 flex flex-col items-center text-center sm:pl-2 md:pl-0">
-                    <div className="mb-3 md:mb-4 text-blue-400 bg-blue-500/10 p-3 rounded-full border border-blue-500/20">
-                      <Lightbulb className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
-                    </div>
-                    <h3 className="text-white font-black text-base md:text-lg tracking-widest uppercase mb-3 md:mb-4">Vision</h3>
-                    <p className="text-slate-300 text-sm md:text-base leading-relaxed font-medium">
-                      Build a smart, sustainable, and globally competitive manufacturing learning systems that drives innovation, creates opportunity, and delivers skilled manpower with high quality knowledge.
-                    </p>
-                  </div>
-
-                </div>
-              </motion.div>
-
-              {/* Buttons */}
-              <div className="flex flex-col sm:flex-row lg:flex-col gap-4 md:gap-6 items-stretch w-full lg:w-auto shrink-0">
-                <motion.button 
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.5, delay: 1.5 }}
-                  onClick={onGlossaryClick}
-                  className="group relative overflow-hidden py-5 px-6 md:py-8 md:px-12 text-white font-black text-xl md:text-3xl xl:text-4xl leading-none uppercase tracking-[0.2em] transition-all duration-500 flex items-center gap-3 md:gap-4 rounded-xl md:rounded-2xl w-full lg:w-auto justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
-                >
-                  {/* Animated Border Background */}
-                  <div className="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2">
-                    <div className="w-full h-full animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_50%,#06b6d4_100%)]"></div>
-                  </div>
-                  
-                  {/* Inner Background to cover the middle */}
-                  <div className="absolute inset-[2px] bg-slate-950 rounded-[calc(0.75rem-2px)] md:rounded-[calc(1rem-2px)] z-0 transition-colors duration-500 group-hover:bg-slate-900"></div>
-
-                  {/* Hover Gradient Overlay */}
-                  <div className="absolute inset-[2px] bg-gradient-to-r from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[calc(0.75rem-2px)] md:rounded-[calc(1rem-2px)] z-0"></div>
-                  
-                  <span className="relative z-10 flex items-center gap-3 md:gap-4 whitespace-nowrap">
-                    <div className="relative animate-spin-x flex items-center justify-center h-[1.2em]">
-                      <span className="block backface-hidden" style={{ transform: 'rotateX(0deg) translateZ(0.6em)' }}>{translations.discover}</span>
-                      <span className="absolute inset-0 flex items-center justify-center backface-hidden" style={{ transform: 'rotateX(90deg) translateZ(0.6em)' }}>{translations.discover}</span>
-                      <span className="absolute inset-0 flex items-center justify-center backface-hidden" style={{ transform: 'rotateX(180deg) translateZ(0.6em)' }}>{translations.discover}</span>
-                      <span className="absolute inset-0 flex items-center justify-center backface-hidden" style={{ transform: 'rotateX(270deg) translateZ(0.6em)' }}>{translations.discover}</span>
-                    </div>
-                    <svg 
-                      className="w-6 h-6 md:w-8 md:h-8 text-cyan-400 transform group-hover:translate-x-2 transition-transform shrink-0" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </span>
-                </motion.button>
-
-                <motion.button 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 1.8 }}
-                  onClick={onAboutClick}
-                  className="py-4 px-6 md:py-5 md:px-8 text-slate-400 font-bold text-xs md:text-sm uppercase tracking-widest hover:text-white transition-colors flex items-center justify-center gap-2 w-full lg:w-auto"
-                >
-                  {isHi ? 'हमारे बारे में' : 'About Us'}
-                </motion.button>
-
-                <motion.button 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 2.0 }}
-                  onClick={() => setShowChangelog(true)}
-                  className="py-4 px-6 md:py-5 md:px-8 text-cyan-500/80 font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] hover:text-cyan-400 transition-all flex items-center justify-center gap-2 w-full lg:w-auto border border-cyan-500/10 rounded-xl bg-cyan-500/5 hover:bg-cyan-500/10"
-                >
-                  <Sparkles size={14} className="animate-pulse" />
-                  {translations.updates}
-                </motion.button>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  A manufacturing hub is a centralized industrial ecosystem where production, supply chain, skilled workforce, and infrastructure come together to enable efficient, large-scale, and cost-effective manufacturing.
+                </p>
               </div>
-          </div>
+
+              {/* Separator */}
+              <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+
+              {/* Bottom Section: Vision */}
+              <div className="p-8 pt-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="text-cyan-400 bg-cyan-500/10 p-2.5 rounded-full border border-cyan-500/20">
+                    <Lightbulb className="w-6 h-6" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-white font-bold text-sm tracking-widest uppercase">
+                    Vision
+                  </h3>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Build a smart, sustainable, and globally competitive manufacturing learning system that drives innovation, creates opportunity, and delivers skilled manpower with high quality knowledge.
+                </p>
+              </div>
+
+              {/* Bottom Tabs */}
+              <div className="flex items-center justify-center gap-12 border-t border-white/5 bg-slate-950/30 py-4">
+                <div className="relative">
+                  <span className="text-white font-bold text-xs tracking-widest uppercase">Overview</span>
+                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-12 h-[2px] bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
+                </div>
+                <div className="relative">
+                  <span className="text-slate-500 font-bold text-xs tracking-widest uppercase hover:text-slate-300 cursor-pointer transition-colors">Vision</span>
+                </div>
+              </div>
+
+            </div>
+          </motion.div>
         </div>
       </motion.div>
 
@@ -398,7 +351,8 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
       >
         HUB
       </motion.div>
-    </div>
+      </div>
+    </VantaBackground>
   );
 };
 

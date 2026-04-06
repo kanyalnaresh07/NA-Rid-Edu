@@ -6,130 +6,36 @@ import { GlossaryTerm } from './types';
 export const AIRFOCUS_LOGO = (
   <div className="flex items-center gap-1.5 md:gap-3 group">
     <div className="relative">
-      {/* Enhanced background glow pulse */}
-      <motion.div 
-        animate={{ 
-          opacity: [0.2, 0.5, 0.2],
-          scale: [1, 1.2, 1],
-          filter: ["blur(8px)", "blur(12px)", "blur(8px)"]
-        }}
-        transition={{ 
-          duration: 3, 
-          repeat: Infinity, 
-          ease: "easeInOut" 
-        }}
-        className="absolute inset-0 bg-cyan-500 rounded-full pointer-events-none"
-      />
-      
       {/* Floating Logo Icon */}
-      <motion.div 
-        initial={{ rotate: -10, opacity: 0, scale: 0.8 }}
-        animate={{ 
-          rotate: [0, -2, 2, 0],
-          y: [0, -2, 0],
-          opacity: 1, 
-          scale: 1 
-        }}
-        whileHover={{ scale: 1.1, rotate: 5 }}
-        transition={{ 
-          opacity: { duration: 0.8 },
-          scale: { duration: 0.8 },
-          rotate: { repeat: Infinity, duration: 5, ease: "easeInOut" },
-          y: { repeat: Infinity, duration: 3, ease: "easeInOut" }
-        }}
-        className="relative w-8 h-8 md:w-10 md:h-10 bg-slate-900 border border-cyan-500/50 rounded-lg flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(6,182,212,0.3)] z-10"
+      <div 
+        className="relative w-8 h-8 md:w-10 md:h-10 bg-slate-900 border border-cyan-500/50 rounded-lg flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(6,182,212,0.3)] z-10 transition-transform hover:scale-105"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-transparent"></div>
         <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 md:w-6 md:h-6 text-cyan-400" stroke="currentColor" strokeWidth="2.5">
-            <motion.path 
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 1 }}
-              transition={{ duration: 1.5, delay: 0.2, ease: "easeInOut" }}
-              d="M12 2L2 7l10 5 10-5-10-5z" 
-            />
-            <motion.path 
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ 
-                pathLength: 1, 
-                opacity: [1, 0.5, 1] 
-              }}
-              transition={{ 
-                pathLength: { duration: 1.5, delay: 0.4, ease: "easeInOut" },
-                opacity: { repeat: Infinity, duration: 2, ease: "easeInOut" }
-              }}
-              d="M2 12l10 5 10-5" 
-            />
-            <motion.path 
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ 
-                pathLength: 1, 
-                opacity: [1, 0.5, 1] 
-              }}
-              transition={{ 
-                pathLength: { duration: 1.5, delay: 0.6, ease: "easeInOut" },
-                opacity: { repeat: Infinity, duration: 2, ease: "easeInOut", delay: 0.3 }
-              }}
-              d="M2 17l10 5 10-5" 
-            />
+            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+            <path d="M2 12l10 5 10-5" />
+            <path d="M2 17l10 5 10-5" />
         </svg>
-      </motion.div>
+      </div>
     </div>
 
     <div className="flex flex-col -space-y-1">
       {/* Shimmering Main Text */}
       <div className="relative overflow-hidden">
-        <motion.span 
-          initial={{ x: -20, opacity: 0 }}
-          animate={{ 
-            x: 0, 
-            opacity: 1,
-            color: ["#ffffff", "#22d3ee", "#ffffff"]
-          }}
-          transition={{ 
-            x: { duration: 0.8, delay: 0.5 },
-            opacity: { duration: 0.8, delay: 0.5 },
-            color: { repeat: Infinity, duration: 4, ease: "easeInOut" }
-          }}
+        <span 
           className="text-lg md:text-2xl font-black tracking-tighter uppercase italic bg-gradient-to-r from-cyan-400 via-white to-cyan-400 bg-[length:200%_auto] bg-clip-text text-transparent"
-          style={{
-            animation: "shimmer 8s linear infinite"
-          }}
         >
           NA-RID
-        </motion.span>
-        
-        {/* Continuous Glint Effect */}
-        <motion.div 
-          animate={{ x: ["-100%", "200%"] }}
-          transition={{ repeat: Infinity, duration: 3, ease: "easeInOut", repeatDelay: 5 }}
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none"
-        />
+        </span>
       </div>
 
       {/* Breathing Subtext */}
-      <motion.span 
-        initial={{ x: -10, opacity: 0 }}
-        animate={{ 
-          x: 0, 
-          opacity: [0.6, 1, 0.6],
-          letterSpacing: ["0.2em", "0.25em", "0.2em"]
-        }}
-        transition={{ 
-          x: { duration: 0.8, delay: 0.8 },
-          opacity: { repeat: Infinity, duration: 3, ease: "easeInOut" },
-          letterSpacing: { repeat: Infinity, duration: 3, ease: "easeInOut" }
-        }}
+      <span 
         className="text-[7px] md:text-[9px] font-bold text-cyan-500 tracking-[0.2em] md:tracking-[0.4em] uppercase ml-0.5"
       >
         Education Hub
-      </motion.span>
+      </span>
     </div>
-
-    <style>{`
-      @keyframes shimmer {
-        to { background-position: 200% center; }
-      }
-    `}</style>
   </div>
 );
 
@@ -152,6 +58,8 @@ export const TRANSLATIONS = {
     navAbout: "ABOUT",
     navQuiz: "QUIZ",
     navPhotos: "PHOTOS",
+    navVideos: "VIDEOS",
+    navAiHub: "AI HUB",
     navContact: "CONTACT",
     navPrivacy: "PRIVACY POLICY",
     updates: "What's New",
@@ -268,6 +176,8 @@ export const TRANSLATIONS = {
     navAbout: "परिचय",
     navQuiz: "क्विज़",
     navPhotos: "फोटो",
+    navVideos: "वीडियो",
+    navAiHub: "AI HUB",
     navContact: "संपर्क",
     navPrivacy: "गोपनीयता नीति",
     updates: "नया क्या है?",

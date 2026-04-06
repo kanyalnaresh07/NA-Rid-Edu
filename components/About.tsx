@@ -80,6 +80,7 @@ const About: React.FC<AboutProps> = ({ translations, lang }) => {
                 alt="Naresh Singh Kanyal"
                 className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
                 referrerPolicy="no-referrer"
+                loading="lazy"
               />
               {/* Subtle inner overlay */}
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-950/40"></div>
