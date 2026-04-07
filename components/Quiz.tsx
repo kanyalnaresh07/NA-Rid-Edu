@@ -1,562 +1,441 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  PlayCircle, Brain, Trophy, ChevronRight, 
-  Clock, CheckCircle2, XCircle, Info, 
-  ArrowLeft, ArrowRight, RotateCcw, ShieldAlert, Settings,
-  BarChart3, Award, Timer, Share2, Eye, History,
-  Factory, Wrench, ClipboardCheck, Truck, Package, Leaf, FileText
+  Bot, Settings, BrainCircuit, ListOrdered, 
+  Play, ChevronRight, CheckCircle2, XCircle, 
+  BarChart3, Award, Timer, ShieldAlert,
+  Cpu, Zap, LineChart
 } from 'lucide-react';
-import { getQuizData } from '../quizData';
-import { QuizCategory, QuizQuestion, Language } from '../types';
-import EmptyState from './EmptyState';
+import { Language } from '../types';
+import { generateQuiz } from '../services/geminiService';
 
 interface QuizProps {
   translations: any;
   lang: Language;
 }
 
-type QuizState = 'selection' | 'level_selection' | 'active' | 'result';
+type QuizState = 'setup' | 'loading' | 'active' | 'feedback' | 'result';
+
+interface AIQuestion {
+  id: string;
+  text: string;
+  options: string[];
+  correctAnswerIndex: number;
+  explanation: string;
+}
+
+const TOPICS = [
+  "Production Planning",
+  "Quality Control",
+  "Lean Manufacturing",
+  "Supply Chain Management",
+  "Industrial Safety",
+  "Equipment Maintenance"
+];
+
+const DIFFICULTIES = ["Adaptive", "Beginner", "Intermediate", "Advanced"];
+const QUESTION_COUNTS = [5, 10, 15, 20];
 
 const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
-  const [state, setState] = useState<QuizState>('selection');
-  const [selectedCategory, setSelectedCategory] = useState<QuizCategory | null>(null);
-  const [selectedLevel, setSelectedLevel] = useState<'beginner' | 'intermediate' | 'advanced' | 'all'>('all');
-  const [currentQuestions, setCurrentQuestions] = useState<QuizQuestion[]>([]);
+  const isHi = lang === 'hi';
+  const [state, setState] = useState<QuizState>('setup');
+  const [topic, setTopic] = useState(TOPICS[0]);
+  const [difficulty, setDifficulty] = useState(DIFFICULTIES[0]);
+  const [questionCount, setQuestionCount] = useState(10);
+  
+  const [questions, setQuestions] = useState<AIQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [userAnswers, setUserAnswers] = useState<Record<string, number>>({});
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [score, setScore] = useState(0);
-  const [leaderboard, setLeaderboard] = useState<{name: string, score: number, category: string, date: string}[]>([]);
-  const [showReview, setShowReview] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(0);
+  
+  const [lastQuestionFeedback, setLastQuestionFeedback] = useState<{
+    isCorrect: boolean;
+    explanation: string;
+    selectedOptionText: string;
+    correctOptionText: string;
+  } | null>(null);
 
-  const quizData = getQuizData(lang);
-
-  useEffect(() => {
-    const savedLeaderboard = localStorage.getItem('quiz_leaderboard');
-    if (savedLeaderboard) {
-      setLeaderboard(JSON.parse(savedLeaderboard));
-    }
-  }, []);
-
-  const startQuiz = (category: QuizCategory, level: 'beginner' | 'intermediate' | 'advanced' | 'all') => {
-    let filtered = category.questions;
-    if (level !== 'all') {
-      filtered = category.questions.filter(q => q.level === level);
-    }
-    
-    // Shuffle questions
-    const shuffled = [...filtered].sort(() => Math.random() - 0.5);
-    
-    setSelectedCategory(category);
-    setSelectedLevel(level);
-    setCurrentQuestions(shuffled);
-    setCurrentIndex(0);
-    setUserAnswers({});
-    setTimeLeft(category.duration * 60);
-    setState('active');
-  };
-
-  const handleAnswer = (optionIndex: number) => {
-    if (userAnswers[currentQuestions[currentIndex].id] !== undefined) return;
-    
-    setUserAnswers(prev => ({
-      ...prev,
-      [currentQuestions[currentIndex].id]: optionIndex
-    }));
-  };
-
-  const nextQuestion = () => {
-    if (currentIndex < currentQuestions.length - 1) {
-      setCurrentIndex(prev => prev + 1);
-    } else {
-      finishQuiz();
-    }
-  };
-
-  const prevQuestion = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(prev => prev - 1);
-    }
-  };
-
-  const finishQuiz = useCallback(() => {
-    let finalScore = 0;
-    currentQuestions.forEach(q => {
-      if (userAnswers[q.id] === q.correctAnswer) {
-        finalScore++;
+  const startQuiz = async () => {
+    setState('loading');
+    try {
+      const generatedQuestions = await generateQuiz(topic, difficulty, questionCount, lang);
+      if (generatedQuestions && generatedQuestions.length > 0) {
+        setQuestions(generatedQuestions);
+        setCurrentIndex(0);
+        setScore(0);
+        setSelectedOption(null);
+        setLastQuestionFeedback(null);
+        setTimeLeft(questionCount * 60); // 1 minute per question
+        setState('active');
+      } else {
+        throw new Error("No questions generated");
       }
-    });
-    setScore(finalScore);
-    setState('result');
-
-    // Update leaderboard
-    const newEntry = {
-      name: 'You',
-      score: Math.round((finalScore / currentQuestions.length) * 100),
-      category: selectedCategory?.title || '',
-      date: new Date().toLocaleDateString()
-    };
-    const updatedLeaderboard = [...leaderboard, newEntry]
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 5);
-    setLeaderboard(updatedLeaderboard);
-    localStorage.setItem('quiz_leaderboard', JSON.stringify(updatedLeaderboard));
-  }, [currentQuestions, userAnswers, selectedCategory, leaderboard]);
-
-  const handleShare = () => {
-    const percentage = Math.round((score / currentQuestions.length) * 100);
-    const text = `I scored ${percentage}% on the ${selectedCategory?.title} at Na-Rid Education Hub! Can you beat me? 🚀`;
-    if (navigator.share) {
-      navigator.share({
-        title: 'Na-Rid Quiz Result',
-        text: text,
-        url: window.location.href,
-      }).catch(() => {
-        navigator.clipboard.writeText(text);
-        alert('Result copied to clipboard!');
-      });
-    } else {
-      navigator.clipboard.writeText(text);
-      alert('Result copied to clipboard!');
+    } catch (error) {
+      console.error("Failed to generate quiz:", error);
+      alert(isHi ? "क्विज़ जनरेट करने में विफल। कृपया पुनः प्रयास करें।" : "Failed to generate quiz. Please try again.");
+      setState('setup');
     }
   };
 
-  useEffect(() => {
-    if (state === 'active' && timeLeft > 0) {
-      const timer = setInterval(() => {
-        setTimeLeft(prev => {
-          if (prev <= 1) {
-            clearInterval(timer);
-            finishQuiz();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-      return () => clearInterval(timer);
+  const handleSubmit = () => {
+    if (selectedOption === null) return;
+
+    const currentQ = questions[currentIndex];
+    const isCorrect = selectedOption === currentQ.correctAnswerIndex;
+    
+    if (isCorrect) {
+      setScore(prev => prev + 1);
     }
-  }, [state, timeLeft, finishQuiz]);
+
+    setLastQuestionFeedback({
+      isCorrect,
+      explanation: currentQ.explanation,
+      selectedOptionText: currentQ.options[selectedOption],
+      correctOptionText: currentQ.options[currentQ.correctAnswerIndex]
+    });
+
+    setState('feedback');
+  };
+
+  const handleNext = () => {
+    if (currentIndex < questions.length - 1) {
+      setCurrentIndex(prev => prev + 1);
+      setSelectedOption(null);
+      setState('active');
+    } else {
+      setState('result');
+    }
+  };
+
+  // Timer logic
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (state === 'active' && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+    } else if (timeLeft === 0 && state === 'active') {
+      setState('result');
+    }
+    return () => clearInterval(timer);
+  }, [state, timeLeft]);
 
   const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}m ${s}s`;
   };
 
-  const getIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'ShieldAlert': return ShieldAlert;
-      case 'Settings': return Settings;
-      case 'Trophy': return Trophy;
-      case 'Factory': return Factory;
-      case 'CheckCircle': return CheckCircle2;
-      case 'Wrench': return Wrench;
-      case 'ClipboardCheck': return ClipboardCheck;
-      case 'Truck': return Truck;
-      case 'Package': return Package;
-      case 'Leaf': return Leaf;
-      case 'FileText': return FileText;
-      default: return Brain;
-    }
-  };
+  return (
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12 relative min-h-screen">
+      {/* Background Effects */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[600px] bg-gradient-to-b from-indigo-500/10 via-purple-500/5 to-transparent blur-[120px] pointer-events-none rounded-full" />
+      
+      {/* Header */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-12 relative z-10"
+      >
+        <div className="inline-flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-indigo-500/30 mb-6 shadow-[0_0_30px_rgba(99,102,241,0.2)] relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-2xl"></div>
+          <Bot className="w-12 h-12 text-indigo-400 relative z-10" />
+          {/* Hexagon outline effect */}
+          <svg className="absolute inset-0 w-full h-full text-indigo-500/50 scale-125" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
+             <polygon points="50 5, 95 27.5, 95 72.5, 50 95, 5 72.5, 5 27.5" />
+          </svg>
+        </div>
+        <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 uppercase tracking-tighter mb-4">
+          {isHi ? 'Na-rid क्विज़' : 'Na-rid QUIZ'}
+        </h2>
+        <p className="text-slate-400 text-sm md:text-lg max-w-2xl mx-auto font-medium leading-relaxed">
+          {isHi 
+            ? 'हमारे अनुकूली, Na-rid क्विज़ के साथ अपने विनिर्माण ज्ञान का परीक्षण करें!' 
+            : 'Test your manufacturing knowledge with our adaptive, Na-rid quizzes!'}
+        </p>
+      </motion.div>
 
-  const isHi = lang === 'hi';
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+        
+        {/* Left Column: Customization */}
+        <div className="lg:col-span-5 space-y-6">
+          <div className="bg-slate-900/60 backdrop-blur-xl border border-indigo-500/20 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500"></div>
+            
+            <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
+              <Settings className="w-6 h-6 text-indigo-400" />
+              {isHi ? 'अपना Na-rid क्विज़ कस्टमाइज़ करें' : 'Customize Your Na-rid Quiz'}
+            </h3>
 
-  if (state === 'selection') {
-    return (
-      <div className="max-w-4xl mx-auto px-6 py-12">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-12 text-center"
-        >
-          <h2 className="text-4xl font-black text-white uppercase tracking-[0.2em] mb-4 italic">
-            <span className="bg-gradient-to-r from-cyan-400 to-white bg-clip-text text-transparent">
-              {translations.navQuiz}
-            </span>
-          </h2>
-          <p className="text-slate-400 text-sm uppercase tracking-widest font-bold">
-            {isHi ? 'अपने औद्योगिक ज्ञान का परीक्षण करें' : 'Test your industrial knowledge and master the floor'}
-          </p>
-        </motion.div>
+            <div className="space-y-6">
+              {/* Topic */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-400 flex items-center gap-2">
+                  <BrainCircuit className="w-4 h-4 text-indigo-400" />
+                  {isHi ? 'विषय' : 'Topic'}
+                </label>
+                <select 
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)}
+                  disabled={state !== 'setup'}
+                  className="w-full bg-slate-950/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500/50 appearance-none"
+                >
+                  {TOPICS.map(t => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
 
-        <div className="grid gap-6">
-          {quizData.map((quiz, idx) => {
-            const Icon = getIcon(quiz.icon);
-            return (
-              <motion.button
-                key={quiz.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                  setSelectedCategory(quiz);
-                  setState('level_selection');
-                }}
-                className="group relative bg-slate-900/40 backdrop-blur-xl border border-white/5 rounded-2xl p-6 hover:border-cyan-500/30 transition-all duration-500 cursor-pointer overflow-hidden text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
+              {/* Difficulty */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-400 flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-purple-400" />
+                  {isHi ? 'कठिनाई' : 'Difficulty'}
+                </label>
+                <select 
+                  value={difficulty}
+                  onChange={(e) => setDifficulty(e.target.value)}
+                  disabled={state !== 'setup'}
+                  className="w-full bg-slate-950/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500/50 appearance-none"
+                >
+                  {DIFFICULTIES.map(d => <option key={d} value={d}>{d}</option>)}
+                </select>
+              </div>
+
+              {/* Number of Questions */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-400 flex items-center gap-2">
+                  <ListOrdered className="w-4 h-4 text-cyan-400" />
+                  {isHi ? 'प्रश्नों की संख्या' : 'Number of Questions'}
+                </label>
+                <select 
+                  value={questionCount}
+                  onChange={(e) => setQuestionCount(Number(e.target.value))}
+                  disabled={state !== 'setup'}
+                  className="w-full bg-slate-950/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 appearance-none"
+                >
+                  {QUESTION_COUNTS.map(c => <option key={c} value={c}>{c} (Dynamic)</option>)}
+                </select>
+              </div>
+
+              <button
+                onClick={startQuiz}
+                disabled={state === 'loading' || state === 'active' || state === 'feedback'}
+                className="w-full mt-8 relative group overflow-hidden rounded-xl p-[1px]"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                
-                <div className="relative flex items-center justify-between gap-6">
-                  <div className="flex items-center gap-6">
-                    <div className="w-16 h-16 rounded-xl bg-slate-950 border border-white/10 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform shadow-inner">
-                      <Icon size={32} />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-black text-white uppercase tracking-wider mb-1 group-hover:text-cyan-400 transition-colors">
-                        {quiz.title}
-                      </h3>
-                      <p className="text-slate-500 text-xs mb-3 font-medium">{quiz.description}</p>
-                      <div className="flex items-center gap-4 text-slate-500 text-[10px] font-bold uppercase tracking-widest">
-                        <span className="flex items-center gap-1"><Timer size={12} /> {quiz.duration} min</span>
-                        <span className="flex items-center gap-1"><Brain size={12} /> {quiz.questions.length} Questions</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/20 group-hover:bg-cyan-500 group-hover:text-white transition-all">
-                    <ChevronRight size={20} />
-                  </div>
+                <span className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 rounded-xl opacity-70 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <div className="relative bg-slate-900 px-8 py-4 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 group-hover:bg-slate-900/50">
+                  {state === 'loading' ? (
+                    <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      <Play className="w-5 h-5 text-white fill-current" />
+                      <span className="text-white font-black uppercase tracking-widest">
+                        {isHi ? 'Na-rid क्विज़ शुरू करें' : 'START Na-rid QUIZ'}
+                      </span>
+                    </>
+                  )}
                 </div>
-              </motion.button>
-            );
-          })}
+              </button>
+            </div>
+          </div>
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="mt-16 p-8 rounded-3xl bg-slate-900/40 border border-white/5 relative overflow-hidden"
-        >
-          <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/5 blur-3xl rounded-full"></div>
-          <div className="flex items-center justify-between mb-8 relative z-10">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-500">
-                <Award size={20} />
+        {/* Right Column: Quiz Card */}
+        <div className="lg:col-span-7 space-y-6">
+          <div className="bg-slate-900/60 backdrop-blur-xl border border-indigo-500/20 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden min-h-[400px] flex flex-col">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500"></div>
+            
+            <div className="flex items-center justify-between mb-8 pb-6 border-b border-white/5">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30">
+                  <Bot className="w-6 h-6 text-indigo-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-black text-white uppercase tracking-widest">
+                    {isHi ? 'Na-rid क्विज़ कार्ड' : 'Na-rid QUIZ CARD'}
+                  </h3>
+                  {state !== 'setup' && state !== 'loading' && (
+                    <div className="flex items-center gap-4 mt-1 text-xs font-bold">
+                      <span className="text-slate-400">Question {currentIndex + 1} / {questions.length}</span>
+                      <span className="text-emerald-400">SCORE +{score}</span>
+                      <span className="text-cyan-400">TIME LEFT: {formatTime(timeLeft)}</span>
+                    </div>
+                  )}
+                </div>
               </div>
-              <h4 className="text-white font-black uppercase tracking-widest">{isHi ? 'शीर्ष प्रदर्शन' : 'Top Performers'}</h4>
+              
+              {state === 'active' && (
+                <button 
+                  onClick={handleNext}
+                  className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-300 text-xs font-bold hover:bg-white/10 transition-colors"
+                >
+                  + SKIP
+                </button>
+              )}
             </div>
-            {leaderboard.length > 0 && (
-              <button 
-                onClick={() => {
-                  localStorage.removeItem('quiz_leaderboard');
-                  setLeaderboard([]);
-                }}
-                className="text-slate-600 hover:text-red-400 transition-colors text-[8px] font-black uppercase tracking-widest focus:outline-none focus-visible:text-red-400"
-              >
-                {isHi ? 'साफ़ करें' : 'Clear'}
-              </button>
-            )}
-          </div>
-          
-          <div className="relative z-10">
-            {leaderboard.length > 0 ? (
-              <div className="space-y-3">
-                {leaderboard.map((entry, i) => (
-                  <div key={i} className="group flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-cyan-500/20 transition-all">
-                    <div className="flex items-center gap-4">
-                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-black text-xs ${i === 0 ? 'bg-yellow-500 text-black' : i === 1 ? 'bg-slate-300 text-black' : i === 2 ? 'bg-orange-400 text-black' : 'bg-white/10 text-white'}`}>
-                        {i + 1}
-                      </div>
-                      <div>
-                        <p className="text-white font-bold text-sm">{entry.name}</p>
-                        <div className="flex items-center gap-2">
-                          <p className="text-slate-500 text-[9px] uppercase tracking-tighter font-bold">{entry.category}</p>
-                          <span className="w-1 h-1 bg-slate-700 rounded-full"></span>
-                          <p className="text-slate-600 text-[8px] font-medium">{entry.date}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-cyan-400 font-black text-lg">{entry.score}%</span>
-                    </div>
-                  </div>
-                ))}
+
+            {state === 'setup' || state === 'loading' ? (
+              <div className="flex-grow flex flex-col items-center justify-center text-center opacity-50">
+                <BrainCircuit className="w-16 h-16 text-indigo-400 mb-4 animate-pulse" />
+                <p className="text-slate-400 text-lg">
+                  {state === 'loading' 
+                    ? (isHi ? 'Na-rid आपके लिए प्रश्न तैयार कर रहा है...' : 'Na-rid is generating your questions...')
+                    : (isHi ? 'क्विज़ शुरू करने के लिए कस्टमाइज़ करें' : 'Customize and start to begin')}
+                </p>
+              </div>
+            ) : state === 'result' ? (
+              <div className="flex-grow flex flex-col items-center justify-center text-center">
+                <Award className="w-20 h-20 text-emerald-400 mb-6" />
+                <h2 className="text-4xl font-black text-white mb-2">Quiz Complete!</h2>
+                <p className="text-xl text-slate-300 mb-8">You scored {score} out of {questions.length}</p>
+                <button 
+                  onClick={() => setState('setup')}
+                  className="px-8 py-4 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white font-black uppercase tracking-widest transition-colors"
+                >
+                  Try Another Quiz
+                </button>
               </div>
             ) : (
-              <EmptyState 
-                icon={History}
-                title={isHi ? 'कोई हालिया गतिविधि नहीं' : 'No Recent Activity'}
-                description={isHi 
-                  ? 'आपने अभी तक कोई क्विज़ नहीं दी है। अपनी पहली क्विज़ शुरू करें!' 
-                  : 'You haven\'t taken any quizzes yet. Start your first challenge to see your score here!'}
-                className="py-8"
-              />
+              <div className="flex-grow flex flex-col">
+                <h4 className="text-xl md:text-2xl font-bold text-white mb-8 leading-relaxed">
+                  {questions[currentIndex]?.text}
+                </h4>
+
+                <div className="space-y-3 mb-8">
+                  {questions[currentIndex]?.options.map((option, idx) => {
+                    const isSelected = selectedOption === idx;
+                    const isFeedback = state === 'feedback';
+                    const isCorrect = idx === questions[currentIndex].correctAnswerIndex;
+                    
+                    let btnClass = "w-full text-left p-4 rounded-xl border transition-all duration-200 flex items-center gap-4 ";
+                    
+                    if (isFeedback) {
+                      if (isCorrect) {
+                        btnClass += "bg-emerald-500/20 border-emerald-500/50 text-emerald-100";
+                      } else if (isSelected) {
+                        btnClass += "bg-red-500/20 border-red-500/50 text-red-100";
+                      } else {
+                        btnClass += "bg-slate-900/50 border-white/5 text-slate-400 opacity-50";
+                      }
+                    } else {
+                      if (isSelected) {
+                        btnClass += "bg-indigo-500/20 border-indigo-500 text-white";
+                      } else {
+                        btnClass += "bg-slate-900/50 border-white/10 text-slate-300 hover:bg-white/5 hover:border-white/20";
+                      }
+                    }
+
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => state === 'active' && setSelectedOption(idx)}
+                        disabled={state === 'feedback'}
+                        className={btnClass}
+                      >
+                        <span className="w-8 h-8 rounded-lg bg-black/20 flex items-center justify-center font-bold text-sm shrink-0">
+                          {String.fromCharCode(65 + idx)}
+                        </span>
+                        <span className="font-medium text-sm md:text-base">{option}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-auto flex justify-end">
+                  {state === 'active' ? (
+                    <button
+                      onClick={handleSubmit}
+                      disabled={selectedOption === null}
+                      className="px-8 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-black uppercase tracking-widest text-sm hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    >
+                      {isHi ? 'सबमिट करें' : 'SUBMIT'} <ChevronRight className="w-4 h-4" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleNext}
+                      className="px-8 py-3 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black uppercase tracking-widest text-sm hover:opacity-90 transition-opacity flex items-center gap-2"
+                    >
+                      {isHi ? 'अगला प्रश्न' : 'NEXT QUESTION'} <ChevronRight className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+              </div>
             )}
           </div>
-        </motion.div>
-      </div>
-    );
-  }
-
-  if (state === 'level_selection') {
-    return (
-      <div className="max-w-2xl mx-auto px-6 py-20">
-        <button 
-          onClick={() => setState('selection')}
-          className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors mb-8 uppercase text-[10px] font-black tracking-widest focus:outline-none focus-visible:text-white"
-        >
-          <ArrowLeft size={14} /> {isHi ? 'पीछे' : 'Back'}
-        </button>
-        
-        <h2 className="text-3xl font-black text-white uppercase tracking-wider mb-2">
-          {isHi ? 'कठिनाई स्तर चुनें' : 'Select Difficulty'}
-        </h2>
-        <p className="text-slate-500 text-sm mb-10 font-medium">
-          {isHi ? 'अपनी विशेषज्ञता के अनुसार स्तर चुनें' : 'Choose a level that matches your expertise'}
-        </p>
-
-        <div className="grid gap-4">
-          {[
-            { id: 'beginner', label: isHi ? 'शुरुआती (Beginner)' : 'Beginner', color: 'bg-green-500' },
-            { id: 'intermediate', label: isHi ? 'मध्यम (Intermediate)' : 'Intermediate', color: 'bg-yellow-500' },
-            { id: 'advanced', label: isHi ? 'उन्नत (Advanced)' : 'Advanced', color: 'bg-red-500' },
-            { id: 'all', label: isHi ? 'सभी प्रश्न (All Questions)' : 'All Questions', color: 'bg-cyan-500' }
-          ].map((level) => (
-            <button
-              key={level.id}
-              onClick={() => startQuiz(selectedCategory!, level.id as any)}
-              className="flex items-center justify-between p-6 bg-slate-900/60 border border-white/5 rounded-2xl hover:border-white/20 hover:bg-slate-800 transition-all group focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
-            >
-              <div className="flex items-center gap-4">
-                <div className={`w-3 h-3 rounded-full ${level.color}`}></div>
-                <span className="text-white font-bold uppercase tracking-widest text-sm">{level.label}</span>
-              </div>
-              <ChevronRight className="text-slate-600 group-hover:text-white transition-colors" />
-            </button>
-          ))}
         </div>
       </div>
-    );
-  }
 
-  if (state === 'active' && currentQuestions.length > 0) {
-    const q = currentQuestions[currentIndex];
-    const progress = ((currentIndex + 1) / currentQuestions.length) * 100;
-    const answered = userAnswers[q.id] !== undefined;
-
-    return (
-      <div className="max-w-3xl mx-auto px-6 py-12">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center text-cyan-400">
-              <Brain size={24} />
-            </div>
-            <div>
-              <h3 className="text-white font-black uppercase tracking-widest text-sm">{selectedCategory?.title}</h3>
-              <p className="text-slate-500 text-[10px] font-bold uppercase tracking-tighter">Question {currentIndex + 1} of {currentQuestions.length}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 px-4 py-2 bg-slate-900 rounded-full border border-white/10">
-            <Clock size={14} className={timeLeft < 60 ? 'text-red-500 animate-pulse' : 'text-cyan-500'} />
-            <span className={`font-mono font-bold ${timeLeft < 60 ? 'text-red-500' : 'text-white'}`}>{formatTime(timeLeft)}</span>
-          </div>
-        </div>
-
-        <div className="w-full h-1 bg-slate-900 rounded-full mb-12 overflow-hidden">
-          <motion.div 
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            className="h-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,1)]"
-          />
-        </div>
-
-        <AnimatePresence>
+      {/* Feedback Section */}
+      <AnimatePresence>
+        {state === 'feedback' && lastQuestionFeedback && (
           <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="mt-8 bg-slate-900/60 backdrop-blur-xl border border-indigo-500/20 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden"
           >
-            <h2 className="text-2xl md:text-3xl font-black text-white leading-tight mb-8">
-              {q.question}
-            </h2>
-
-            <div className="grid gap-4">
-              {q.options.map((option, i) => {
-                const isSelected = userAnswers[q.id] === i;
-                const isCorrect = q.correctAnswer === i;
-                let borderColor = 'border-white/5';
-                let bgColor = 'bg-slate-900/40';
-                
-                if (answered) {
-                  if (isCorrect) {
-                    borderColor = 'border-green-500';
-                    bgColor = 'bg-green-500/10';
-                  } else if (isSelected) {
-                    borderColor = 'border-red-500';
-                    bgColor = 'bg-red-500/10';
-                  }
-                } else {
-                  borderColor = 'hover:border-cyan-500/50 hover:bg-slate-800/60';
-                }
-
-                return (
-                  <button
-                    key={i}
-                    disabled={answered}
-                    onClick={() => handleAnswer(i)}
-                    className={`w-full text-left p-6 rounded-2xl border ${borderColor} ${bgColor} transition-all flex items-center justify-between group focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50`}
-                  >
-                    <span className={`font-bold ${isSelected ? 'text-white' : 'text-slate-300'} group-hover:text-white`}>{option}</span>
-                    {answered && isCorrect && <CheckCircle2 className="text-green-500" size={20} />}
-                    {answered && isSelected && !isCorrect && <XCircle className="text-red-500" size={20} />}
-                  </button>
-                );
-              })}
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="flex items-center justify-between">
-          <button
-            onClick={prevQuestion}
-            disabled={currentIndex === 0}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 text-slate-400 font-bold uppercase text-[10px] tracking-widest hover:bg-white/10 hover:text-white transition-all disabled:opacity-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20"
-          >
-            <ArrowLeft size={14} /> {isHi ? 'पिछला' : 'Previous'}
-          </button>
-          
-          <button
-            onClick={nextQuestion}
-            disabled={!answered}
-            className="flex items-center gap-2 px-8 py-3 rounded-xl bg-cyan-500 text-white font-black uppercase text-[10px] tracking-widest hover:bg-cyan-400 transition-all disabled:opacity-30 shadow-[0_0_20px_rgba(6,182,212,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
-          >
-            {currentIndex === currentQuestions.length - 1 ? (isHi ? 'सबमिट' : 'Submit') : (isHi ? 'अगला' : 'Next')} <ArrowRight size={14} />
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (state === 'result') {
-    const percentage = Math.round((score / currentQuestions.length) * 100);
-    const passed = percentage >= 70;
-
-    if (showReview) {
-      return (
-        <div className="max-w-3xl mx-auto px-6 py-12">
-          <button 
-            onClick={() => setShowReview(false)}
-            className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors mb-8 uppercase text-[10px] font-black tracking-widest focus:outline-none focus-visible:text-white"
-          >
-            <ArrowLeft size={14} /> {isHi ? 'परिणाम पर वापस' : 'Back to Result'}
-          </button>
-          
-          <h2 className="text-3xl font-black text-white uppercase tracking-wider mb-8">
-            {isHi ? 'प्रश्नों की समीक्षा' : 'Review Answers'}
-          </h2>
-
-          <div className="space-y-8">
-            {currentQuestions.map((q, idx) => {
-              const userAnswer = userAnswers[q.id];
-              const isCorrect = userAnswer === q.correctAnswer;
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="flex flex-col justify-center">
+                <h3 className="text-2xl font-black text-white uppercase tracking-widest mb-4">
+                  {isHi ? 'Na-rid फीडबैक' : 'Na-rid FEEDBACK'}
+                </h3>
+                <p className="text-slate-300 leading-relaxed">
+                  {lastQuestionFeedback.explanation}
+                </p>
+              </div>
               
-              return (
-                <div key={q.id} className="p-6 rounded-3xl bg-slate-900/40 border border-white/5">
-                  <div className="flex items-start gap-4 mb-4">
-                    <span className={`w-8 h-8 rounded-lg flex items-center justify-center font-black text-xs shrink-0 ${isCorrect ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}`}>
-                      {idx + 1}
-                    </span>
-                    <p className="text-white font-bold leading-relaxed">{q.question}</p>
+              <div className="bg-slate-950/50 rounded-2xl p-6 border border-white/5">
+                <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                  <LineChart className="w-4 h-4" /> LAST QUESTION
+                </h4>
+                
+                <div className={`p-4 rounded-xl border mb-6 flex items-center gap-4 ${lastQuestionFeedback.isCorrect ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-red-500/10 border-red-500/30'}`}>
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-black text-xl ${lastQuestionFeedback.isCorrect ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
+                    {lastQuestionFeedback.isCorrect ? '✓' : '✗'}
                   </div>
-                  
-                  <div className="grid gap-2 ml-12">
-                    {q.options.map((opt, i) => (
-                      <div 
-                        key={i}
-                        className={`p-3 rounded-xl text-xs font-medium border ${
-                          i === q.correctAnswer 
-                            ? 'bg-green-500/10 border-green-500/30 text-green-400' 
-                            : i === userAnswer 
-                              ? 'bg-red-500/10 border-red-500/30 text-red-400'
-                              : 'bg-white/5 border-transparent text-slate-500'
-                        }`}
-                      >
-                        {opt}
-                        {i === q.correctAnswer && <span className="ml-2 text-[8px] font-black uppercase tracking-widest">(Correct)</span>}
-                        {i === userAnswer && i !== q.correctAnswer && <span className="ml-2 text-[8px] font-black uppercase tracking-widest">(Your Answer)</span>}
-                      </div>
-                    ))}
+                  <div>
+                    <div className={`font-bold text-lg ${lastQuestionFeedback.isCorrect ? 'text-emerald-400' : 'text-red-400'}`}>
+                      {lastQuestionFeedback.isCorrect ? 'Correct' : 'Incorrect'}
+                    </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      );
-    }
 
-    return (
-      <div className="max-w-2xl mx-auto px-6 py-20 text-center">
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="mb-12"
-        >
-          <div className={`w-32 h-32 rounded-full mx-auto flex items-center justify-center mb-8 ${passed ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}`}>
-            {passed ? <Trophy size={64} /> : <RotateCcw size={64} />}
-          </div>
-          
-          <h2 className="text-5xl font-black text-white uppercase tracking-tighter mb-4">
-            {passed ? (isHi ? 'बधाई हो!' : 'Congratulations!') : (isHi ? 'फिर से प्रयास करें' : 'Keep Learning!') }
-          </h2>
-          <p className="text-slate-500 font-bold uppercase tracking-widest mb-12">
-            {isHi ? `आपने ${currentQuestions.length} में से ${score} अंक प्राप्त किए` : `You scored ${score} out of ${currentQuestions.length}`}
-          </p>
-
-          <div className="grid grid-cols-2 gap-6 mb-12">
-            <div className="p-6 rounded-3xl bg-slate-900/60 border border-white/5">
-              <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">{isHi ? 'प्रतिशत' : 'Percentage'}</p>
-              <p className="text-3xl font-black text-white">{percentage}%</p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <div className="text-xs text-slate-500 font-bold uppercase mb-1">Score</div>
+                    <div className="text-xl font-black text-white">{score} / {questions.length}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-500 font-bold uppercase mb-1">Time Left</div>
+                    <div className="text-xl font-black text-white">{formatTime(timeLeft)}</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="p-6 rounded-3xl bg-slate-900/60 border border-white/5">
-              <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">{isHi ? 'स्थिति' : 'Status'}</p>
-              <p className={`text-3xl font-black ${passed ? 'text-green-500' : 'text-red-500'}`}>
-                {passed ? (isHi ? 'पास' : 'PASS') : (isHi ? 'फेल' : 'FAIL')}
-              </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Features Bottom */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 relative z-10">
+        {[
+          { icon: Cpu, title: 'DYNAMIC QUESTIONS', desc: 'Na-rid creates custom quizzes based on your topic and skill level.', color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' },
+          { icon: ShieldAlert, title: 'ADAPTIVE DIFFICULTY', desc: 'Questions adjust in real-time to challenge you based on your performance.', color: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' },
+          { icon: BrainCircuit, title: 'EXPLANATIONS & HINTS', desc: 'Receive instant feedback and detailed explanations for every answer.', color: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/20' },
+          { icon: BarChart3, title: 'IN-DEPTH ANALYSIS', desc: 'Review your performance with detailed insights pinpointing weak areas.', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' }
+        ].map((feature, idx) => (
+          <div key={idx} className="bg-slate-900/40 backdrop-blur-md border border-white/5 rounded-2xl p-6 text-center hover:bg-slate-900/60 transition-colors">
+            <div className={`w-16 h-16 mx-auto rounded-full ${feature.bg} ${feature.border} border flex items-center justify-center mb-4`}>
+              <feature.icon className={`w-8 h-8 ${feature.color}`} />
             </div>
+            <h4 className="text-sm font-black text-white uppercase tracking-widest mb-2">{feature.title}</h4>
+            <p className="text-xs text-slate-400 leading-relaxed">{feature.desc}</p>
           </div>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <button
-              onClick={() => setState('selection')}
-              className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-cyan-500 text-white font-black uppercase tracking-widest hover:bg-cyan-400 transition-all shadow-[0_0_30px_rgba(6,182,212,0.4)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
-            >
-              {isHi ? 'होम पर जाएं' : 'Back to Home'}
-            </button>
-            <button
-              onClick={() => startQuiz(selectedCategory!, selectedLevel)}
-              className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-white/5 text-white font-black uppercase tracking-widest hover:bg-white/10 transition-all border border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20"
-            >
-              {isHi ? 'पुनः प्रयास करें' : 'Try Again'}
-            </button>
-          </div>
-
-          <div className="flex items-center justify-center gap-6">
-            <button 
-              onClick={() => setShowReview(true)}
-              className="flex items-center gap-2 text-slate-500 hover:text-cyan-400 transition-colors text-[10px] font-black uppercase tracking-widest focus:outline-none focus-visible:text-cyan-400"
-            >
-              <Eye size={14} /> {isHi ? 'जवाब देखें' : 'Review Answers'}
-            </button>
-            <button 
-              onClick={handleShare}
-              className="flex items-center gap-2 text-slate-500 hover:text-cyan-400 transition-colors text-[10px] font-black uppercase tracking-widest focus:outline-none focus-visible:text-cyan-400"
-            >
-              <Share2 size={14} /> {isHi ? 'शेयर करें' : 'Share Result'}
-            </button>
-          </div>
-        </motion.div>
+        ))}
       </div>
-    );
-  }
 
-  return null;
+    </div>
+  );
 };
 
 export default Quiz;

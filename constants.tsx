@@ -21,9 +21,9 @@ export const AIRFOCUS_LOGO = (
 
     <div className="flex flex-col -space-y-1">
       {/* Shimmering Main Text */}
-      <div className="relative overflow-hidden">
+      <div className="relative">
         <span 
-          className="text-lg md:text-2xl font-black tracking-tighter uppercase italic bg-gradient-to-r from-cyan-400 via-white to-cyan-400 bg-[length:200%_auto] bg-clip-text text-transparent"
+          className="text-lg md:text-2xl font-black tracking-tighter uppercase italic bg-gradient-to-r from-cyan-400 via-white to-cyan-400 bg-[length:200%_auto] bg-clip-text text-transparent pr-1"
         >
           NA-RID
         </span>

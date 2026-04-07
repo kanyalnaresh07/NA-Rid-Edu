@@ -357,20 +357,20 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
             </div>
           ) : pointData ? (
             <div className="space-y-6 md:space-y-8">
-               <div className="relative bg-slate-900/80 border border-cyan-500/30 p-8 md:p-16 rounded-3xl md:rounded-[48px] shadow-2xl overflow-hidden backdrop-blur-3xl group">
+               <div className="relative bg-slate-900/80 border border-cyan-500/30 p-6 md:p-10 rounded-2xl md:rounded-[32px] shadow-2xl overflow-hidden backdrop-blur-3xl group">
                   <div className="absolute -top-24 -right-24 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px]"></div>
                   
                   <div className="relative z-10">
-                    <div className="inline-block px-3 py-1 bg-cyan-500/20 border border-cyan-500/40 rounded-full text-cyan-400 text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] mb-6 md:mb-8">
+                    <div className="inline-block px-3 py-1 bg-cyan-500/20 border border-cyan-500/40 rounded-full text-cyan-400 text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] mb-4 md:mb-6">
                        Highlighted Concept
                     </div>
-                    <h2 className="text-3xl md:text-6xl font-black text-white uppercase tracking-tighter leading-tight mb-8 md:mb-10 drop-shadow-2xl">
+                    <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter leading-tight mb-6 md:mb-8 drop-shadow-2xl">
                        {pointData.title}
                     </h2>
-                    <div className="h-1 w-24 md:h-1.5 md:w-32 bg-gradient-to-r from-cyan-500 to-transparent mb-8 md:mb-12 rounded-full"></div>
+                    <div className="h-1 w-24 md:h-1.5 md:w-32 bg-gradient-to-r from-cyan-500 to-transparent mb-6 md:mb-8 rounded-full"></div>
                     
-                    <div className="bg-white/5 p-6 md:p-12 rounded-2xl md:rounded-[32px] border border-white/10 shadow-inner">
-                       <div className="text-slate-100 text-lg md:text-2xl leading-relaxed font-bold prose prose-invert max-w-none">
+                    <div className="bg-white/5 p-5 md:p-8 rounded-xl md:rounded-2xl border border-white/10 shadow-inner">
+                       <div className="text-slate-100 text-base md:text-lg leading-relaxed font-bold prose prose-invert max-w-none prose-p:text-slate-100 prose-headings:text-white prose-strong:text-white prose-li:text-slate-100">
                           <Markdown>{pointData.definition}</Markdown>
                        </div>
                     </div>
@@ -396,7 +396,7 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                   </svg>
                </div>
                <div className="min-w-0">
-                  <h3 className="text-xl md:text-3xl font-black text-white uppercase tracking-tighter leading-none truncate">{selectedDetail.name}</h3>
+                  <h3 className="text-lg md:text-2xl font-black text-white uppercase tracking-tighter leading-none truncate">{selectedDetail.name}</h3>
                   <p className="text-cyan-500 text-[7px] md:text-[8px] font-black uppercase tracking-[0.4em] mt-1">Operational Dashboard / {selectedDetail.id}</p>
                </div>
             </div>
@@ -404,12 +404,12 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 items-start">
             <div className="lg:col-span-4 flex flex-col gap-4 md:gap-6 order-2 lg:order-1">
-              <div className="bg-slate-900/60 border border-cyan-500/20 p-5 md:p-6 rounded-2xl relative overflow-hidden backdrop-blur-xl shadow-xl">
+              <div className="bg-slate-900/60 border border-cyan-500/20 p-4 md:p-5 rounded-2xl relative overflow-hidden backdrop-blur-xl shadow-xl">
                 <div className="absolute top-0 left-0 w-1 h-full bg-cyan-500"></div>
-                <h4 className="text-cyan-400 text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] mb-3">{translations.mainRole}</h4>
-                <p className="text-white text-xs md:text-base font-bold leading-snug">"{selectedDetail.role}"</p>
+                <h4 className="text-cyan-400 text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] mb-2">{translations.mainRole}</h4>
+                <p className="text-white text-[10px] md:text-sm font-bold leading-snug">"{selectedDetail.role}"</p>
               </div>
-              <div className="bg-slate-900/40 border border-white/5 rounded-2xl p-5 md:p-6 shadow-xl backdrop-blur-xl">
+              <div className="bg-slate-900/40 border border-white/5 rounded-2xl p-4 md:p-5 shadow-xl backdrop-blur-xl">
                 <h4 className="text-white text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] mb-4 flex items-center gap-2">
                   <span className="w-4 h-[1px] bg-cyan-500"></span>
                   {translations.responsibleTeam}
@@ -426,7 +426,7 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                 </div>
               </div>
             </div>
-            <div className="lg:col-span-8 bg-slate-900/40 border border-white/10 rounded-2xl p-5 md:p-8 shadow-2xl backdrop-blur-xl order-1 lg:order-2">
+            <div className="lg:col-span-8 bg-slate-900/40 border border-white/10 rounded-2xl p-4 md:p-6 shadow-2xl backdrop-blur-xl order-1 lg:order-2">
               <div className="flex items-center justify-between mb-4 md:mb-6 border-b border-white/5 pb-4">
                  <h4 className="text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-3">
                    <span className="w-6 md:w-8 h-0.5 bg-cyan-500"></span>
@@ -443,22 +443,22 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                         {group.groupName}
                       </h5>
                     )}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 md:gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4">
                       {group.items.map((item, i) => (
                         <button 
                           key={i} 
                           onClick={() => handlePointClick(item)}
-                          className="group/point relative text-left bg-slate-950/40 p-2.5 md:p-3.5 rounded-lg md:rounded-xl border border-white/5 hover:border-cyan-500/50 hover:bg-slate-900 transition-all duration-200 shadow-lg flex items-start gap-2.5 md:gap-3 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
+                          className="group/point relative text-left bg-slate-950/40 p-3 md:p-4 rounded-xl md:rounded-2xl border border-white/5 hover:border-cyan-500/50 hover:bg-slate-900 transition-all duration-200 shadow-lg flex items-start gap-3 md:gap-4 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
                         >
                           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover/point:opacity-100 transition-opacity"></div>
-                          <div className="relative z-10 w-5 h-5 md:w-7 md:h-7 flex-shrink-0 bg-slate-800 border border-white/10 rounded-md md:rounded-lg flex items-center justify-center text-cyan-400 group-hover/point:bg-cyan-500 group-hover/point:text-white transition-all text-[7px] md:text-[8px] font-black">
+                          <div className="relative z-10 w-6 h-6 md:w-8 md:h-8 flex-shrink-0 bg-slate-800 border border-white/10 rounded-lg md:rounded-xl flex items-center justify-center text-cyan-400 group-hover/point:bg-cyan-500 group-hover/point:text-white transition-all text-[9px] md:text-[10px] font-black">
                             {i + 1 < 10 ? `0${i + 1}` : i + 1}
                           </div>
-                          <div className="relative z-10 flex-grow min-w-0">
-                            <span className="block text-slate-100 text-[9px] md:text-[11px] font-bold uppercase tracking-tight leading-tight group-hover:text-white transition-colors">
+                          <div className="relative z-10 flex-grow min-w-0 pt-0.5">
+                            <span className="block text-slate-100 text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-tight leading-snug group-hover:text-white transition-colors break-words">
                               {item}
                             </span>
-                            <div className="h-0.5 w-0 bg-cyan-500 group-hover/point:w-full transition-all duration-300 mt-1 md:mt-1.5 opacity-50"></div>
+                            <div className="h-0.5 w-0 bg-cyan-500 group-hover/point:w-full transition-all duration-300 mt-2 opacity-50"></div>
                           </div>
                         </button>
                       ))}
@@ -497,7 +497,7 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                         <div className="w-1 h-4 md:h-6 bg-cyan-500"></div>
                         <span className="text-cyan-500 text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] md:tracking-[0.6em]">Directory v2.5</span>
                     </div>
-                    <h2 className="text-xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[0.9] mb-3 md:mb-6 drop-shadow-2xl">
+                    <h2 className="text-xl md:text-4xl font-black text-white tracking-tighter uppercase leading-[0.9] mb-3 md:mb-6 drop-shadow-2xl">
                       {category.title}
                     </h2>
                 </div>
@@ -508,33 +508,33 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
             </div>
 
             {category.description && (
-                <div className="flex items-center mb-10 relative drop-shadow-xl group">
+                <div className="flex items-center mb-8 relative drop-shadow-xl group">
                     {/* Hexagon Container */}
-                    <div className="relative z-10 w-24 h-28 md:w-28 md:h-32 shrink-0">
+                    <div className="relative z-10 w-16 h-20 md:w-20 md:h-24 shrink-0">
                         {/* White Border Hexagon */}
                         <div className="absolute inset-0 bg-white" style={{ clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)' }}></div>
                         {/* Inner Cyan Hexagon */}
-                        <div className="absolute inset-[3px] md:inset-[4px] bg-cyan-500 flex items-center justify-center transition-transform duration-300 group-hover:scale-105" style={{ clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', perspective: '1000px' }}>
+                        <div className="absolute inset-[2px] md:inset-[3px] bg-cyan-500 flex items-center justify-center transition-transform duration-300 group-hover:scale-105" style={{ clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', perspective: '1000px' }}>
                             <div className="transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)]">
-                                <Info className="text-white w-8 h-8 md:w-10 md:h-10" strokeWidth={2} />
+                                <Info className="text-white w-6 h-6 md:w-8 md:h-8" strokeWidth={2} />
                             </div>
                         </div>
                     </div>
                     
                     {/* Right Banner */}
-                    <div className="relative z-0 -ml-8 md:-ml-10 flex-1 bg-cyan-500 flex flex-col justify-center py-5 md:py-8 pr-10 md:pr-16 pl-14 md:pl-20 min-h-[6rem] md:min-h-[8rem]"
-                         style={{ clipPath: 'polygon(0% 0%, calc(100% - 32px) 0%, 100% 50%, calc(100% - 32px) 100%, 0% 100%)' }}>
-                        <h3 className="text-slate-900 font-black text-lg md:text-xl uppercase mb-2 tracking-wider">
+                    <div className="relative z-0 -ml-6 md:-ml-8 flex-1 bg-cyan-500 flex flex-col justify-center py-4 md:py-6 pr-8 md:pr-12 pl-10 md:pl-14 min-h-[5rem] md:min-h-[6rem]"
+                         style={{ clipPath: 'polygon(0% 0%, calc(100% - 24px) 0%, 100% 50%, calc(100% - 24px) 100%, 0% 100%)' }}>
+                        <h3 className="text-slate-900 font-black text-base md:text-lg uppercase mb-1 tracking-wider">
                             {lang === 'hi' ? 'परिचय' : 'Introduction'}
                         </h3>
-                        <p className="text-slate-900 font-semibold text-sm md:text-base leading-relaxed">
+                        <p className="text-slate-900 font-semibold text-xs md:text-sm leading-relaxed">
                             {category.description}
                         </p>
                     </div>
                 </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-8 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6 mt-8">
                 {category.subItems.map((item, idx) => {
                     const Icon = getIconForSubItem(item);
                     const cardColors = [
@@ -555,7 +555,7 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                         whileHover={{ y: -5, scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => handleSubItemClick(item)}
-                        className={`group relative flex flex-col items-center justify-center w-full h-full min-h-[260px] py-8 md:py-10 ${color.bg} overflow-hidden transition-all duration-300 focus:outline-none shadow-lg`}
+                        className={`group relative flex flex-col items-center justify-center w-full h-full min-h-[200px] py-6 md:py-8 ${color.bg} overflow-hidden transition-all duration-300 focus:outline-none shadow-lg`}
                     >
                         {/* Background Image Overlay */}
                         <div 
@@ -566,20 +566,20 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                         {/* Gradient Overlay for better text readability */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
 
-                        <div className="relative z-10 flex flex-col items-center justify-center h-full p-4 md:p-6 w-full" style={{ perspective: '1000px' }}>
+                        <div className="relative z-10 flex flex-col items-center justify-center h-full p-4 w-full" style={{ perspective: '1000px' }}>
                             {/* Icon */}
-                            <div className="mb-4 md:mb-5 text-white transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)_scale(1.1)]">
-                                <Icon className="w-14 h-14 md:w-16 md:h-16 drop-shadow-md" strokeWidth={1.5} />
+                            <div className="mb-3 md:mb-4 text-white transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)_scale(1.1)]">
+                                <Icon className="w-10 h-10 md:w-12 md:h-12 drop-shadow-md" strokeWidth={1.5} />
                             </div>
 
                             {/* Title */}
-                            <h4 className="text-lg md:text-xl font-bold text-white uppercase tracking-wide text-center mb-2 md:mb-3">
+                            <h4 className="text-base md:text-lg font-bold text-white uppercase tracking-wide text-center mb-2">
                                 {item}
                             </h4>
 
                             {/* Description / Role */}
                             {category.details && category.details[item] && (
-                                <p className="text-xs md:text-sm text-white/90 font-medium text-center line-clamp-4">
+                                <p className="text-[10px] md:text-xs text-white/90 font-medium text-center line-clamp-4">
                                     {category.details[item].role}
                                 </p>
                             )}

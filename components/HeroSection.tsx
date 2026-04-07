@@ -36,7 +36,6 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
   const isHi = lang === 'hi';
 
   return (
-    <VantaBackground>
       <div className="relative w-full min-h-screen overflow-x-hidden flex flex-col bg-transparent">
         {/* Decorative vertical lines */}
       <div className="hidden md:block absolute top-1/2 -translate-y-1/2 right-4 md:right-12 space-y-4 md:space-y-8 z-20 pointer-events-none">
@@ -352,7 +351,6 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
         HUB
       </motion.div>
       </div>
-    </VantaBackground>
   );
 };
 

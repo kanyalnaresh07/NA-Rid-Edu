@@ -155,7 +155,7 @@ const AIHub: React.FC<AIHubProps> = ({ translations, lang }) => {
                 </div>
               </div>
               
-              <div className="prose prose-invert prose-indigo max-w-none prose-p:leading-relaxed prose-pre:bg-slate-950 prose-pre:border prose-pre:border-white/10">
+              <div className="prose prose-invert prose-indigo max-w-none text-slate-300 prose-p:text-slate-300 prose-headings:text-white prose-strong:text-white prose-li:text-slate-300 prose-p:leading-relaxed prose-pre:bg-slate-950 prose-pre:border prose-pre:border-white/10">
                 <ReactMarkdown>{response}</ReactMarkdown>
               </div>
             </motion.div>

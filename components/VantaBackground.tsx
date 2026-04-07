@@ -35,13 +35,13 @@ export default function VantaBackground({ children }: VantaBackgroundProps) {
             color1: 0xff0055,
             color2: 0x00d1ff,
             colorMode: "varianceGradient",
-            quantity: 4.00, // Reduced from 20 to prevent memory overflow (quantity scales exponentially in Vanta Birds)
-            birdSize: 1.00,
-            wingSpan: 30.00,
-            speedLimit: 5.00,
-            separation: 20.00,
+            quantity: 5.00, // Slightly increased for more birds, but safe from overflow
+            birdSize: 2.00, // Adjusted size
+            wingSpan: 30.00, // Adjusted wingspan
+            speedLimit: 6.00,
+            separation: 100.00, // Increased separation to spread across screen
             alignment: 20.00,
-            cohesion: 20.00,
+            cohesion: 10.00, // Decreased cohesion so they don't clump together
             backgroundAlpha: 1.00
           });
           
@@ -62,7 +62,7 @@ export default function VantaBackground({ children }: VantaBackgroundProps) {
 
   return (
     <div className="relative w-full min-h-screen">
-      <div ref={vantaRef} className="absolute inset-0 z-0 pointer-events-none" />
+      <div ref={vantaRef} className="fixed inset-0 w-full h-full z-0 pointer-events-none" />
       <div className="relative z-10 w-full h-full">
         {children}
       </div>

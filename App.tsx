@@ -6,8 +6,8 @@ import LanguageModal from './components/LanguageModal';
 import LoadingSkeleton from './components/LoadingSkeleton';
 import { PageView, Language, GlossaryTerm } from './types';
 import { TRANSLATIONS, AIRFOCUS_LOGO, GLOSSARY_TERMS } from './constants';
+import VantaBackground from './components/VantaBackground';
 
-const NetworkBackground = lazy(() => import('./components/NetworkBackground'));
 const GlossaryList = lazy(() => import('./components/GlossaryList'));
 const SubCategoryList = lazy(() => import('./components/SubCategoryList'));
 const About = lazy(() => import('./components/About'));
@@ -282,12 +282,9 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#020617] relative overflow-x-hidden">
-      <Suspense fallback={null}>
-        {window.innerWidth >= 768 && <NetworkBackground />}
-      </Suspense>
-
-      <div className="relative z-10">
+    <VantaBackground>
+      <div className="min-h-screen bg-transparent relative overflow-x-hidden">
+        <div className="relative z-10">
         <LanguageModal isOpen={showLangModal} onSelect={handleLanguageSelect} />
         
         <AnimatePresence>
@@ -339,33 +336,48 @@ const App: React.FC = () => {
                   <div onClick={handleBackHome} className="cursor-pointer scale-[0.6] sm:scale-75 origin-left md:scale-90 hover:opacity-80 transition-opacity shrink-0">
                       {AIRFOCUS_LOGO}
                   </div>
-                  <nav className="flex items-center gap-1.5 md:gap-6 overflow-x-auto no-scrollbar whitespace-nowrap min-w-0 pr-4 h-full">
-                    <button onClick={handleBackHome} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors hover:text-cyan-400`}>{t.navHome}</button>
-                    <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
-                    <button onClick={handleQuizClick} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.QUIZ ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navQuiz}</button>
-                    <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
-                    <button onClick={handlePhotosClick} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.PHOTOS ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navPhotos}</button>
-                    <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
-                    <button onClick={handleVideosClick} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.VIDEOS ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navVideos}</button>
-                    <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
-                    <button 
-                      onClick={handleAiHubClick} 
-                      className={`relative px-2 py-1 md:px-3 md:py-1.5 rounded-md text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-all overflow-hidden group ${view === PageView.AI_HUB ? 'text-white' : 'text-indigo-200 hover:text-white'}`}
-                    >
-                      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 opacity-20 group-hover:opacity-40 transition-opacity rounded-md"></span>
-                      <span className="absolute inset-0 w-full h-full border border-indigo-500/50 rounded-md"></span>
-                      <span className="relative flex items-center gap-1.5">
-                        <svg className="w-3 h-3 md:w-4 md:h-4 text-cyan-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        {t.navAiHub}
-                      </span>
-                    </button>
-                    <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
-                    <button onClick={handleAboutClick} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.ABOUT ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navAbout}</button>
-                    <span className="text-white/10 md:text-white/20 text-[7px]">/</span>
-                    <button onClick={handleContactClick} className={`text-white text-[7px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.CONTACT ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navContact}</button>
-                  </nav>
+                  <div className="relative flex-1 min-w-0 h-full flex items-center">
+                    <nav className="flex items-center gap-2 md:gap-6 overflow-x-auto no-scrollbar whitespace-nowrap min-w-0 pr-8 md:pr-4 h-full w-full">
+                      <button onClick={handleBackHome} className={`text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors hover:text-cyan-400`}>{t.navHome}</button>
+                      <span className="text-white/10 md:text-white/20 text-[8px]">/</span>
+                      <button 
+                        onClick={handleQuizClick} 
+                        className={`relative px-2 py-1 md:px-3 md:py-1.5 rounded-md text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-all overflow-hidden group shrink-0 ${view === PageView.QUIZ ? 'text-white' : 'text-amber-200 hover:text-white'}`}
+                      >
+                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 opacity-20 group-hover:opacity-40 transition-opacity rounded-md"></span>
+                        <span className="absolute inset-0 w-full h-full border border-amber-500/50 rounded-md"></span>
+                        <span className="relative flex items-center gap-1.5">
+                          <svg className="w-3 h-3 md:w-4 md:h-4 text-amber-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                          </svg>
+                          {t.navQuiz}
+                        </span>
+                      </button>
+                      <span className="text-white/10 md:text-white/20 text-[8px]">/</span>
+                      <button onClick={handlePhotosClick} className={`text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.PHOTOS ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navPhotos}</button>
+                      <span className="text-white/10 md:text-white/20 text-[8px]">/</span>
+                      <button onClick={handleVideosClick} className={`text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.VIDEOS ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navVideos}</button>
+                      <span className="text-white/10 md:text-white/20 text-[8px]">/</span>
+                      <button 
+                        onClick={handleAiHubClick} 
+                        className={`relative px-2 py-1 md:px-3 md:py-1.5 rounded-md text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-all overflow-hidden group shrink-0 ${view === PageView.AI_HUB ? 'text-white' : 'text-indigo-200 hover:text-white'}`}
+                      >
+                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 opacity-20 group-hover:opacity-40 transition-opacity rounded-md"></span>
+                        <span className="absolute inset-0 w-full h-full border border-indigo-500/50 rounded-md"></span>
+                        <span className="relative flex items-center gap-1.5">
+                          <svg className="w-3 h-3 md:w-4 md:h-4 text-cyan-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                          </svg>
+                          {t.navAiHub}
+                        </span>
+                      </button>
+                      <span className="text-white/10 md:text-white/20 text-[8px]">/</span>
+                      <button onClick={handleAboutClick} className={`text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.ABOUT ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navAbout}</button>
+                      <span className="text-white/10 md:text-white/20 text-[8px]">/</span>
+                      <button onClick={handleContactClick} className={`text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.CONTACT ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navContact}</button>
+                    </nav>
+                    <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-slate-950 to-transparent pointer-events-none md:hidden"></div>
+                  </div>
                 </div>
                 
                 <div className="flex items-center gap-1 md:gap-4 shrink-0 h-full">
@@ -525,7 +537,8 @@ const App: React.FC = () => {
           )}
         </AnimatePresence>
       </div>
-    </div>
+      </div>
+    </VantaBackground>
   );
 };
 

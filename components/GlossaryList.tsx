@@ -383,7 +383,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       </p>
                     </div>
                   ) : (
-                    <div className="prose prose-invert max-w-none">
+                    <div className="prose prose-invert max-w-none prose-p:text-slate-300 prose-headings:text-white prose-strong:text-white prose-li:text-slate-300">
                       <div className="text-slate-300 leading-relaxed text-sm md:text-base font-medium space-y-4">
                         <Markdown>{aiResponse}</Markdown>
                       </div>
@@ -419,13 +419,13 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                 <div className="h-3 w-full bg-rose-500 relative">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-8 bg-slate-950 rounded-b-full border-x border-b border-white/10"></div>
                 </div>
-                <div className="p-6 md:p-8 pt-10 flex flex-col md:flex-row gap-5 items-start h-full">
-                  <div className="shrink-0 w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
-                    <Lightbulb size={28} strokeWidth={1.5} />
+                <div className="p-4 md:p-6 pt-8 flex flex-col md:flex-row gap-4 items-start h-full">
+                  <div className="shrink-0 w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                    <Lightbulb size={20} strokeWidth={1.5} />
                   </div>
                   <div className="flex flex-col h-full">
-                    <h3 className="text-lg md:text-xl font-black uppercase tracking-tight mb-3 text-white group-hover:text-rose-400 transition-colors">{translations.heroCards.card1.title}</h3>
-                    <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-medium mb-6">{translations.heroCards.card1.desc}</p>
+                    <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-2 text-white group-hover:text-rose-400 transition-colors">{translations.heroCards.card1.title}</h3>
+                    <p className="text-slate-400 text-[10px] md:text-xs leading-relaxed font-medium mb-4">{translations.heroCards.card1.desc}</p>
                     <div className="mt-auto flex gap-1.5">
                       {[1, 2, 3, 4].map((i) => (
                         <div key={i} className="w-1.5 h-1.5 rounded-full bg-rose-500/30 group-hover:bg-rose-500 transition-all duration-300" style={{ transitionDelay: `${i * 100}ms` }}></div>
@@ -448,13 +448,13 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                 <div className="h-3 w-full bg-blue-500 relative">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-8 bg-slate-950 rounded-b-full border-x border-b border-white/10"></div>
                 </div>
-                <div className="p-6 md:p-8 pt-10 flex flex-col md:flex-row gap-5 items-start h-full">
-                  <div className="shrink-0 w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
-                    <Puzzle size={28} strokeWidth={1.5} />
+                <div className="p-4 md:p-6 pt-8 flex flex-col md:flex-row gap-4 items-start h-full">
+                  <div className="shrink-0 w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                    <Puzzle size={20} strokeWidth={1.5} />
                   </div>
                   <div className="flex flex-col h-full">
-                    <h3 className="text-lg md:text-xl font-black uppercase tracking-tight mb-3 text-white group-hover:text-blue-400 transition-colors">{translations.heroCards.card2.title}</h3>
-                    <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-medium mb-6">{translations.heroCards.card2.desc}</p>
+                    <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-2 text-white group-hover:text-blue-400 transition-colors">{translations.heroCards.card2.title}</h3>
+                    <p className="text-slate-400 text-[10px] md:text-xs leading-relaxed font-medium mb-4">{translations.heroCards.card2.desc}</p>
                     <div className="mt-auto flex gap-1.5">
                       {[1, 2, 3, 4].map((i) => (
                         <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-500/30 group-hover:bg-blue-500 transition-all duration-300" style={{ transitionDelay: `${i * 100}ms` }}></div>
@@ -477,13 +477,13 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                 <div className="h-3 w-full bg-amber-500 relative">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-8 bg-slate-950 rounded-b-full border-x border-b border-white/10"></div>
                 </div>
-                <div className="p-6 md:p-8 pt-10 flex flex-col md:flex-row gap-5 items-start h-full">
-                  <div className="shrink-0 w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
-                    <Megaphone size={28} strokeWidth={1.5} />
+                <div className="p-4 md:p-6 pt-8 flex flex-col md:flex-row gap-4 items-start h-full">
+                  <div className="shrink-0 w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                    <Megaphone size={20} strokeWidth={1.5} />
                   </div>
                   <div className="flex flex-col h-full">
-                    <h3 className="text-lg md:text-xl font-black uppercase tracking-tight mb-3 text-white group-hover:text-amber-400 transition-colors">{translations.heroCards.card3.title}</h3>
-                    <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-medium mb-6">{translations.heroCards.card3.desc}</p>
+                    <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-2 text-white group-hover:text-amber-400 transition-colors">{translations.heroCards.card3.title}</h3>
+                    <p className="text-slate-400 text-[10px] md:text-xs leading-relaxed font-medium mb-4">{translations.heroCards.card3.desc}</p>
                     <div className="mt-auto flex gap-1.5">
                       {[1, 2, 3, 4].map((i) => (
                         <div key={i} className="w-1.5 h-1.5 rounded-full bg-amber-500/30 group-hover:bg-amber-500 transition-all duration-300" style={{ transitionDelay: `${i * 100}ms` }}></div>
@@ -517,7 +517,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity rounded-2xl"></div>
               
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none z-10">
-                <Search className={`w-5 h-5 transition-colors duration-300 ${searchQuery ? 'text-cyan-400' : 'text-slate-500 group-focus-within:text-cyan-400'}`} />
+                <Search className={`w-4 h-4 transition-colors duration-300 ${searchQuery ? 'text-cyan-400' : 'text-slate-500 group-focus-within:text-cyan-400'}`} />
               </div>
               <input
                 type="text"
@@ -525,7 +525,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                 onChange={(e) => handleSearchChangeLocal(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={translations.searchPlaceholder}
-                className="w-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-2xl py-4 pl-14 pr-14 text-base text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50 focus:bg-slate-800/90 transition-all shadow-2xl relative z-0"
+                className="w-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-2xl py-3 pl-12 pr-12 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50 focus:bg-slate-800/90 transition-all shadow-2xl relative z-0"
               />
               {searchQuery && (
                 <button
@@ -550,7 +550,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               whileTap={{ scale: 0.95 }}
               onClick={handleAISearch}
               disabled={!searchQuery.trim()}
-              className={`whitespace-nowrap px-8 py-4 rounded-2xl font-black text-xs tracking-[0.2em] uppercase transition-all flex items-center gap-3 shadow-2xl relative overflow-hidden group/btn ${
+              className={`whitespace-nowrap px-6 py-3 rounded-2xl font-black text-[10px] tracking-[0.2em] uppercase transition-all flex items-center gap-2 shadow-2xl relative overflow-hidden group/btn ${
                 searchQuery.trim() 
                   ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white border border-white/20' 
                   : 'bg-slate-800 text-slate-500 border border-white/5 cursor-not-allowed'
@@ -667,40 +667,43 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-20 md:gap-24 lg:gap-32 px-4 md:px-8 max-w-[1700px] mx-auto"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 md:gap-16 lg:gap-20 px-4 md:px-8 max-w-[1700px] mx-auto"
             >
               {filteredTerms.map((term, index) => {
                 const color = circleColors[index % circleColors.length];
                 const Icon = circleIcons[index % circleIcons.length];
                 
-                // Update connector logic for 3 items per row
-                const getConnectorClassesFor3 = (index: number, total: number) => {
+                // Update connector logic for responsive columns
+                const getConnectorClasses = (index: number, total: number) => {
                   if (index === total - 1) return 'hidden';
                   
                   // Mobile (1 column): hide all connectors
-                  const mobileClass = 'hidden md:flex';
+                  const mobileClass = 'hidden sm:flex';
                   
                   // Tablet (2 columns): hide on every 2nd item
-                  const tabletClass = (index + 1) % 2 === 0 ? 'md:hidden xl:flex' : '';
+                  const tabletClass = (index + 1) % 2 === 0 ? 'sm:hidden lg:flex' : '';
                   
                   // Desktop (3 columns): hide on every 3rd item
-                  const desktopClass = (index + 1) % 3 === 0 ? 'xl:hidden' : '';
+                  const desktopClass = (index + 1) % 3 === 0 ? 'lg:hidden xl:flex' : '';
+
+                  // XL Desktop (4 columns): hide on every 4th item
+                  const xlClass = (index + 1) % 4 === 0 ? 'xl:hidden' : '';
                   
-                  return `${mobileClass} ${tabletClass} ${desktopClass}`;
+                  return `${mobileClass} ${tabletClass} ${desktopClass} ${xlClass}`;
                 };
 
                 return (
                   <div key={term.id} className="relative flex justify-center items-center w-full">
                     {/* Connector Lines */}
-                    <div className={`absolute top-1/2 -right-10 md:-right-12 lg:-right-16 xl:-right-20 w-10 md:w-12 lg:w-16 xl:w-20 h-8 -translate-y-1/2 z-0 flex flex-col justify-center gap-3 ${getConnectorClassesFor3(index, filteredTerms.length)}`}>
-                      <div className={`w-full h-[6px] md:h-[8px] ${color.line} opacity-20 rounded-full relative overflow-hidden`}>
+                    <div className={`absolute top-1/2 -right-6 md:-right-8 lg:-right-10 xl:-right-10 w-6 md:w-8 lg:w-10 xl:w-10 h-6 -translate-y-1/2 z-0 flex flex-col justify-center gap-2 ${getConnectorClasses(index, filteredTerms.length)}`}>
+                      <div className={`w-full h-[4px] md:h-[6px] ${color.line} opacity-20 rounded-full relative overflow-hidden`}>
                         <motion.div 
                           animate={{ x: ['-100%', '100%'] }}
                           transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
                           className="absolute inset-0 bg-white/40"
                         />
                       </div>
-                      <div className={`w-full h-[6px] md:h-[8px] ${color.line} opacity-20 rounded-full relative overflow-hidden`}>
+                      <div className={`w-full h-[4px] md:h-[6px] ${color.line} opacity-20 rounded-full relative overflow-hidden`}>
                         <motion.div 
                           animate={{ x: ['100%', '-100%'] }}
                           transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
@@ -717,38 +720,38 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       whileTap={{ scale: 0.95 }}
                       transition={{ type: "spring", damping: 20, stiffness: 100, delay: index * 0.05 }}
                       onClick={() => onCategorySelect(term)}
-                      className={`relative w-[340px] sm:w-[380px] md:w-[420px] lg:w-[460px] aspect-square rounded-full border-[14px] md:border-[20px] ${color.border} bg-white flex flex-col items-center justify-center p-12 md:p-16 text-center group z-10 shadow-[0_30px_60px_rgba(0,0,0,0.4)] focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50 overflow-visible`}
+                      className={`relative w-[220px] sm:w-[240px] md:w-[260px] lg:w-[280px] aspect-square rounded-full border-[8px] md:border-[12px] ${color.border} bg-white flex flex-col items-center justify-center p-6 md:p-8 text-center group z-10 shadow-[0_15px_30px_rgba(0,0,0,0.4)] focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50 overflow-visible`}
                     >
                       {/* Premium Loader Animation Rings */}
                       <div 
-                        className={`absolute inset-[-18px] md:inset-[-26px] rounded-full border-[4px] md:border-[6px] border-transparent ${color.text} opacity-60 animate-[spin_4s_linear_infinite] pointer-events-none`}
+                        className={`absolute inset-[-12px] md:inset-[-16px] rounded-full border-[3px] md:border-[4px] border-transparent ${color.text} opacity-60 animate-[spin_4s_linear_infinite] pointer-events-none`}
                         style={{ borderTopColor: 'currentColor', borderRightColor: 'currentColor' }}
                       ></div>
                       <div 
-                        className={`absolute inset-[-26px] md:inset-[-38px] rounded-full border-[2px] border-dashed ${color.text} opacity-30 animate-[spin_10s_linear_infinite_reverse] pointer-events-none`}
+                        className={`absolute inset-[-18px] md:inset-[-24px] rounded-full border-[1px] md:border-[2px] border-dashed ${color.text} opacity-30 animate-[spin_10s_linear_infinite_reverse] pointer-events-none`}
                         style={{ borderColor: 'currentColor' }}
                       ></div>
                       <div 
-                        className={`absolute inset-[-36px] md:inset-[-50px] rounded-full border-[3px] border-transparent ${color.text} opacity-40 animate-[spin_6s_linear_infinite] pointer-events-none`}
+                        className={`absolute inset-[-24px] md:inset-[-32px] rounded-full border-[2px] md:border-[3px] border-transparent ${color.text} opacity-40 animate-[spin_6s_linear_infinite] pointer-events-none`}
                         style={{ borderBottomColor: 'currentColor', borderLeftColor: 'currentColor' }}
                       >
-                        <div className={`absolute bottom-[14%] right-[14%] w-3 h-3 md:w-4 md:h-4 rounded-full ${color.line} shadow-[0_0_15px_currentColor] animate-pulse`}></div>
+                        <div className={`absolute bottom-[14%] right-[14%] w-2 h-2 md:w-3 md:h-3 rounded-full ${color.line} shadow-[0_0_10px_currentColor] animate-pulse`}></div>
                       </div>
 
                       {/* Inner dashed ring */}
-                      <div className="absolute inset-4 border-2 border-dashed border-slate-100 rounded-full pointer-events-none"></div>
+                      <div className="absolute inset-3 border border-dashed border-slate-100 rounded-full pointer-events-none"></div>
 
-                      <div className={`mb-6 md:mb-8 ${color.text} transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)_scale(1.2)]`} style={{ perspective: '1000px' }}>
-                        <Icon className="w-20 h-20 md:w-24 md:h-24" strokeWidth={1} />
+                      <div className={`mb-3 md:mb-4 ${color.text} transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)_scale(1.2)]`} style={{ perspective: '1000px' }}>
+                        <Icon className="w-10 h-10 md:w-12 md:h-12" strokeWidth={1.5} />
                       </div>
                       
-                      <h3 className="text-slate-900 font-black text-2xl md:text-4xl uppercase tracking-widest mb-4 line-clamp-2 px-6 leading-tight group-hover:text-cyan-600 transition-colors">
+                      <h3 className="text-slate-900 font-black text-sm md:text-lg uppercase tracking-widest mb-2 line-clamp-2 px-4 leading-tight group-hover:text-cyan-600 transition-colors">
                         {term.title}
                       </h3>
                       
-                      <div className="w-16 h-1.5 bg-slate-200 mb-6 rounded-full group-hover:w-24 group-hover:bg-cyan-500 transition-all duration-500"></div>
+                      <div className="w-10 h-1 bg-slate-200 mb-3 rounded-full group-hover:w-16 group-hover:bg-cyan-500 transition-all duration-500"></div>
 
-                      <p className="text-slate-500 text-[13px] md:text-[15px] font-bold px-6 line-clamp-3 leading-relaxed tracking-wide">
+                      <p className="text-slate-500 text-[10px] md:text-xs font-bold px-4 line-clamp-3 leading-relaxed tracking-wide">
                         {term.subItems.join(', ')}
                       </p>
                     </motion.button>

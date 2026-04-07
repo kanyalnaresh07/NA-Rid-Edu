@@ -16,7 +16,7 @@ export const searchWithAI = async (query: string, lang: Language = 'en') => {
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-flash-latest",
+      model: "gemini-2.5-flash",
       contents: [{ parts: [{ text: query }] }],
       config: {
         systemInstruction,
@@ -36,6 +36,55 @@ export const searchWithAI = async (query: string, lang: Language = 'en') => {
   }
 };
 
+export const generateQuiz = async (topic: string, difficulty: string, count: number, lang: Language = 'en') => {
+  if (!apiKey) {
+    console.error("GEMINI_API_KEY is missing from environment variables.");
+    throw new Error("Gemini API key is not configured.");
+  }
+  const ai = new GoogleGenAI({ apiKey });
+  
+  const languagePrompt = lang === 'hi' ? 'in Hindi language' : 'in English language';
+
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: [{ parts: [{ text: `Generate a multiple-choice quiz about "${topic}" in the context of manufacturing and industrial production. The difficulty level should be ${difficulty}. Generate exactly ${count} questions. The response must be ${languagePrompt}.` }] }],
+      config: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.OBJECT,
+          properties: {
+            questions: {
+              type: Type.ARRAY,
+              items: {
+                type: Type.OBJECT,
+                properties: {
+                  id: { type: Type.STRING },
+                  text: { type: Type.STRING },
+                  options: {
+                    type: Type.ARRAY,
+                    items: { type: Type.STRING }
+                  },
+                  correctAnswerIndex: { type: Type.INTEGER },
+                  explanation: { type: Type.STRING }
+                },
+                required: ["id", "text", "options", "correctAnswerIndex", "explanation"]
+              }
+            }
+          },
+          required: ["questions"]
+        }
+      }
+    });
+
+    const result = JSON.parse(response.text || "{}");
+    return result.questions || [];
+  } catch (error: any) {
+    console.error("Error generating quiz:", error);
+    throw error;
+  }
+};
+
 export const getTermDefinition = async (term: string, lang: Language = 'en') => {
   if (!apiKey) {
     console.error("GEMINI_API_KEY is missing from environment variables.");
@@ -47,7 +96,7 @@ export const getTermDefinition = async (term: string, lang: Language = 'en') => 
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-flash-latest",
+      model: "gemini-2.5-flash",
       contents: [{ parts: [{ text: `Explain the technical term "${term}" ${languagePrompt} specifically in the context of a Manufacturing hub and industrial production. Focus on efficiency, quality control, or process optimization where relevant. Keep it professional and concise, like a glossary entry. Return the response in ${lang === 'hi' ? 'Hindi' : 'English'}.` }] }],
       config: {
         responseMimeType: "application/json",
