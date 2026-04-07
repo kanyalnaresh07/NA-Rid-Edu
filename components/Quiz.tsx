@@ -59,8 +59,39 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
   const startQuiz = async () => {
     setState('loading');
     try {
-      const generatedQuestions = await generateQuiz(topic, difficulty, questionCount, lang);
+      // Load and filter recent questions to prevent repetition
+      const RECENT_QUESTIONS_KEY = 'narid_recent_quiz_questions';
+      const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+      const now = Date.now();
+      
+      let storedQuestions: {text: string, timestamp: number}[] = [];
+      try {
+        const stored = localStorage.getItem(RECENT_QUESTIONS_KEY);
+        if (stored) {
+          storedQuestions = JSON.parse(stored);
+          // Filter out questions older than 1 week
+          storedQuestions = storedQuestions.filter(q => (now - q.timestamp) < ONE_WEEK_MS);
+        }
+      } catch (e) {
+        console.error("Failed to parse recent questions", e);
+      }
+
+      const recentQuestionTexts = storedQuestions.map(q => q.text);
+
+      const generatedQuestions = await generateQuiz(topic, difficulty, questionCount, lang, recentQuestionTexts);
+      
       if (generatedQuestions && generatedQuestions.length > 0) {
+        // Save new questions to localStorage
+        const newStoredQuestions = [
+          ...storedQuestions,
+          ...generatedQuestions.map((q: any) => ({ text: q.text, timestamp: now }))
+        ];
+        // Keep only the last 200 questions to avoid localStorage bloat
+        if (newStoredQuestions.length > 200) {
+          newStoredQuestions.splice(0, newStoredQuestions.length - 200);
+        }
+        localStorage.setItem(RECENT_QUESTIONS_KEY, JSON.stringify(newStoredQuestions));
+
         setQuestions(generatedQuestions);
         setCurrentIndex(0);
         setScore(0);

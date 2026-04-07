@@ -36,7 +36,7 @@ export const searchWithAI = async (query: string, lang: Language = 'en') => {
   }
 };
 
-export const generateQuiz = async (topic: string, difficulty: string, count: number, lang: Language = 'en') => {
+export const generateQuiz = async (topic: string, difficulty: string, count: number, lang: Language = 'en', recentQuestions: string[] = []) => {
   if (!apiKey) {
     console.error("GEMINI_API_KEY is missing from environment variables.");
     throw new Error("Gemini API key is not configured.");
@@ -45,10 +45,22 @@ export const generateQuiz = async (topic: string, difficulty: string, count: num
   
   const languagePrompt = lang === 'hi' ? 'in Hindi language' : 'in English language';
 
+  let avoidPrompt = "";
+  if (recentQuestions && recentQuestions.length > 0) {
+    // Limit to last 50 questions to avoid token limits
+    const recentSample = recentQuestions.slice(-50);
+    avoidPrompt = `\nIMPORTANT: Do NOT generate any questions similar to the following recently asked questions to ensure variety:\n${recentSample.map(q => `- ${q}`).join('\n')}`;
+  }
+
+  const promptText = `Generate a multiple-choice quiz about "${topic}" specifically in the context of the electronics manufacturing industry. The difficulty level should be ${difficulty}. Generate exactly ${count} questions. The response must be ${languagePrompt}.
+  
+For each question, provide a detailed 'explanation' that describes exactly WHY the correct answer is correct, WHERE this concept is used in electronics manufacturing, and WHAT it means in practical terms. Make the explanation highly educational.
+${avoidPrompt}`;
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: [{ parts: [{ text: `Generate a multiple-choice quiz about "${topic}" in the context of manufacturing and industrial production. The difficulty level should be ${difficulty}. Generate exactly ${count} questions. The response must be ${languagePrompt}.` }] }],
+      contents: [{ parts: [{ text: promptText }] }],
       config: {
         responseMimeType: "application/json",
         responseSchema: {
@@ -66,7 +78,7 @@ export const generateQuiz = async (topic: string, difficulty: string, count: num
                     items: { type: Type.STRING }
                   },
                   correctAnswerIndex: { type: Type.INTEGER },
-                  explanation: { type: Type.STRING }
+                  explanation: { type: Type.STRING, description: "Detailed explanation of why the answer is correct, where it is used, and what it means." }
                 },
                 required: ["id", "text", "options", "correctAnswerIndex", "explanation"]
               }
