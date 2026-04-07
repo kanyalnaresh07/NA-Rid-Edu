@@ -35,13 +35,13 @@ export default function VantaBackground({ children }: VantaBackgroundProps) {
             color1: 0xff0055,
             color2: 0x00d1ff,
             colorMode: "varianceGradient",
-            quantity: 5.00, // Slightly increased for more birds, but safe from overflow
-            birdSize: 2.00, // Adjusted size
-            wingSpan: 30.00, // Adjusted wingspan
+            quantity: 5.00,
+            birdSize: 2.00,
+            wingSpan: 30.00,
             speedLimit: 6.00,
-            separation: 100.00, // Increased separation to spread across screen
+            separation: 100.00,
             alignment: 20.00,
-            cohesion: 10.00, // Decreased cohesion so they don't clump together
+            cohesion: 10.00,
             backgroundAlpha: 1.00
           });
           
@@ -60,9 +60,19 @@ export default function VantaBackground({ children }: VantaBackgroundProps) {
     };
   }, [vantaEffect]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (vantaEffect && typeof vantaEffect.resize === 'function') {
+        vantaEffect.resize();
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [vantaEffect]);
+
   return (
     <div className="relative w-full min-h-screen">
-      <div ref={vantaRef} className="fixed inset-0 w-full h-full z-0 pointer-events-none" />
+      <div ref={vantaRef} className="fixed top-0 left-0 w-full h-[100dvh] z-0 pointer-events-none" />
       <div className="relative z-10 w-full h-full">
         {children}
       </div>
