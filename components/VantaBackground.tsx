@@ -67,12 +67,19 @@ export default function VantaBackground({ children }: VantaBackgroundProps) {
       }
     };
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
   }, [vantaEffect]);
 
   return (
-    <div className="relative w-full min-h-screen">
-      <div ref={vantaRef} className="fixed top-0 left-0 w-full h-[100dvh] z-0 pointer-events-none" />
+    <div className="relative w-full min-h-screen bg-[#07192f]">
+      <div 
+        ref={vantaRef} 
+        className="fixed top-0 left-0 w-screen h-screen z-0 pointer-events-none" 
+      />
       <div className="relative z-10 w-full h-full">
         {children}
       </div>
