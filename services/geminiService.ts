@@ -52,7 +52,12 @@ export const generateQuiz = async (topic: string, difficulty: string, count: num
     avoidPrompt = `\nIMPORTANT: Do NOT generate any questions similar to the following recently asked questions to ensure variety:\n${recentSample.map(q => `- ${q}`).join('\n')}`;
   }
 
-  const promptText = `Generate a multiple-choice quiz about "${topic}" specifically in the context of the electronics manufacturing industry. The difficulty level should be ${difficulty}. Generate exactly ${count} questions. The response must be ${languagePrompt}.
+  let topicContext = `specifically in the context of the electronics manufacturing industry.`;
+  if (topic.includes("Production Operations")) {
+    topicContext = `specifically in the context of the electronics manufacturing industry, focusing on a combination of SMT (Surface Mount Technology), MI (Manual Insertion), AI (Auto Insertion), and FATP (Final Assembly, Test, and Pack-out) processes.`;
+  }
+
+  const promptText = `Generate a multiple-choice quiz about "${topic}" ${topicContext} The difficulty level should be ${difficulty}. Generate exactly ${count} questions. The response must be ${languagePrompt}.
   
 For each question, provide a detailed 'explanation' that describes exactly WHY the correct answer is correct, WHERE this concept is used in electronics manufacturing, and WHAT it means in practical terms. Make the explanation highly educational.
 ${avoidPrompt}`;

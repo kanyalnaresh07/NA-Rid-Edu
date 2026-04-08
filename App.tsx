@@ -6,7 +6,7 @@ import LanguageModal from './components/LanguageModal';
 import LoadingSkeleton from './components/LoadingSkeleton';
 import { PageView, Language, GlossaryTerm } from './types';
 import { TRANSLATIONS, AIRFOCUS_LOGO, GLOSSARY_TERMS } from './constants';
-import VantaBackground from './components/VantaBackground';
+import AppBackground from './components/AppBackground';
 
 const GlossaryList = lazy(() => import('./components/GlossaryList'));
 const SubCategoryList = lazy(() => import('./components/SubCategoryList'));
@@ -166,6 +166,22 @@ const App: React.FC = () => {
 
   const navigateTo = (targetView: PageView, additionalState: any = {}) => {
     if (targetView !== view || Object.keys(additionalState).length > 0) {
+      // Preload the next view if it's a lazy component
+      // This helps reduce the "Loading..." flash
+      const preloadMap: Record<string, () => Promise<any>> = {
+        [PageView.GLOSSARY]: () => import('./components/GlossaryList'),
+        [PageView.ABOUT]: () => import('./components/About'),
+        [PageView.QUIZ]: () => import('./components/Quiz'),
+        [PageView.PHOTOS]: () => import('./components/Photos'),
+        [PageView.VIDEOS]: () => import('./components/Videos'),
+        [PageView.AI_HUB]: () => import('./components/AIHub'),
+        [PageView.CONTACT]: () => import('./components/Contact'),
+      };
+      
+      if (preloadMap[targetView]) {
+        preloadMap[targetView]();
+      }
+
       setViewHistory(prev => [...prev, targetView]);
       setView(targetView);
       
@@ -181,7 +197,7 @@ const App: React.FC = () => {
       } catch (e) {
         console.warn("History API not available:", e);
       }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
   };
 
@@ -282,7 +298,7 @@ const App: React.FC = () => {
   );
 
   return (
-    <VantaBackground>
+    <AppBackground>
       <div className="min-h-screen bg-transparent relative overflow-x-hidden">
         <div className="relative z-10">
         <LanguageModal isOpen={showLangModal} onSelect={handleLanguageSelect} />
@@ -387,14 +403,15 @@ const App: React.FC = () => {
 
               <main className="flex-grow">
                 <Suspense fallback={<LoadingSkeleton />}>
-                  <AnimatePresence mode="wait">
+                  <AnimatePresence mode="wait" initial={false}>
                     {view === PageView.GLOSSARY && (
                     <motion.div
                       key="glossary-list"
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                      transition={{ duration: 0.4 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.15, ease: "linear" }}
+                      style={{ willChange: "transform, opacity" }}
                     >
                       <GlossaryList 
                         translations={t} 
@@ -415,10 +432,11 @@ const App: React.FC = () => {
                   {view === PageView.CATEGORY_DETAIL && selectedCategory && (
                     <motion.div
                       key="category-detail"
-                      initial={{ opacity: 0, x: 20 }}
+                      initial={{ opacity: 0, x: 10 }}
                       animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.4 }}
+                      exit={{ opacity: 0, x: -10 }}
+                      transition={{ duration: 0.15, ease: "linear" }}
+                      style={{ willChange: "transform, opacity" }}
                     >
                       <SubCategoryList 
                         category={selectedCategory}
@@ -433,10 +451,11 @@ const App: React.FC = () => {
                   {view === PageView.ABOUT && (
                     <motion.div
                       key="about"
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.4 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.15, ease: "linear" }}
+                      style={{ willChange: "transform, opacity" }}
                     >
                       <About translations={t} lang={lang} />
                     </motion.div>
@@ -444,10 +463,11 @@ const App: React.FC = () => {
                   {view === PageView.QUIZ && (
                     <motion.div
                       key="quiz"
-                      initial={{ opacity: 0, scale: 0.9 }}
+                      initial={{ opacity: 0, scale: 0.98 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 1.1 }}
-                      transition={{ duration: 0.4 }}
+                      exit={{ opacity: 0, scale: 1.02 }}
+                      transition={{ duration: 0.15, ease: "linear" }}
+                      style={{ willChange: "transform, opacity" }}
                     >
                       <Quiz translations={t} lang={lang} />
                     </motion.div>
@@ -455,10 +475,11 @@ const App: React.FC = () => {
                   {view === PageView.PHOTOS && (
                     <motion.div
                       key="photos"
-                      initial={{ opacity: 0, filter: "blur(10px)" }}
-                      animate={{ opacity: 1, filter: "blur(0px)" }}
-                      exit={{ opacity: 0, filter: "blur(10px)" }}
-                      transition={{ duration: 0.4 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.15, ease: "linear" }}
+                      style={{ willChange: "opacity" }}
                     >
                       <Photos translations={t} lang={lang} />
                     </motion.div>
@@ -466,10 +487,11 @@ const App: React.FC = () => {
                   {view === PageView.VIDEOS && (
                     <motion.div
                       key="videos"
-                      initial={{ opacity: 0, filter: "blur(10px)" }}
-                      animate={{ opacity: 1, filter: "blur(0px)" }}
-                      exit={{ opacity: 0, filter: "blur(10px)" }}
-                      transition={{ duration: 0.4 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.15, ease: "linear" }}
+                      style={{ willChange: "opacity" }}
                     >
                       <Videos translations={t} lang={lang} />
                     </motion.div>
@@ -477,10 +499,11 @@ const App: React.FC = () => {
                   {view === PageView.AI_HUB && (
                     <motion.div
                       key="ai_hub"
-                      initial={{ opacity: 0, scale: 0.95 }}
+                      initial={{ opacity: 0, scale: 0.98 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 1.05 }}
-                      transition={{ duration: 0.4 }}
+                      exit={{ opacity: 0, scale: 1.02 }}
+                      transition={{ duration: 0.15, ease: "linear" }}
+                      style={{ willChange: "transform, opacity" }}
                     >
                       <AIHub translations={t} lang={lang} />
                     </motion.div>
@@ -488,10 +511,11 @@ const App: React.FC = () => {
                   {view === PageView.CONTACT && (
                     <motion.div
                       key="contact"
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.4 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.15, ease: "linear" }}
+                      style={{ willChange: "transform, opacity" }}
                     >
                       <Contact translations={t} />
                     </motion.div>
@@ -499,10 +523,11 @@ const App: React.FC = () => {
                   {view === PageView.PRIVACY && (
                     <motion.div
                       key="privacy"
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.4 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.15, ease: "linear" }}
+                      style={{ willChange: "transform, opacity" }}
                     >
                       <PrivacyPolicy translations={t} />
                     </motion.div>
@@ -538,7 +563,7 @@ const App: React.FC = () => {
         </AnimatePresence>
       </div>
       </div>
-    </VantaBackground>
+    </AppBackground>
   );
 };
 

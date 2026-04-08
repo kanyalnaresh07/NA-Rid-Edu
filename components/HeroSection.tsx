@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { AIRFOCUS_LOGO } from '../constants';
 import { Language } from '../types';
 import { ChevronRight, Target, Lightbulb, CheckCircle2, Wrench, Sparkles } from 'lucide-react';
-import VantaBackground from './VantaBackground';
 
 interface HeroProps {
   title: string;

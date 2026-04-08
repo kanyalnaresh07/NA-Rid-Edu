@@ -25,11 +25,12 @@ interface AIQuestion {
 }
 
 const TOPICS = [
-  "Production Planning",
-  "Quality Control",
+  "Production Operations (SMT/MI/AI/FATP)",
+  "Electronics Assembly (SMT/THT)",
+  "Quality Control & Testing",
+  "Production Planning & Control",
   "Lean Manufacturing",
-  "Supply Chain Management",
-  "Industrial Safety",
+  "Industrial Safety & ESD",
   "Equipment Maintenance"
 ];
 
@@ -177,7 +178,7 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
              <polygon points="50 5, 95 27.5, 95 72.5, 50 95, 5 72.5, 5 27.5" />
           </svg>
         </div>
-        <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 uppercase tracking-tighter mb-4">
+        <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 uppercase tracking-tighter mb-4 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]">
           {isHi ? 'Na-rid क्विज़' : 'Na-rid QUIZ'}
         </h2>
         <p className="text-slate-400 text-sm md:text-lg max-w-2xl mx-auto font-medium leading-relaxed">
