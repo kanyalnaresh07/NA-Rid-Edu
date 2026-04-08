@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { Play, Video, Clock, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Play, Video, Clock, ExternalLink, X } from 'lucide-react';
 import { Language } from '../types';
 
 interface VideosProps {
@@ -10,31 +10,17 @@ interface VideosProps {
 
 const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
   const isHi = lang === 'hi';
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   const videoList = [
     {
-      id: 'v1',
-      title: isHi ? '5S कार्यप्रणाली का परिचय' : 'Introduction to 5S Methodology',
-      description: isHi ? 'कार्यस्थल संगठन और दक्षता के लिए 5S के बुनियादी सिद्धांतों को समझें।' : 'Understand the basic principles of 5S for workplace organization and efficiency.',
-      duration: '12:45',
-      thumbnail: 'https://picsum.photos/seed/5s/800/450',
-      category: 'Production'
-    },
-    {
-      id: 'v2',
-      title: isHi ? 'Kaizen: निरंतर सुधार' : 'Kaizen: Continuous Improvement',
-      description: isHi ? 'कैसे छोटे बदलाव बड़े औद्योगिक सुधार ला सकते हैं।' : 'How small changes can lead to massive industrial improvements.',
-      duration: '15:20',
-      thumbnail: 'https://picsum.photos/seed/kaizen/800/450',
-      category: 'Process'
-    },
-    {
-      id: 'v3',
-      title: isHi ? 'गुणवत्ता नियंत्रण (QC) मूल बातें' : 'Quality Control (QC) Basics',
-      description: isHi ? 'विनिर्माण में उच्च गुणवत्ता मानकों को बनाए रखने की तकनीकें।' : 'Techniques for maintaining high quality standards in manufacturing.',
-      duration: '10:30',
-      thumbnail: 'https://picsum.photos/seed/quality/800/450',
-      category: 'Quality'
+      id: 'v4',
+      title: 'Excel full hindi course',
+      description: isHi ? 'एक्सेल का पूरा कोर्स हिंदी में सीखें।' : 'Learn the complete Excel course in Hindi.',
+      duration: 'Course',
+      thumbnail: 'https://img.youtube.com/vi/OX-iyb-21tk/hqdefault.jpg',
+      category: 'Software',
+      videoUrl: 'https://www.youtube.com/embed/OX-iyb-21tk'
     }
   ];
 
@@ -63,7 +49,8 @@ const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
-            className="group bg-slate-900/50 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/50 transition-all shadow-2xl"
+            className="group bg-slate-900/50 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/50 transition-all shadow-2xl cursor-pointer"
+            onClick={() => video.videoUrl && setSelectedVideo(video.videoUrl)}
           >
             <div className="relative aspect-video overflow-hidden">
               <img 
@@ -94,7 +81,17 @@ const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
               <p className="text-slate-500 text-xs font-medium leading-relaxed mb-6 line-clamp-2">
                 {video.description}
               </p>
-              <button className="w-full py-3 rounded-xl bg-white/5 border border-white/10 text-white text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-cyan-500 hover:border-cyan-500 transition-all active:scale-95">
+              <button 
+                className="w-full py-3 rounded-xl bg-white/5 border border-white/10 text-white text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-cyan-500 hover:border-cyan-500 transition-all active:scale-95"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (video.videoUrl) {
+                    setSelectedVideo(video.videoUrl);
+                  } else {
+                    alert(isHi ? 'यह वीडियो अभी उपलब्ध नहीं है।' : 'This video is not available yet.');
+                  }
+                }}
+              >
                 {isHi ? 'अभी देखें' : 'Watch Now'}
                 <ExternalLink size={14} />
               </button>
@@ -126,6 +123,42 @@ const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
           </p>
         </div>
       </motion.div>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {selectedVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
+            onClick={() => setSelectedVideo(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelectedVideo(null)}
+                className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-red-500 text-white rounded-full transition-colors"
+              >
+                <X size={24} />
+              </button>
+              <iframe
+                src={`${selectedVideo}?autoplay=1`}
+                title="YouTube video player"
+                className="w-full h-full"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
