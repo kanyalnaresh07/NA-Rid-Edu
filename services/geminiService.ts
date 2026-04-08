@@ -83,7 +83,17 @@ ${avoidPrompt}`;
                     items: { type: Type.STRING }
                   },
                   correctAnswerIndex: { type: Type.INTEGER },
-                  explanation: { type: Type.STRING, description: "Detailed explanation of why the answer is correct, where it is used, and what it means." }
+                  explanation: { 
+                    type: Type.OBJECT, 
+                    description: "Detailed explanation broken down into parts",
+                    properties: {
+                      general: { type: Type.STRING, description: "General context or introduction" },
+                      why: { type: Type.STRING, description: "Why the correct answer is correct" },
+                      where: { type: Type.STRING, description: "Where this concept is used in electronics manufacturing" },
+                      what: { type: Type.STRING, description: "What it means in practical terms" }
+                    },
+                    required: ["general", "why", "where", "what"]
+                  }
                 },
                 required: ["id", "text", "options", "correctAnswerIndex", "explanation"]
               }

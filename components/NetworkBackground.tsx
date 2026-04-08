@@ -125,7 +125,7 @@ const NetworkBackground: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 z-0 pointer-events-none bg-[#000a14]"
+      className="fixed inset-0 z-0 pointer-events-none bg-transparent"
       style={{ display: 'block' }}
     />
   );

@@ -1,44 +1,45 @@
 
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, Settings, Lightbulb, Rocket, BarChart, Target, Factory, ShieldCheck, Wrench, CalendarClock, Box, Truck, Users, DollarSign, Monitor, ShieldAlert, Info } from 'lucide-react';
 import { GlossaryTerm, Language, DepartmentDetail, PageView } from '../types';
 import { getTermDefinition } from '../services/geminiService';
 import Markdown from 'react-markdown';
-import T5SDetail from './T5SDetail';
-import PPEDetail from './PPEDetail';
-import WIDetail from './WIDetail';
-import TimeManagementDetail from './TimeManagementDetail';
-import ProductivityDetail from './ProductivityDetail';
-import QualityDetail from './QualityDetail';
-import ManpowerDetail from './ManpowerDetail';
-import MaterialHandlingDetail from './MaterialHandlingDetail';
-import SLEDetail from './SLEDetail';
-import OEEDetail from './OEEDetail';
-import LOBDetail from './LOBDetail';
-import ManufacturingLossDetail from './ManufacturingLossDetail';
-import ValueAnalysisDetail from './ValueAnalysisDetail';
-import FourPrinciplesDetail from './FourPrinciplesDetail';
-import QualityManagementDetail from './QualityManagementDetail';
-import KaizenPokaYokeDetail from './KaizenPokaYokeDetail';
-import FMEADMAICDetail from './FMEADMAICDetail';
-import ControlPlanDetail from './ControlPlanDetail';
-import APQPPPAPDetail from './APQPPPAPDetail';
-import ProcessEngineeringDetail from './ProcessEngineeringDetail';
-import MaintenanceDetail from './MaintenanceDetail';
-import PlanningDetail from './PlanningDetail';
-import StoreInventoryDetail from './StoreInventoryDetail';
-import PurchaseProcurementDetail from './PurchaseProcurementDetail';
-import LogisticsDetail from './LogisticsDetail';
-import RDDesignDetail from './RDDesignDetail';
-import HRAdminDetail from './HRAdminDetail';
-import FinanceDetail from './FinanceDetail';
-import ITSystemsDetail from './ITSystemsDetail';
-import EHSDetail from './EHSDetail';
-import SMEDDetail from './SMEDDetail';
-import AndonDetail from './AndonDetail';
-import JITKanbanPullDetail from './JITKanbanPullDetail';
-import ImprovementPrincipleDetail from './ImprovementPrincipleDetail';
+
+const T5SDetail = lazy(() => import('./T5SDetail'));
+const PPEDetail = lazy(() => import('./PPEDetail'));
+const WIDetail = lazy(() => import('./WIDetail'));
+const TimeManagementDetail = lazy(() => import('./TimeManagementDetail'));
+const ProductivityDetail = lazy(() => import('./ProductivityDetail'));
+const QualityDetail = lazy(() => import('./QualityDetail'));
+const ManpowerDetail = lazy(() => import('./ManpowerDetail'));
+const MaterialHandlingDetail = lazy(() => import('./MaterialHandlingDetail'));
+const SLEDetail = lazy(() => import('./SLEDetail'));
+const OEEDetail = lazy(() => import('./OEEDetail'));
+const LOBDetail = lazy(() => import('./LOBDetail'));
+const ManufacturingLossDetail = lazy(() => import('./ManufacturingLossDetail'));
+const ValueAnalysisDetail = lazy(() => import('./ValueAnalysisDetail'));
+const FourPrinciplesDetail = lazy(() => import('./FourPrinciplesDetail'));
+const QualityManagementDetail = lazy(() => import('./QualityManagementDetail'));
+const KaizenPokaYokeDetail = lazy(() => import('./KaizenPokaYokeDetail'));
+const FMEADMAICDetail = lazy(() => import('./FMEADMAICDetail'));
+const ControlPlanDetail = lazy(() => import('./ControlPlanDetail'));
+const APQPPPAPDetail = lazy(() => import('./APQPPPAPDetail'));
+const ProcessEngineeringDetail = lazy(() => import('./ProcessEngineeringDetail'));
+const MaintenanceDetail = lazy(() => import('./MaintenanceDetail'));
+const PlanningDetail = lazy(() => import('./PlanningDetail'));
+const StoreInventoryDetail = lazy(() => import('./StoreInventoryDetail'));
+const PurchaseProcurementDetail = lazy(() => import('./PurchaseProcurementDetail'));
+const LogisticsDetail = lazy(() => import('./LogisticsDetail'));
+const RDDesignDetail = lazy(() => import('./RDDesignDetail'));
+const HRAdminDetail = lazy(() => import('./HRAdminDetail'));
+const FinanceDetail = lazy(() => import('./FinanceDetail'));
+const ITSystemsDetail = lazy(() => import('./ITSystemsDetail'));
+const EHSDetail = lazy(() => import('./EHSDetail'));
+const SMEDDetail = lazy(() => import('./SMEDDetail'));
+const AndonDetail = lazy(() => import('./AndonDetail'));
+const JITKanbanPullDetail = lazy(() => import('./JITKanbanPullDetail'));
+const ImprovementPrincipleDetail = lazy(() => import('./ImprovementPrincipleDetail'));
 
 interface SubCategoryListProps {
   category: GlossaryTerm;
@@ -232,40 +233,60 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
     window.history.back();
   };
 
-  if (activeDeepDive === 'T5S') return <T5SDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'PPE') return <PPEDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'WI') return <WIDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Time') return <TimeManagementDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Productivity') return <ProductivityDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Quality') return <QualityDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Manpower') return <ManpowerDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Material') return <MaterialHandlingDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'SLE') return <SLEDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'OEE') return <OEEDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'LOB') return <LOBDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Loss') return <ManufacturingLossDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'VA') return <ValueAnalysisDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Principles') return <FourPrinciplesDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'QualityDept') return <QualityManagementDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Kaizen') return <KaizenPokaYokeDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'FMEA') return <FMEADMAICDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'ControlPlan') return <ControlPlanDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'APQPPPAP') return <APQPPPAPDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'SMED') return <SMEDDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Andon') return <AndonDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'JIT') return <JITKanbanPullDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Improvement') return <ImprovementPrincipleDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'ProcessEng') return <ProcessEngineeringDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Maintenance') return <MaintenanceDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Planning') return <PlanningDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Store') return <StoreInventoryDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Purchase') return <PurchaseProcurementDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Logistics') return <LogisticsDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'RD') return <RDDesignDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'HR') return <HRAdminDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'Finance') return <FinanceDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'IT') return <ITSystemsDetail onBack={handleBackFromDeepDive} lang={lang} />;
-  if (activeDeepDive === 'EHS') return <EHSDetail onBack={handleBackFromDeepDive} lang={lang} />;
+  const renderDeepDive = () => {
+    if (activeDeepDive === 'T5S') return <T5SDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'PPE') return <PPEDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'WI') return <WIDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Time') return <TimeManagementDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Productivity') return <ProductivityDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Quality') return <QualityDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Manpower') return <ManpowerDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Material') return <MaterialHandlingDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'SLE') return <SLEDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'OEE') return <OEEDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'LOB') return <LOBDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Loss') return <ManufacturingLossDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'VA') return <ValueAnalysisDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Principles') return <FourPrinciplesDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'QualityDept') return <QualityManagementDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Kaizen') return <KaizenPokaYokeDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'FMEA') return <FMEADMAICDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'ControlPlan') return <ControlPlanDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'APQPPPAP') return <APQPPPAPDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'SMED') return <SMEDDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Andon') return <AndonDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'JIT') return <JITKanbanPullDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Improvement') return <ImprovementPrincipleDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'ProcessEng') return <ProcessEngineeringDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Maintenance') return <MaintenanceDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Planning') return <PlanningDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Store') return <StoreInventoryDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Purchase') return <PurchaseProcurementDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Logistics') return <LogisticsDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'RD') return <RDDesignDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'HR') return <HRAdminDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'Finance') return <FinanceDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'IT') return <ITSystemsDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    if (activeDeepDive === 'EHS') return <EHSDetail onBack={handleBackFromDeepDive} lang={lang} />;
+    return null;
+  };
+
+  if (activeDeepDive) {
+    return (
+      <Suspense fallback={
+        <div className="min-h-screen flex items-center justify-center bg-[#020817]">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-blue-400 font-medium animate-pulse">
+              {lang === 'hi' ? 'लोड हो रहा है...' : 'Loading...'}
+            </p>
+          </div>
+        </div>
+      }>
+        {renderDeepDive()}
+      </Suspense>
+    );
+  }
 
   const getIconForSubItem = (item: string) => {
     const lowerItem = item.toLowerCase();

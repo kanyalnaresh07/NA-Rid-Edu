@@ -21,7 +21,7 @@ interface AIQuestion {
   text: string;
   options: string[];
   correctAnswerIndex: number;
-  explanation: string;
+  explanation: any;
 }
 
 const TOPICS = [
@@ -52,10 +52,43 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
   
   const [lastQuestionFeedback, setLastQuestionFeedback] = useState<{
     isCorrect: boolean;
-    explanation: string;
+    explanation: any;
     selectedOptionText: string;
     correctOptionText: string;
   } | null>(null);
+
+  const parseExplanation = (exp: any) => {
+    if (typeof exp === 'object' && exp !== null) {
+      return {
+        general: exp.general || '',
+        why: exp.why || '',
+        where: exp.where || '',
+        what: exp.what || ''
+      };
+    }
+    
+    if (typeof exp === 'string') {
+      let general = exp;
+      let why = '';
+      let where = '';
+      let what = '';
+      
+      const whyMatch = exp.match(/WHY it's correct:(.*?)(WHERE it is used:|WHAT it means:|$)/i);
+      const whereMatch = exp.match(/WHERE it is used:(.*?)(WHAT it means:|$)/i);
+      const whatMatch = exp.match(/WHAT it means:(.*)/i);
+      
+      if (whyMatch || whereMatch || whatMatch) {
+        general = exp.split(/WHY it's correct:|WHERE it is used:|WHAT it means:/i)[0].trim();
+        why = whyMatch ? whyMatch[1].trim() : '';
+        where = whereMatch ? whereMatch[1].trim() : '';
+        what = whatMatch ? whatMatch[1].trim() : '';
+      }
+      
+      return { general, why, where, what };
+    }
+    
+    return { general: '', why: '', where: '', what: '' };
+  };
 
   const startQuiz = async () => {
     setState('loading');
@@ -417,12 +450,49 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex flex-col justify-center">
-                <h3 className="text-2xl font-black text-white uppercase tracking-widest mb-4">
+                <h3 className="text-2xl font-black text-white uppercase tracking-widest mb-6">
                   {isHi ? 'Na-rid फीडबैक' : 'Na-rid FEEDBACK'}
                 </h3>
-                <p className="text-slate-300 leading-relaxed">
-                  {lastQuestionFeedback.explanation}
-                </p>
+                
+                {(() => {
+                  const parsed = parseExplanation(lastQuestionFeedback.explanation);
+                  return (
+                    <div className="space-y-4">
+                      {parsed.general && (
+                        <p className="text-slate-300 leading-relaxed text-sm md:text-base">
+                          {parsed.general}
+                        </p>
+                      )}
+                      
+                      {parsed.why && (
+                        <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-4">
+                          <h4 className="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4" /> {isHi ? 'यह सही क्यों है' : 'Why it is correct'}
+                          </h4>
+                          <p className="text-slate-300 text-sm leading-relaxed">{parsed.why}</p>
+                        </div>
+                      )}
+                      
+                      {parsed.where && (
+                        <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4">
+                          <h4 className="text-emerald-400 font-bold text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
+                            <Settings className="w-4 h-4" /> {isHi ? 'यह कहाँ उपयोग होता है' : 'Where it is used'}
+                          </h4>
+                          <p className="text-slate-300 text-sm leading-relaxed">{parsed.where}</p>
+                        </div>
+                      )}
+                      
+                      {parsed.what && (
+                        <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
+                          <h4 className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
+                            <Zap className="w-4 h-4" /> {isHi ? 'इसका क्या अर्थ है' : 'What it means'}
+                          </h4>
+                          <p className="text-slate-300 text-sm leading-relaxed">{parsed.what}</p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
               
               <div className="bg-slate-950/50 rounded-2xl p-6 border border-white/5">

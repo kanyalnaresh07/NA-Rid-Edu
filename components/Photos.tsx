@@ -46,11 +46,11 @@ const DIVISIONS = [
 ];
 
 const colorMap = {
-  teal: { light: 'bg-[#3b6967]', dark: 'bg-[#163332]', text: 'text-teal-300', arrow: 'border-l-[#2a4f4e]' },
-  orange: { light: 'bg-[#e08924]', dark: 'bg-[#8a4a08]', text: 'text-orange-300', arrow: 'border-l-[#b86b14]' },
-  red: { light: 'bg-[#c92a2a]', dark: 'bg-[#5e0b0b]', text: 'text-red-300', arrow: 'border-l-[#9c1919]' },
-  purple: { light: 'bg-[#6b1b54]', dark: 'bg-[#2b0520]', text: 'text-fuchsia-300', arrow: 'border-l-[#4f103d]' },
-  blue: { light: 'bg-[#2874e8]', dark: 'bg-[#0b2d6b]', text: 'text-blue-300', arrow: 'border-l-[#1a55b3]' },
+  teal: { light: 'bg-[#14b8a6]', dark: 'bg-[#0f766e]', text: 'text-teal-100', arrow: 'border-l-[#115e59]' },
+  orange: { light: 'bg-[#f97316]', dark: 'bg-[#c2410c]', text: 'text-orange-100', arrow: 'border-l-[#9a3412]' },
+  red: { light: 'bg-[#ef4444]', dark: 'bg-[#b91c1c]', text: 'text-red-100', arrow: 'border-l-[#991b1b]' },
+  purple: { light: 'bg-[#a855f7]', dark: 'bg-[#7e22ce]', text: 'text-purple-100', arrow: 'border-l-[#6b21a8]' },
+  blue: { light: 'bg-[#3b82f6]', dark: 'bg-[#1d4ed8]', text: 'text-blue-100', arrow: 'border-l-[#1e40af]' },
 };
 
 const Photos: React.FC<PhotosProps> = ({ translations, lang }) => {

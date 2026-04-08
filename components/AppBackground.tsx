@@ -11,7 +11,7 @@ const AppBackground: React.FC<AppBackgroundProps> = ({ children }) => {
       <div 
         className="fixed inset-0 z-0 pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(to bottom, rgba(2, 6, 23, 0.5), rgba(2, 6, 23, 0.7)), url('https://lh3.googleusercontent.com/d/1UGmsFQibiFSorRM7TDKvxDD07Ywnrv0g')`,
+          backgroundImage: `linear-gradient(to bottom, rgba(2, 6, 23, 0.2), rgba(2, 6, 23, 0.4)), url('https://lh3.googleusercontent.com/d/1UGmsFQibiFSorRM7TDKvxDD07Ywnrv0g')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
@@ -19,7 +19,7 @@ const AppBackground: React.FC<AppBackgroundProps> = ({ children }) => {
       />
       
       {/* Subtle overlay to ensure text readability */}
-      <div className="fixed inset-0 z-0 pointer-events-none bg-black/20" />
+      <div className="fixed inset-0 z-0 pointer-events-none bg-black/10" />
       
       <div className="relative z-10 w-full h-full">
         {children}
