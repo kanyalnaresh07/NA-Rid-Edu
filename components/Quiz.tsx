@@ -103,9 +103,18 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
       } else {
         throw new Error("No questions generated");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to generate quiz:", error);
-      alert(isHi ? "क्विज़ जनरेट करने में विफल। कृपया पुनः प्रयास करें।" : "Failed to generate quiz. Please try again.");
+      
+      let errorMessage = isHi ? "क्विज़ जनरेट करने में विफल। कृपया पुनः प्रयास करें।" : "Failed to generate quiz. Please try again.";
+      
+      if (error.message?.includes("API key is not configured") || error.message?.includes("Invalid API Key")) {
+        errorMessage = isHi 
+          ? "API Key सेट नहीं है या अमान्य है। कृपया Vercel सेटिंग्स में GEMINI_API_KEY जोड़ें।" 
+          : "API Key is missing or invalid. Please set GEMINI_API_KEY in your Vercel project settings.";
+      }
+      
+      alert(errorMessage);
       setState('setup');
     }
   };

@@ -98,6 +98,9 @@ ${avoidPrompt}`;
     return result.questions || [];
   } catch (error: any) {
     console.error("Error generating quiz:", error);
+    if (error.message?.includes("API_KEY_INVALID") || error.message?.includes("API key not valid")) {
+      throw new Error("Invalid API Key. Please check your GEMINI_API_KEY.");
+    }
     throw error;
   }
 };
