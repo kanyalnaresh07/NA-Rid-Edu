@@ -19,14 +19,13 @@ import {
   Sparkles
 } from 'lucide-react';
 import { Language } from '../types';
-import ResumeBuilder from './ResumeBuilder';
 
 interface InterviewProps {
   translations: any;
   lang: Language;
 }
 
-type Tab = 'videos' | 'notes' | 'photos' | 'resume';
+type Tab = 'videos' | 'notes' | 'photos';
 
 const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
   const [activeTab, setActiveTab] = useState<Tab>('videos');
@@ -743,7 +742,6 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
     { id: 'videos', label: isHi ? "वीडियो" : "Videos", icon: Video },
     { id: 'notes', label: isHi ? "नोट्स" : "Notes", icon: FileText },
     { id: 'photos', label: isHi ? "फोटो" : "Photos", icon: ImageIcon },
-    { id: 'resume', label: isHi ? "रिज्यूमे बिल्डर" : "Resume Builder", icon: Sparkles },
   ];
 
   return (
@@ -813,10 +811,8 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className={activeTab === 'resume' ? "w-full" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {activeTab === 'resume' && <ResumeBuilder lang={lang} />}
-
           {activeTab === 'videos' && content.videos.map((video, i) => (
             <motion.div
               key={i}
