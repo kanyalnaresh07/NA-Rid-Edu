@@ -8,7 +8,7 @@ import Sidebar from './components/Sidebar';
 import { PageView, Language, GlossaryTerm } from './types';
 import { TRANSLATIONS, AIRFOCUS_LOGO, GLOSSARY_TERMS } from './constants';
 import AppBackground from './components/AppBackground';
-import { Sparkles, ChevronRight } from 'lucide-react';
+import { Sparkles, ChevronRight, Globe } from 'lucide-react';
 
 const changelog = {
   major: [
@@ -292,6 +292,19 @@ const App: React.FC = () => {
     navigateWithLangCheck(PageView.PRIVACY);
   };
 
+  const getNavTitle = () => {
+    if (view === PageView.HOME) return TRANSLATIONS[lang].title;
+    
+    // Special cases
+    if (view === PageView.GLOSSARY) return TRANSLATIONS[lang].navCategories;
+    if (view === PageView.CATEGORY_DETAIL) return selectedCategory?.title || TRANSLATIONS[lang].navCategories;
+    if (view === PageView.AI_HUB) return TRANSLATIONS[lang].navAiHub;
+    
+    const navKey = `nav${view.charAt(0).toUpperCase() + view.slice(1).toLowerCase()}`;
+    const title = (TRANSLATIONS[lang] as any)[navKey];
+    return typeof title === 'string' ? title : view;
+  };
+
   return (
     <AppBackground>
       <div className="min-h-screen bg-transparent relative overflow-x-hidden flex">
@@ -301,49 +314,62 @@ const App: React.FC = () => {
             currentView={view}
             onNavigate={navigateTo}
             lang={lang}
-            onLangChange={handleLanguageSelect}
+            onLangChange={() => setShowLangModal(true)}
             translations={t}
             showChangelog={showChangelog}
             setShowChangelog={setShowChangelog}
           />
         )}
 
-        <div className={`relative z-10 flex-grow transition-all duration-500 ${view !== PageView.HOME ? 'pl-[70px] lg:pl-[280px]' : 'pl-0'}`}>
-          {/* Logo for Home Page (since sidebar is hidden) */}
+        <div className={`relative z-10 flex-grow transition-all duration-500 ${view === PageView.HOME ? 'pl-0' : 'pl-[70px] lg:pl-[280px]'}`}>
+          {/* Floating Logo and Language Switcher for Home Page (since Sidebar/Nav is hidden) */}
           {view === PageView.HOME && (
-            <>
-              <div className="absolute top-8 left-8 z-30 scale-90 md:scale-110 origin-left">
+            <div className="absolute top-8 left-8 md:left-12 z-[50] flex items-center gap-6">
+              <div 
+                onClick={() => navigateTo(PageView.HOME)}
+                className="cursor-pointer hover:opacity-80 transition-opacity scale-110 origin-left"
+              >
                 {AIRFOCUS_LOGO}
               </div>
-              <div className="absolute top-8 right-8 z-30 flex items-center gap-2 md:gap-4 bg-slate-900/50 backdrop-blur-md p-1 rounded-xl border border-white/10 shadow-2xl">
-                {/* Updates Button */}
+              
+              <button 
+                onClick={() => setShowLangModal(true)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-cyan-400 hover:bg-white/10 transition-all group backdrop-blur-md"
+              >
+                <Globe size={18} className="group-hover:rotate-12 transition-transform" />
+                <span className="text-[10px] font-black uppercase tracking-widest hidden sm:block">
+                  {lang === 'en' ? 'EN' : 'हिं'}
+                </span>
+              </button>
+            </div>
+          )}
+
+          {/* Top Navigation Bar - Hidden on Home Page */}
+          {view !== PageView.HOME && (
+            <header className="sticky top-0 left-0 right-0 z-[40] bg-slate-950/80 backdrop-blur-md border-b border-white/5 px-4 md:px-8 py-4 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="block">
+                  <h2 className="text-sm font-black text-white uppercase tracking-widest">
+                    {getNavTitle()}
+                  </h2>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3">
                 <button 
-                  onClick={() => setShowChangelog(true)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 hover:bg-cyan-500/20 transition-all duration-300 group/updates"
+                  onClick={() => setShowLangModal(true)}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-cyan-400 hover:bg-white/10 transition-all group"
                 >
-                  <Sparkles size={14} className="animate-pulse group-hover/updates:scale-110 transition-transform" />
-                  <span className="text-[9px] font-black tracking-widest uppercase hidden sm:inline">
-                    {t.updates}
+                  <Globe size={18} className="group-hover:rotate-12 transition-transform" />
+                  <span className="text-[10px] font-black uppercase tracking-widest hidden sm:block">
+                    {lang === 'en' ? 'EN' : 'हिं'}
                   </span>
                 </button>
-
-                <div className="w-[1px] h-4 bg-white/10" />
-
-                <button 
-                  onClick={() => handleLanguageSelect('en')}
-                  className={`px-3 py-1.5 rounded-lg text-[10px] font-black tracking-widest transition-all ${lang === 'en' ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`}
-                >
-                  EN
-                </button>
-                <button 
-                  onClick={() => handleLanguageSelect('hi')}
-                  className={`px-3 py-1.5 rounded-lg text-[10px] font-black tracking-widest transition-all ${lang === 'hi' ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`}
-                >
-                  हिं
-                </button>
               </div>
-            </>
+            </header>
           )}
+
+          {/* Main Content Area */}
           
           <LanguageModal isOpen={showLangModal} onSelect={handleLanguageSelect} />
           

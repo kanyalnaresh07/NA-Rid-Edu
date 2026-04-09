@@ -8,12 +8,27 @@ interface ContactProps {
 
 const Contact: React.FC<ContactProps> = ({ translations }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    subject: '',
+    message: ''
+  });
   const t = translations.contact;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Construct WhatsApp message
+    const whatsappNumber = "918979031442";
+    const text = `*New Feedback*%0A%0A*Name:* ${encodeURIComponent(formData.name)}%0A*Subject:* ${encodeURIComponent(formData.subject)}%0A*Message:* ${encodeURIComponent(formData.message)}`;
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${text}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+    
     setIsSubmitted(true);
     setTimeout(() => setIsSubmitted(false), 5000);
+    setFormData({ name: '', subject: '', message: '' });
   };
 
   const contactInfo = [
@@ -96,17 +111,8 @@ const Contact: React.FC<ContactProps> = ({ translations }) => {
                   type="text" 
                   placeholder={t.namePlaceholder}
                   required
-                  className="w-full bg-slate-950/50 border border-white/5 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-700 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all"
-                />
-              </div>
-              <div>
-                <label className="block text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-2">
-                  {t.emailLabel}
-                </label>
-                <input 
-                  type="email" 
-                  placeholder={t.emailPlaceholder}
-                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full bg-slate-950/50 border border-white/5 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-700 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all"
                 />
               </div>
@@ -118,6 +124,8 @@ const Contact: React.FC<ContactProps> = ({ translations }) => {
                   type="text" 
                   placeholder={t.subjectPlaceholder}
                   required
+                  value={formData.subject}
+                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   className="w-full bg-slate-950/50 border border-white/5 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-700 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all"
                 />
               </div>
@@ -129,6 +137,8 @@ const Contact: React.FC<ContactProps> = ({ translations }) => {
                   required
                   placeholder={t.messagePlaceholder}
                   rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full bg-slate-950/50 border border-white/5 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-700 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all resize-none"
                 ></textarea>
               </div>

@@ -19,7 +19,7 @@ interface SidebarProps {
   currentView: PageView;
   onNavigate: (view: PageView) => void;
   lang: Language;
-  onLangChange: (lang: Language) => void;
+  onLangChange: () => void;
   translations: any;
   showChangelog: boolean;
   setShowChangelog: (show: boolean) => void;
@@ -62,7 +62,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             onClick={() => handleNavClick(PageView.HOME)}
             className="cursor-pointer hover:opacity-80 transition-opacity"
           >
-            <div className="scale-[0.6] lg:scale-110 origin-center lg:origin-left">
+            <div className="scale-90 lg:scale-110 origin-center lg:origin-left">
               {AIRFOCUS_LOGO}
             </div>
           </div>
@@ -124,30 +124,8 @@ const Sidebar: React.FC<SidebarProps> = ({
           })}
         </nav>
 
-        {/* Bottom Section: Language & Info */}
+        {/* Bottom Section: Info */}
         <div className="p-2 lg:p-6 mt-auto border-t border-white/5 space-y-6">
-          {/* Language Switcher */}
-          <div className="flex flex-col gap-3">
-            <div className="hidden lg:flex items-center gap-2 px-2">
-              <Globe size={14} className="text-slate-500" />
-              <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Language</span>
-            </div>
-            <div className="flex flex-col lg:flex-row bg-slate-900/50 p-1 rounded-xl border border-white/5 gap-1">
-              <button 
-                onClick={() => onLangChange('en')}
-                className={`flex-1 py-1.5 lg:py-2 rounded-lg text-[8px] lg:text-[10px] font-black tracking-widest transition-all ${lang === 'en' ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20' : 'text-slate-500 hover:text-white'}`}
-              >
-                EN
-              </button>
-              <button 
-                onClick={() => onLangChange('hi')}
-                className={`flex-1 py-1.5 lg:py-2 rounded-lg text-[8px] lg:text-[10px] font-black tracking-widest transition-all ${lang === 'hi' ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20' : 'text-slate-500 hover:text-white'}`}
-              >
-                हिं
-              </button>
-            </div>
-          </div>
-
           {/* Copyright Info */}
           <div className="px-2 hidden lg:block">
             <p className="text-[8px] font-bold text-slate-600 uppercase tracking-[0.3em] leading-relaxed">

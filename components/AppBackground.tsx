@@ -26,7 +26,7 @@ const AppBackground: React.FC<AppBackgroundProps> = ({ children }) => {
       </div>
       
       {/* Subtle overlay to ensure text readability */}
-      <div className="fixed inset-0 z-0 pointer-events-none bg-slate-950/40 backdrop-blur-[4px]" />
+      <div className="fixed inset-0 z-0 pointer-events-none bg-slate-950/60 backdrop-blur-[8px]" />
       
       <div className="relative z-10 w-full h-full">
         {children}
