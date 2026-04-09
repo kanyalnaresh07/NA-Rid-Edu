@@ -16,7 +16,7 @@ export const searchWithAI = async (query: string, lang: Language = 'en') => {
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3-flash-preview",
       contents: [{ parts: [{ text: query }] }],
       config: {
         systemInstruction,
@@ -64,7 +64,7 @@ ${avoidPrompt}`;
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3-flash-preview",
       contents: [{ parts: [{ text: promptText }] }],
       config: {
         responseMimeType: "application/json",
@@ -126,7 +126,7 @@ export const getTermDefinition = async (term: string, lang: Language = 'en') => 
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3-flash-preview",
       contents: [{ parts: [{ text: `Explain the technical term "${term}" ${languagePrompt} specifically in the context of a Manufacturing hub and industrial production. Focus on efficiency, quality control, or process optimization where relevant. Keep it professional and concise, like a glossary entry. Return the response in ${lang === 'hi' ? 'Hindi' : 'English'}.` }] }],
       config: {
         responseMimeType: "application/json",

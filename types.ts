@@ -11,7 +11,8 @@ export enum PageView {
   CONTACT = 'contact',
   PRIVACY = 'privacy',
   VIDEOS = 'videos',
-  AI_HUB = 'ai_hub'
+  AI_HUB = 'ai_hub',
+  INTERVIEW = 'interview'
 }
 
 export type Language = 'en' | 'hi';

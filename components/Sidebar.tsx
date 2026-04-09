@@ -10,7 +10,8 @@ import {
   Info, 
   Mail, 
   Globe,
-  Sparkles
+  Sparkles,
+  UserCheck
 } from 'lucide-react';
 import { PageView, Language } from '../types';
 import { AIRFOCUS_LOGO } from '../constants';
@@ -42,6 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     { id: PageView.PHOTOS, label: translations.navPhotos, icon: ImageIcon, color: 'text-emerald-400' },
     { id: PageView.VIDEOS, label: translations.navVideos, icon: PlayCircle, color: 'text-rose-400' },
     { id: PageView.AI_HUB, label: translations.navAiHub, icon: Cpu, color: 'text-indigo-400', special: true },
+    { id: PageView.INTERVIEW, label: translations.navInterview, icon: UserCheck, color: 'text-orange-400', special: true },
     { id: PageView.ABOUT, label: translations.navAbout, icon: Info, color: 'text-cyan-400' },
     { id: PageView.CONTACT, label: translations.navContact, icon: Mail, color: 'text-slate-400' },
   ];

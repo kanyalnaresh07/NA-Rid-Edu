@@ -33,6 +33,7 @@ const Photos = lazy(() => import('./components/Photos'));
 const Videos = lazy(() => import('./components/Videos'));
 const AIHub = lazy(() => import('./components/AIHub'));
 const Contact = lazy(() => import('./components/Contact'));
+const Interview = lazy(() => import('./components/Interview'));
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
 
 const App: React.FC = () => {
@@ -284,6 +285,10 @@ const App: React.FC = () => {
     navigateWithLangCheck(PageView.AI_HUB);
   };
 
+  const handleInterviewClick = () => {
+    navigateWithLangCheck(PageView.INTERVIEW);
+  };
+
   const handleContactClick = () => {
     navigateWithLangCheck(PageView.CONTACT);
   };
@@ -299,6 +304,7 @@ const App: React.FC = () => {
     if (view === PageView.GLOSSARY) return TRANSLATIONS[lang].navCategories;
     if (view === PageView.CATEGORY_DETAIL) return selectedCategory?.title || TRANSLATIONS[lang].navCategories;
     if (view === PageView.AI_HUB) return TRANSLATIONS[lang].navAiHub;
+    if (view === PageView.INTERVIEW) return TRANSLATIONS[lang].navInterview;
     
     const navKey = `nav${view.charAt(0).toUpperCase() + view.slice(1).toLowerCase()}`;
     const title = (TRANSLATIONS[lang] as any)[navKey];
@@ -637,6 +643,18 @@ const App: React.FC = () => {
                       style={{ willChange: "transform, opacity" }}
                     >
                       <AIHub translations={t} lang={lang} />
+                    </motion.div>
+                  )}
+                  {view === PageView.INTERVIEW && (
+                    <motion.div
+                      key="interview"
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 1.02 }}
+                      transition={{ duration: 0.15, ease: "linear" }}
+                      style={{ willChange: "transform, opacity" }}
+                    >
+                      <Interview translations={t} lang={lang} />
                     </motion.div>
                   )}
                   {view === PageView.CONTACT && (
