@@ -139,7 +139,7 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
     } catch (error: any) {
       console.error("Failed to generate quiz:", error);
       
-      let errorMessage = isHi ? "क्विज़ जनरेट करने में विफल। कृपया पुनः प्रयास करें।" : "Failed to generate quiz. Please try again.";
+      let errorMessage = isHi ? `क्विज़ जनरेट करने में विफल। कृपया पुनः प्रयास करें। (${error.message})` : `Failed to generate quiz. Please try again. (${error.message})`;
       
       if (error.message?.includes("API key is not configured") || error.message?.includes("Invalid API Key")) {
         errorMessage = isHi 

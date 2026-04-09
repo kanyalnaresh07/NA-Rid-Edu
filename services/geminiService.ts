@@ -60,7 +60,25 @@ export const generateQuiz = async (topic: string, difficulty: string, count: num
   const promptText = `Generate a multiple-choice quiz about "${topic}" ${topicContext} The difficulty level should be ${difficulty}. Generate exactly ${count} questions. The response must be ${languagePrompt}.
   
 For each question, provide a detailed 'explanation' that describes exactly WHY the correct answer is correct, WHERE this concept is used in electronics manufacturing, and WHAT it means in practical terms. Make the explanation highly educational.
-${avoidPrompt}`;
+${avoidPrompt}
+
+IMPORTANT: You MUST return ONLY a valid JSON object with the following structure:
+{
+  "questions": [
+    {
+      "id": "unique-string-id",
+      "text": "Question text here",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correctAnswerIndex": 0,
+      "explanation": {
+        "general": "General context",
+        "why": "Why it is correct",
+        "where": "Where it is used",
+        "what": "What it means"
+      }
+    }
+  ]
+}`;
 
   try {
     const response = await ai.models.generateContent({
@@ -68,43 +86,18 @@ ${avoidPrompt}`;
       contents: [{ parts: [{ text: promptText }] }],
       config: {
         responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            questions: {
-              type: Type.ARRAY,
-              items: {
-                type: Type.OBJECT,
-                properties: {
-                  id: { type: Type.STRING },
-                  text: { type: Type.STRING },
-                  options: {
-                    type: Type.ARRAY,
-                    items: { type: Type.STRING }
-                  },
-                  correctAnswerIndex: { type: Type.INTEGER },
-                  explanation: { 
-                    type: Type.OBJECT, 
-                    description: "Detailed explanation broken down into parts",
-                    properties: {
-                      general: { type: Type.STRING, description: "General context or introduction" },
-                      why: { type: Type.STRING, description: "Why the correct answer is correct" },
-                      where: { type: Type.STRING, description: "Where this concept is used in electronics manufacturing" },
-                      what: { type: Type.STRING, description: "What it means in practical terms" }
-                    },
-                    required: ["general", "why", "where", "what"]
-                  }
-                },
-                required: ["id", "text", "options", "correctAnswerIndex", "explanation"]
-              }
-            }
-          },
-          required: ["questions"]
-        }
+        temperature: 0.7
       }
     });
 
-    const result = JSON.parse(response.text || "{}");
+    let responseText = response.text || "{}";
+    // Strip markdown code blocks if present
+    if (responseText.startsWith("```json")) {
+      responseText = responseText.replace(/^```json\n/, "").replace(/\n```$/, "");
+    } else if (responseText.startsWith("```")) {
+      responseText = responseText.replace(/^```\n/, "").replace(/\n```$/, "");
+    }
+    const result = JSON.parse(responseText);
     return result.questions || [];
   } catch (error: any) {
     console.error("Error generating quiz:", error);
@@ -127,24 +120,30 @@ export const getTermDefinition = async (term: string, lang: Language = 'en') => 
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
-      contents: [{ parts: [{ text: `Explain the technical term "${term}" ${languagePrompt} specifically in the context of a Manufacturing hub and industrial production. Focus on efficiency, quality control, or process optimization where relevant. Keep it professional and concise, like a glossary entry. Return the response in ${lang === 'hi' ? 'Hindi' : 'English'}.` }] }],
+      contents: [{ parts: [{ text: `Explain the technical term "${term}" ${languagePrompt} specifically in the context of a Manufacturing hub and industrial production. Focus on efficiency, quality control, or process optimization where relevant. Keep it professional and concise, like a glossary entry. Return the response in ${lang === 'hi' ? 'Hindi' : 'English'}.
+      
+IMPORTANT: You MUST return ONLY a valid JSON object with the following structure:
+{
+  "title": "Term Name",
+  "definition": "Detailed definition",
+  "category": "Category name",
+  "types": "Common types or categories",
+  "tools": "Common tools or equipment"
+}` }] }],
       config: {
         responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            title: { type: Type.STRING },
-            definition: { type: Type.STRING },
-            category: { type: Type.STRING },
-            types: { type: Type.STRING, description: "Common types or categories of this term" },
-            tools: { type: Type.STRING, description: "Common tools or equipment associated with this" }
-          },
-          required: ["title", "definition", "category", "types", "tools"]
-        }
+        temperature: 0.7
       }
     });
 
-    const result = JSON.parse(response.text || "{}");
+    let responseText = response.text || "{}";
+    // Strip markdown code blocks if present
+    if (responseText.startsWith("```json")) {
+      responseText = responseText.replace(/^```json\n/, "").replace(/\n```$/, "");
+    } else if (responseText.startsWith("```")) {
+      responseText = responseText.replace(/^```\n/, "").replace(/\n```$/, "");
+    }
+    const result = JSON.parse(responseText);
     return result;
   } catch (error: any) {
     console.error("Error fetching definition:", error);
