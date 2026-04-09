@@ -16,7 +16,7 @@ export const searchWithAI = async (query: string, lang: Language = 'en') => {
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-flash-latest",
+      model: "gemini-3.1-flash-lite-preview",
       contents: [{ parts: [{ text: query }] }],
       config: {
         systemInstruction,
@@ -82,7 +82,7 @@ IMPORTANT: You MUST return ONLY a valid JSON object with the following structure
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-flash-latest",
+      model: "gemini-3.1-flash-lite-preview",
       contents: [{ parts: [{ text: promptText }] }],
       config: {
         responseMimeType: "application/json",
@@ -119,7 +119,7 @@ export const getTermDefinition = async (term: string, lang: Language = 'en') => 
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-flash-latest",
+      model: "gemini-3.1-flash-lite-preview",
       contents: [{ parts: [{ text: `Explain the technical term "${term}" ${languagePrompt} specifically in the context of a Manufacturing hub and industrial production. Focus on efficiency, quality control, or process optimization where relevant. Keep it professional and concise, like a glossary entry. Return the response in ${lang === 'hi' ? 'Hindi' : 'English'}.
       
 IMPORTANT: You MUST return ONLY a valid JSON object with the following structure:

@@ -3,7 +3,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 async function run() {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-flash-latest",
+      model: "gemini-3.1-flash-lite-preview",
       contents: [{ parts: [{ text: "Generate a quiz" }] }],
       config: {
         responseMimeType: "application/json",
