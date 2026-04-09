@@ -145,6 +145,14 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
         errorMessage = isHi 
           ? "API Key सेट नहीं है या अमान्य है। कृपया Vercel सेटिंग्स में GEMINI_API_KEY जोड़ें।" 
           : "API Key is missing or invalid. Please set GEMINI_API_KEY in your Vercel project settings.";
+      } else if (error.message?.includes("429") || error.message?.includes("quota") || error.message?.includes("RESOURCE_EXHAUSTED")) {
+        errorMessage = isHi
+          ? "API कोटा समाप्त हो गया है। कृपया कुछ मिनट प्रतीक्षा करें और पुनः प्रयास करें।"
+          : "API Quota Exceeded. Please wait a few minutes and try again.";
+      } else if (error.message?.includes("503") || error.message?.includes("UNAVAILABLE")) {
+        errorMessage = isHi
+          ? "AI मॉडल वर्तमान में ओवरलोड है। कृपया बाद में प्रयास करें।"
+          : "AI model is currently overloaded. Please try again later.";
       }
       
       alert(errorMessage);

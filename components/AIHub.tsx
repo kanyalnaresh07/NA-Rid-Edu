@@ -25,7 +25,13 @@ const AIHub: React.FC<AIHubProps> = ({ translations, lang }) => {
       setResponse(aiResponse || null);
     } catch (error: any) {
       console.error("AI Search failed:", error);
-      setResponse(isHi ? `क्षमा करें, AI खोज विफल रही। कृपया पुनः प्रयास करें। (${error.message})` : `Sorry, AI search failed. Please try again. (${error.message})`);
+      let errorMsg = error.message;
+      if (errorMsg.includes("429") || errorMsg.includes("quota") || errorMsg.includes("RESOURCE_EXHAUSTED")) {
+        errorMsg = "API Quota Exceeded. Please wait a minute and try again.";
+      } else if (errorMsg.includes("503") || errorMsg.includes("UNAVAILABLE")) {
+        errorMsg = "AI model is currently overloaded. Please try again later.";
+      }
+      setResponse(isHi ? `क्षमा करें, AI खोज विफल रही। कृपया पुनः प्रयास करें। (${errorMsg})` : `Sorry, AI search failed. Please try again. (${errorMsg})`);
     } finally {
       setIsSearching(false);
     }
