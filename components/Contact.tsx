@@ -31,10 +31,10 @@ const Contact: React.FC<ContactProps> = ({ translations }) => {
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-12 md:mb-16"
       >
-        <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4">
+        <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-2xl">
           {t.title}
         </h1>
-        <p className="text-slate-400 max-w-2xl mx-auto text-xs md:text-sm">
+        <p className="text-slate-200 max-w-2xl mx-auto text-xs md:text-sm drop-shadow-lg">
           {t.subtitle}
         </p>
       </motion.div>
@@ -59,7 +59,7 @@ const Contact: React.FC<ContactProps> = ({ translations }) => {
                 {info.icon}
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">{info.label}</span>
+                <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-1">{info.label}</span>
                 <span className="text-sm md:text-base font-bold text-white group-hover:text-cyan-400 transition-colors">{info.value}</span>
               </div>
             </a>
@@ -89,7 +89,7 @@ const Contact: React.FC<ContactProps> = ({ translations }) => {
               <h3 className="text-lg font-black text-white uppercase tracking-widest mb-6">{t.formTitle}</h3>
               
               <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">
+                <label className="block text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-2">
                   {t.nameLabel}
                 </label>
                 <input 
@@ -100,7 +100,7 @@ const Contact: React.FC<ContactProps> = ({ translations }) => {
                 />
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">
+                <label className="block text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-2">
                   {t.emailLabel}
                 </label>
                 <input 
@@ -111,7 +111,7 @@ const Contact: React.FC<ContactProps> = ({ translations }) => {
                 />
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">
+                <label className="block text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-2">
                   {t.subjectLabel}
                 </label>
                 <input 
@@ -122,7 +122,7 @@ const Contact: React.FC<ContactProps> = ({ translations }) => {
                 />
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">
+                <label className="block text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-2">
                   {t.messageLabel}
                 </label>
                 <textarea 

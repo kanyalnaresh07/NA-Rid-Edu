@@ -55,47 +55,6 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
         ))}
       </div>
 
-      {/* Top Navigation Bar */}
-      <motion.nav 
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "backOut" }}
-        className="relative z-30 flex justify-between items-center px-4 sm:px-8 py-6 md:px-16 md:py-8 w-full"
-      >
-        <div className="scale-75 sm:scale-90 md:scale-100 origin-left shrink-0">
-           {AIRFOCUS_LOGO}
-        </div>
-
-        <div className="flex items-center gap-2 md:gap-4 shrink-0">
-          {/* Updates Button */}
-          <button 
-            onClick={() => setShowChangelog(true)}
-            className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 hover:bg-cyan-500/20 transition-all duration-300 group/updates shadow-[0_0_15px_rgba(6,182,212,0.1)]"
-          >
-            <Sparkles size={14} className="animate-pulse group-hover/updates:scale-110 transition-transform" />
-            <span className="text-[9px] md:text-[10px] font-black tracking-widest uppercase hidden sm:inline">
-              {translations.updates}
-            </span>
-          </button>
-
-          {/* Language Change Option */}
-          <div className="flex items-center gap-1 bg-slate-950/40 backdrop-blur-xl p-1 rounded-lg border border-white/10 shadow-2xl">
-            <button 
-              onClick={() => setLang('en')}
-              className={`px-3 py-1.5 md:px-4 md:py-2 rounded-md text-[10px] md:text-xs font-black tracking-widest transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 ${lang === 'en' ? 'bg-cyan-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
-            >
-              EN
-            </button>
-            <button 
-              onClick={() => setLang('hi')}
-              className={`px-3 py-1.5 md:px-4 md:py-2 rounded-md text-[10px] md:text-xs font-black tracking-widest transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 ${lang === 'hi' ? 'bg-cyan-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
-            >
-              हिं
-            </button>
-          </div>
-        </div>
-      </motion.nav>
-
       {/* Content Area */}
       <motion.div 
         className="flex-grow flex flex-col justify-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 z-20 py-8 md:py-16 w-full max-w-[100vw]"
@@ -124,7 +83,7 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)]"
             >
               Future-ready<br />
               Manufacturing Ecosystem
@@ -135,7 +94,7 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-slate-300 text-lg md:text-xl max-w-2xl leading-relaxed"
+              className="text-slate-200 text-lg md:text-xl max-w-2xl leading-relaxed drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]"
             >
               Empowering the next generation of smart, sustainable, and globally competitive manufacturing.
             </motion.p>

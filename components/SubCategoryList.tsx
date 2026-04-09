@@ -441,7 +441,7 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                       <div className="w-5 h-5 md:w-6 md:h-6 rounded-lg bg-slate-800 flex items-center justify-center text-cyan-400 text-[9px] font-black flex-shrink-0">
                         {idx + 1}
                       </div>
-                      <span className="text-slate-300 font-bold text-[9px] md:text-[10px] uppercase tracking-wider">{person}</span>
+                      <span className="text-slate-200 font-bold text-[9px] md:text-[10px] uppercase tracking-wider">{person}</span>
                     </div>
                   ))}
                 </div>
@@ -489,7 +489,7 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
               </div>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 md:px-6 py-3 bg-slate-950/60 rounded-xl border border-white/5 text-[7px] md:text-[8px] font-black uppercase tracking-[0.4em] text-slate-500">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 md:px-6 py-3 bg-slate-950/60 rounded-xl border border-white/5 text-[7px] md:text-[8px] font-black uppercase tracking-[0.4em] text-slate-300">
               <div className="flex gap-4 md:gap-6">
                  <span className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>

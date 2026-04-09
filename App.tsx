@@ -4,9 +4,26 @@ import { motion, AnimatePresence } from 'motion/react';
 import Hero from './components/HeroSection';
 import LanguageModal from './components/LanguageModal';
 import LoadingSkeleton from './components/LoadingSkeleton';
+import Sidebar from './components/Sidebar';
 import { PageView, Language, GlossaryTerm } from './types';
 import { TRANSLATIONS, AIRFOCUS_LOGO, GLOSSARY_TERMS } from './constants';
 import AppBackground from './components/AppBackground';
+import { Sparkles, ChevronRight } from 'lucide-react';
+
+const changelog = {
+  major: [
+    { title: "New Glossary Structure", desc: "Redesigned the glossary layout for better navigation." },
+    { title: "Multi-language Support", desc: "Added full Hindi language support." }
+  ],
+  minor: [
+    { title: "UI Improvements", desc: "Enhanced animations and visual feedback." },
+    { title: "Performance", desc: "Optimized rendering for smoother experience." }
+  ],
+  fixes: [
+    { title: "Fixed navigation bugs" },
+    { title: "Resolved layout issues on mobile" }
+  ]
+};
 
 const GlossaryList = lazy(() => import('./components/GlossaryList'));
 const SubCategoryList = lazy(() => import('./components/SubCategoryList'));
@@ -36,6 +53,7 @@ const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewHistory, setViewHistory] = useState<PageView[]>([PageView.HOME]);
   const [showSecurityAlert, setShowSecurityAlert] = useState(false);
+  const [showChangelog, setShowChangelog] = useState(false);
 
   const t = TRANSLATIONS[lang] || TRANSLATIONS['en'];
 
@@ -274,34 +292,175 @@ const App: React.FC = () => {
     navigateWithLangCheck(PageView.PRIVACY);
   };
 
-  const LanguageSwitcher = ({ className = "" }: { className?: string }) => (
-    <div className={`flex items-center gap-0 bg-white/10 backdrop-blur-md p-0.5 rounded-lg border border-white/20 shadow-lg ${className}`}>
-      <button 
-        onClick={() => {
-          setLang('en');
-          localStorage.setItem('app_lang', 'en');
-        }}
-        className={`px-1.5 py-0.5 md:px-3 md:py-1 rounded-md text-[9px] md:text-[10px] font-black transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-white/50 ${lang === 'en' ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/50' : 'text-white/60 hover:text-white'}`}
-      >
-        EN
-      </button>
-      <button 
-        onClick={() => {
-          setLang('hi');
-          localStorage.setItem('app_lang', 'hi');
-        }}
-        className={`px-1.5 py-0.5 md:px-3 md:py-1 rounded-md text-[9px] md:text-[10px] font-black transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-white/50 ${lang === 'hi' ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/50' : 'text-white/60 hover:text-white'}`}
-      >
-        हिं
-      </button>
-    </div>
-  );
-
   return (
     <AppBackground>
-      <div className="min-h-screen bg-transparent relative overflow-x-hidden">
-        <div className="relative z-10">
-        <LanguageModal isOpen={showLangModal} onSelect={handleLanguageSelect} />
+      <div className="min-h-screen bg-transparent relative overflow-x-hidden flex">
+        {/* Global Sidebar - Hidden on Home Page */}
+        {view !== PageView.HOME && (
+          <Sidebar 
+            currentView={view}
+            onNavigate={navigateTo}
+            lang={lang}
+            onLangChange={handleLanguageSelect}
+            translations={t}
+            showChangelog={showChangelog}
+            setShowChangelog={setShowChangelog}
+          />
+        )}
+
+        <div className={`relative z-10 flex-grow transition-all duration-500 ${view !== PageView.HOME ? 'pl-[70px] lg:pl-[280px]' : 'pl-0'}`}>
+          {/* Logo for Home Page (since sidebar is hidden) */}
+          {view === PageView.HOME && (
+            <>
+              <div className="absolute top-8 left-8 z-30 scale-90 md:scale-110 origin-left">
+                {AIRFOCUS_LOGO}
+              </div>
+              <div className="absolute top-8 right-8 z-30 flex items-center gap-2 md:gap-4 bg-slate-900/50 backdrop-blur-md p-1 rounded-xl border border-white/10 shadow-2xl">
+                {/* Updates Button */}
+                <button 
+                  onClick={() => setShowChangelog(true)}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 hover:bg-cyan-500/20 transition-all duration-300 group/updates"
+                >
+                  <Sparkles size={14} className="animate-pulse group-hover/updates:scale-110 transition-transform" />
+                  <span className="text-[9px] font-black tracking-widest uppercase hidden sm:inline">
+                    {t.updates}
+                  </span>
+                </button>
+
+                <div className="w-[1px] h-4 bg-white/10" />
+
+                <button 
+                  onClick={() => handleLanguageSelect('en')}
+                  className={`px-3 py-1.5 rounded-lg text-[10px] font-black tracking-widest transition-all ${lang === 'en' ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`}
+                >
+                  EN
+                </button>
+                <button 
+                  onClick={() => handleLanguageSelect('hi')}
+                  className={`px-3 py-1.5 rounded-lg text-[10px] font-black tracking-widest transition-all ${lang === 'hi' ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'}`}
+                >
+                  हिं
+                </button>
+              </div>
+            </>
+          )}
+          
+          <LanguageModal isOpen={showLangModal} onSelect={handleLanguageSelect} />
+          
+          {/* Changelog Modal */}
+          <AnimatePresence>
+            {showChangelog && (
+              <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+                  onClick={() => setShowChangelog(false)}
+                />
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                  className="relative w-full max-w-2xl bg-slate-900 border border-cyan-500/20 rounded-3xl shadow-[0_0_50px_rgba(6,182,212,0.15)] overflow-hidden"
+                >
+                  {/* Header */}
+                  <div className="p-6 md:p-8 border-b border-white/5 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-[60px] rounded-full -translate-y-1/2 translate-x-1/2" />
+                    <div className="relative z-10 flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                        <Sparkles size={24} />
+                      </div>
+                      <div>
+                        <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight">
+                          {lang === 'hi' ? 'नया क्या है?' : 'What\'s New?'}
+                        </h2>
+                        <p className="text-sm font-bold text-cyan-500 uppercase tracking-widest mt-1">
+                          {lang === 'hi' ? 'संस्करण 2.0.0' : 'Version 2.0.0'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6 md:p-8 max-h-[60vh] overflow-y-auto custom-scrollbar">
+                    <div className="space-y-8">
+                      {/* Major */}
+                      <section>
+                        <div className="flex items-center gap-2 mb-4">
+                          <Sparkles className="text-cyan-400" size={18} />
+                          <h3 className="text-sm font-black text-cyan-500 uppercase tracking-[0.3em]">
+                            {lang === 'hi' ? 'प्रमुख अपडेट्स' : 'Major Updates'}
+                          </h3>
+                        </div>
+                        <div className="space-y-3">
+                          {changelog.major.map((item, i) => (
+                            <div key={i} className="flex gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
+                              <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full mt-1.5 shrink-0" />
+                              <div>
+                                <h4 className="text-sm font-black text-white uppercase tracking-tight">{item.title}</h4>
+                                <p className="text-xs text-slate-400 mt-1 font-medium">{item.desc}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </section>
+
+                      {/* Minor */}
+                      <section>
+                        <div className="flex items-center gap-2 mb-4">
+                          <Sparkles className="text-emerald-400" size={16} />
+                          <h3 className="text-xs font-black text-emerald-500 uppercase tracking-[0.3em]">
+                            {lang === 'hi' ? 'लघु अपडेट्स' : 'Minor Updates'}
+                          </h3>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {changelog.minor.map((item, i) => (
+                            <div key={i} className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                              <h4 className="text-xs font-black text-white uppercase tracking-tight">{item.title}</h4>
+                              <p className="text-[10px] text-slate-400 mt-1 font-medium leading-relaxed">{item.desc}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </section>
+
+                      {/* Fixes */}
+                      <section>
+                        <div className="flex items-center gap-2 mb-4">
+                          <Sparkles className="text-amber-400" size={16} />
+                          <h3 className="text-xs font-black text-amber-500 uppercase tracking-[0.3em]">
+                            {lang === 'hi' ? 'बग फिक्स' : 'Bug Fixes'}
+                          </h3>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {changelog.fixes.map((item, i) => (
+                            <div key={i} className="px-3 py-2 bg-white/5 rounded-xl border border-white/5 flex items-center gap-2">
+                              <div className="w-1 h-1 bg-amber-500 rounded-full" />
+                              <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">{item.title}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="p-6 bg-slate-950/50 border-t border-white/5 flex items-center justify-between">
+                    <p className="text-[9px] font-bold text-slate-600 uppercase tracking-[0.2em]">
+                      {lang === 'hi' ? 'सिस्टम स्थिति: इष्टतम' : 'System Status: Optimal'}
+                    </p>
+                    <button 
+                      onClick={() => setShowChangelog(false)}
+                      className="flex items-center gap-2 text-[10px] font-black text-cyan-400 uppercase tracking-widest hover:gap-3 transition-all"
+                    >
+                      {lang === 'hi' ? 'जारी रखें' : 'Continue'}
+                      <ChevronRight size={14} />
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
         
         <AnimatePresence>
           {showSecurityAlert && (
@@ -347,60 +506,6 @@ const App: React.FC = () => {
               transition={{ duration: 0.3 }}
               className="min-h-screen flex flex-col"
             >
-              <header className="bg-slate-950/80 border-b border-cyan-500/10 px-2 md:px-12 py-2 md:py-4 flex justify-between items-center sticky top-0 z-50 backdrop-blur-2xl h-14 md:h-20">
-                <div className="flex items-center gap-1 md:gap-8 min-w-0 flex-1 h-full">
-                  <div onClick={handleBackHome} className="cursor-pointer scale-[0.6] sm:scale-75 origin-left md:scale-90 hover:opacity-80 transition-opacity shrink-0">
-                      {AIRFOCUS_LOGO}
-                  </div>
-                  <div className="relative flex-1 min-w-0 h-full flex items-center">
-                    <nav className="flex items-center gap-2 md:gap-6 overflow-x-auto no-scrollbar whitespace-nowrap min-w-0 pr-8 md:pr-4 h-full w-full">
-                      <button onClick={handleBackHome} className={`text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors hover:text-cyan-400`}>{t.navHome}</button>
-                      <span className="text-white/10 md:text-white/20 text-[8px]">/</span>
-                      <button 
-                        onClick={handleQuizClick} 
-                        className={`relative px-2 py-1 md:px-3 md:py-1.5 rounded-md text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-all overflow-hidden group shrink-0 ${view === PageView.QUIZ ? 'text-white' : 'text-amber-200 hover:text-white'}`}
-                      >
-                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 opacity-20 group-hover:opacity-40 transition-opacity rounded-md"></span>
-                        <span className="absolute inset-0 w-full h-full border border-amber-500/50 rounded-md"></span>
-                        <span className="relative flex items-center gap-1.5">
-                          <svg className="w-3 h-3 md:w-4 md:h-4 text-amber-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                          </svg>
-                          {t.navQuiz}
-                        </span>
-                      </button>
-                      <span className="text-white/10 md:text-white/20 text-[8px]">/</span>
-                      <button onClick={handlePhotosClick} className={`text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.PHOTOS ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navPhotos}</button>
-                      <span className="text-white/10 md:text-white/20 text-[8px]">/</span>
-                      <button onClick={handleVideosClick} className={`text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.VIDEOS ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navVideos}</button>
-                      <span className="text-white/10 md:text-white/20 text-[8px]">/</span>
-                      <button 
-                        onClick={handleAiHubClick} 
-                        className={`relative px-2 py-1 md:px-3 md:py-1.5 rounded-md text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-all overflow-hidden group shrink-0 ${view === PageView.AI_HUB ? 'text-white' : 'text-indigo-200 hover:text-white'}`}
-                      >
-                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 opacity-20 group-hover:opacity-40 transition-opacity rounded-md"></span>
-                        <span className="absolute inset-0 w-full h-full border border-indigo-500/50 rounded-md"></span>
-                        <span className="relative flex items-center gap-1.5">
-                          <svg className="w-3 h-3 md:w-4 md:h-4 text-cyan-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                          </svg>
-                          {t.navAiHub}
-                        </span>
-                      </button>
-                      <span className="text-white/10 md:text-white/20 text-[8px]">/</span>
-                      <button onClick={handleAboutClick} className={`text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.ABOUT ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navAbout}</button>
-                      <span className="text-white/10 md:text-white/20 text-[8px]">/</span>
-                      <button onClick={handleContactClick} className={`text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.05em] md:tracking-[0.2em] transition-colors ${view === PageView.CONTACT ? 'text-cyan-400' : 'hover:text-cyan-400'}`}>{t.navContact}</button>
-                    </nav>
-                    <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-slate-950 to-transparent pointer-events-none md:hidden"></div>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-1 md:gap-4 shrink-0 h-full">
-                  <LanguageSwitcher />
-                </div>
-              </header>
-
               <main className="flex-grow">
                 <Suspense fallback={<LoadingSkeleton />}>
                   <AnimatePresence mode="wait" initial={false}>

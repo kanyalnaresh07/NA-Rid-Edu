@@ -99,11 +99,11 @@ const About: React.FC<AboutProps> = ({ translations, lang }) => {
           <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tight">
             Naresh Singh <span className="text-cyan-400">Kanyal</span>
           </h1>
-          <p className="text-slate-400 font-bold tracking-[0.3em] uppercase text-xs md:text-sm">{lang === 'hi' ? 'इंडस्ट्रियल सिस्टम्स में उत्कृष्टता' : 'Excellence in Industrial Systems'}</p>
+          <p className="text-slate-300 font-bold tracking-[0.3em] uppercase text-xs md:text-sm">{lang === 'hi' ? 'इंडस्ट्रियल सिस्टम्स में उत्कृष्टता' : 'Excellence in Industrial Systems'}</p>
           
           <div className="flex flex-wrap justify-center gap-2 pt-4">
             {['Engineer', 'Tech Innovator', 'Part-time Coder'].map((tag) => (
-              <span key={tag} className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-slate-300 tracking-wider uppercase">
+              <span key={tag} className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-slate-200 tracking-wider uppercase">
                 {tag}
               </span>
             ))}
@@ -191,7 +191,7 @@ const About: React.FC<AboutProps> = ({ translations, lang }) => {
                 {iconMap[item.icon]}
               </div>
               <h3 className="text-white text-base font-black mb-3 uppercase tracking-tight">{item.title}</h3>
-              <p className="text-slate-400 text-xs font-medium leading-relaxed">{item.desc}</p>
+              <p className="text-slate-300 text-xs font-medium leading-relaxed">{item.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -257,7 +257,7 @@ const About: React.FC<AboutProps> = ({ translations, lang }) => {
                 {value.icon}
               </div>
               <h4 className="text-white text-lg font-black uppercase tracking-tight mb-2">{value.title}</h4>
-              <p className="text-slate-400 text-xs font-medium leading-relaxed">{value.desc}</p>
+              <p className="text-slate-300 text-xs font-medium leading-relaxed">{value.desc}</p>
             </motion.div>
           ))}
         </div>

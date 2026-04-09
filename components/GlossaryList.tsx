@@ -615,17 +615,17 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                         <HighlightText 
                           text={result.subtitle} 
                           highlight={searchQuery} 
-                          className="block text-[8px] md:text-[10px] font-bold text-slate-500 uppercase tracking-widest truncate"
+                          className="block text-[8px] md:text-[10px] font-bold text-slate-300 uppercase tracking-widest truncate"
                         />
                         {result.snippet && (
-                          <div className="mt-2 text-[9px] md:text-[11px] text-slate-400 line-clamp-2 leading-relaxed italic border-l-2 border-cyan-500/30 pl-2">
+                          <div className="mt-2 text-[9px] md:text-[11px] text-slate-200 line-clamp-2 leading-relaxed italic border-l-2 border-cyan-500/30 pl-2">
                             <HighlightText text={result.snippet} highlight={searchQuery} />
                           </div>
                         )}
                         {result.matchReason && (
                           <div className="mt-1 flex items-center gap-1.5">
                             <div className="w-1 h-1 bg-cyan-500 rounded-full"></div>
-                            <span className="text-[7px] md:text-[8px] font-black text-cyan-400 uppercase tracking-widest">{result.matchReason}</span>
+                            <span className="text-[7px] md:text-[8px] font-black text-cyan-300 uppercase tracking-widest">{result.matchReason}</span>
                           </div>
                         )}
                       </div>
@@ -720,38 +720,38 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       whileTap={{ scale: 0.95 }}
                       transition={{ type: "spring", damping: 20, stiffness: 100, delay: index * 0.05 }}
                       onClick={() => onCategorySelect(term)}
-                      className={`relative w-[220px] sm:w-[240px] md:w-[260px] lg:w-[280px] aspect-square rounded-full border-[8px] md:border-[12px] ${color.border} bg-white flex flex-col items-center justify-center p-6 md:p-8 text-center group z-10 shadow-[0_15px_30px_rgba(0,0,0,0.4)] focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50 overflow-visible`}
+                      className={`relative w-[260px] sm:w-[280px] md:w-[300px] lg:w-[320px] aspect-square rounded-full border-[10px] md:border-[14px] ${color.border} bg-white flex flex-col items-center justify-center p-10 md:p-12 text-center group z-10 shadow-[0_20px_40px_rgba(0,0,0,0.4)] focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50 overflow-visible`}
                     >
                       {/* Premium Loader Animation Rings */}
                       <div 
-                        className={`absolute inset-[-12px] md:inset-[-16px] rounded-full border-[3px] md:border-[4px] border-transparent ${color.text} opacity-60 animate-[spin_4s_linear_infinite] pointer-events-none`}
+                        className={`absolute inset-[-14px] md:inset-[-18px] rounded-full border-[3px] md:border-[4px] border-transparent ${color.text} opacity-60 animate-[spin_4s_linear_infinite] pointer-events-none`}
                         style={{ borderTopColor: 'currentColor', borderRightColor: 'currentColor' }}
                       ></div>
                       <div 
-                        className={`absolute inset-[-18px] md:inset-[-24px] rounded-full border-[1px] md:border-[2px] border-dashed ${color.text} opacity-30 animate-[spin_10s_linear_infinite_reverse] pointer-events-none`}
+                        className={`absolute inset-[-20px] md:inset-[-26px] rounded-full border-[1px] md:border-[2px] border-dashed ${color.text} opacity-30 animate-[spin_10s_linear_infinite_reverse] pointer-events-none`}
                         style={{ borderColor: 'currentColor' }}
                       ></div>
                       <div 
-                        className={`absolute inset-[-24px] md:inset-[-32px] rounded-full border-[2px] md:border-[3px] border-transparent ${color.text} opacity-40 animate-[spin_6s_linear_infinite] pointer-events-none`}
+                        className={`absolute inset-[-26px] md:inset-[-34px] rounded-full border-[2px] md:border-[3px] border-transparent ${color.text} opacity-40 animate-[spin_6s_linear_infinite] pointer-events-none`}
                         style={{ borderBottomColor: 'currentColor', borderLeftColor: 'currentColor' }}
                       >
                         <div className={`absolute bottom-[14%] right-[14%] w-2 h-2 md:w-3 md:h-3 rounded-full ${color.line} shadow-[0_0_10px_currentColor] animate-pulse`}></div>
                       </div>
 
                       {/* Inner dashed ring */}
-                      <div className="absolute inset-3 border border-dashed border-slate-100 rounded-full pointer-events-none"></div>
+                      <div className="absolute inset-6 border border-dashed border-slate-100 rounded-full pointer-events-none"></div>
 
-                      <div className={`mb-3 md:mb-4 ${color.text} transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)_scale(1.2)]`} style={{ perspective: '1000px' }}>
+                      <div className={`mb-2 md:mb-3 ${color.text} transition-all duration-700 ease-in-out group-hover:[transform:rotateY(360deg)_scale(1.1)]`} style={{ perspective: '1000px' }}>
                         <Icon className="w-10 h-10 md:w-12 md:h-12" strokeWidth={1.5} />
                       </div>
                       
-                      <h3 className="text-slate-900 font-black text-sm md:text-lg uppercase tracking-widest mb-2 line-clamp-2 px-4 leading-tight group-hover:text-cyan-600 transition-colors">
+                      <h3 className="text-slate-900 font-black text-sm md:text-lg uppercase tracking-wider mb-1 md:mb-2 line-clamp-2 px-2 leading-tight group-hover:text-cyan-600 transition-colors">
                         {term.title}
                       </h3>
                       
-                      <div className="w-10 h-1 bg-slate-200 mb-3 rounded-full group-hover:w-16 group-hover:bg-cyan-500 transition-all duration-500"></div>
+                      <div className="w-10 h-1 bg-slate-200 mb-2 md:mb-3 rounded-full group-hover:w-16 group-hover:bg-cyan-500 transition-all duration-500"></div>
 
-                      <p className="text-slate-500 text-[10px] md:text-xs font-bold px-4 line-clamp-3 leading-relaxed tracking-wide">
+                      <p className="text-slate-500 text-[10px] md:text-xs font-bold px-2 line-clamp-4 leading-relaxed tracking-wide">
                         {term.subItems.join(', ')}
                       </p>
                     </motion.button>
