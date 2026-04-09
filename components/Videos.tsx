@@ -21,6 +21,15 @@ const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
       thumbnail: 'https://img.youtube.com/vi/OX-iyb-21tk/hqdefault.jpg',
       category: 'Software',
       videoUrl: 'https://www.youtube.com/embed/OX-iyb-21tk'
+    },
+    {
+      id: 'v5',
+      title: '5S, VMS, KAIZEN, POKA YOKE, ANDON, KPI, SMED',
+      description: isHi ? 'औद्योगिक उत्कृष्टता के लिए प्रमुख विनिर्माण अवधारणाओं को सीखें।' : 'Learn key manufacturing concepts for industrial excellence.',
+      duration: 'Training',
+      thumbnail: 'https://img.youtube.com/vi/0Fvyx2bqaoc/hqdefault.jpg',
+      category: 'Production',
+      videoUrl: 'https://www.youtube.com/embed/0Fvyx2bqaoc'
     }
   ];
 

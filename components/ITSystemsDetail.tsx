@@ -57,16 +57,16 @@ const ITSystemsDetail: React.FC<ITSystemsDetailProps> = ({ onBack, lang }) => {
         },
         {
           id: 3,
-          title: "Data Management",
+          title: "Data Management & Cyber Security",
           tag: "Security",
-          desc: "Collection, storage, and safety of factory data.",
+          desc: "Collection, storage, and protection of factory data.",
           points: [
-            "Production output logging",
-            "Quality defect & PPM data",
-            "Maintenance & Breakdown logs",
+            "Firewalls & Antivirus protection",
+            "VPNs for secure remote access",
+            "Access Control Policies (Role-based)",
             "Backup & Disaster recovery"
           ],
-          purpose: "Avoid data loss; enable future analytics.",
+          purpose: "Prevent data breaches, unauthorized access, and ensure factory data safety.",
           icon: "🗄️",
           color: "cyan",
           clickable: true
@@ -167,16 +167,16 @@ const ITSystemsDetail: React.FC<ITSystemsDetailProps> = ({ onBack, lang }) => {
         },
         {
           id: 3,
-          title: "डेटा मैनेजमेंट",
+          title: "डेटा मैनेजमेंट और साइबर सुरक्षा",
           tag: "सुरक्षा",
           desc: "फैक्ट्री डेटा का संग्रह, स्टोरेज और सुरक्षा।",
           points: [
-            "प्रोडक्शन आउटपुट डेटा रिकॉर्ड",
-            "क्वालिटी डिफेक्ट और PPM डेटा",
-            "ब्रेकडाउन और मेंटेनेंस डेटा",
+            "फ़ायरवॉल और एंटीवायरस सुरक्षा",
+            "सुरक्षित रिमोट एक्सेस के लिए VPN",
+            "एक्सेस कंट्रोल पॉलिसी (रोल-आधारित)",
             "बैकअप और डेटा रिकवरी"
           ],
-          purpose: "डेटा खोने से बचाना और भविष्य के विश्लेषण के लिए तैयार रखना।",
+          purpose: "डेटा चोरी और अनधिकृत पहुँच को रोकना और फैक्ट्री डेटा की सुरक्षा सुनिश्चित करना।",
           icon: "🗄️",
           color: "cyan",
           clickable: true

@@ -42,7 +42,7 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
   const [state, setState] = useState<QuizState>('setup');
   const [topic, setTopic] = useState(TOPICS[0]);
   const [difficulty, setDifficulty] = useState(DIFFICULTIES[0]);
-  const [questionCount, setQuestionCount] = useState(10);
+  const [questionCount, setQuestionCount] = useState(5);
   
   const [questions, setQuestions] = useState<AIQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
