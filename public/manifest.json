@@ -1,0 +1,17 @@
+{
+  "background_color": "#0792e5",
+  "description": "Learn OEE, 5S, PPE, IQC, IPQC, FQC, OQC, Kaizen, Line Balancing and Manufacturing concepts in simple way. Free platform for engineering and production learning.",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Na-Rid Education",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "Na-Rid Education",
+  "start_url": "/",
+  "theme_color": "#e8e213",
+  "id": "/na-ridedu",
+  "lang": "en",
+  "categories": [
+    "education"
+  ]
+}
