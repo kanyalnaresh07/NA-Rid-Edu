@@ -23,9 +23,9 @@ const AIHub: React.FC<AIHubProps> = ({ translations, lang }) => {
     try {
       const aiResponse = await searchWithAI(query, lang);
       setResponse(aiResponse || null);
-    } catch (error) {
+    } catch (error: any) {
       console.error("AI Search failed:", error);
-      setResponse(isHi ? "क्षमा करें, AI खोज विफल रही। कृपया पुनः प्रयास करें।" : "Sorry, AI search failed. Please try again.");
+      setResponse(isHi ? `क्षमा करें, AI खोज विफल रही। कृपया पुनः प्रयास करें। (${error.message})` : `Sorry, AI search failed. Please try again. (${error.message})`);
     } finally {
       setIsSearching(false);
     }

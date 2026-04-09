@@ -185,7 +185,7 @@ const ResumeBuilder: React.FC<{ lang: string }> = ({ lang }) => {
       Return ONLY the summary text.`;
 
       const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
+        model: "gemini-3.1-pro-preview",
         contents: prompt,
       });
 
@@ -211,7 +211,7 @@ const ResumeBuilder: React.FC<{ lang: string }> = ({ lang }) => {
       Return ONLY the polished bullet points.`;
 
       const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
+        model: "gemini-3.1-pro-preview",
         contents: prompt,
       });
 

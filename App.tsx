@@ -328,7 +328,7 @@ const App: React.FC = () => {
         )}
 
         <div className={`relative z-10 flex-grow transition-all duration-500 ${view === PageView.HOME ? 'pl-0' : 'pl-[70px] lg:pl-[280px]'}`}>
-          {/* Floating Logo and Language Switcher for Home Page (since Sidebar/Nav is hidden) */}
+          {/* Floating Logo for Home Page (since Sidebar/Nav is hidden) */}
           {view === PageView.HOME && (
             <div className="absolute top-8 left-8 md:left-12 z-[50] flex items-center gap-6">
               <div 
@@ -337,16 +337,6 @@ const App: React.FC = () => {
               >
                 {AIRFOCUS_LOGO}
               </div>
-              
-              <button 
-                onClick={() => setShowLangModal(true)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-cyan-400 hover:bg-white/10 transition-all group backdrop-blur-md"
-              >
-                <Globe size={18} className="group-hover:rotate-12 transition-transform" />
-                <span className="text-[10px] font-black uppercase tracking-widest hidden sm:block">
-                  {lang === 'en' ? 'EN' : 'हिं'}
-                </span>
-              </button>
             </div>
           )}
 
