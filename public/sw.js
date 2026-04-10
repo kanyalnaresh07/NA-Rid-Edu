@@ -1,15 +1,7 @@
-const CACHE = "narid-cache-v3";
+const CACHE = "narid-cache-v4";
 
 self.addEventListener("install", event => {
   self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE).then(cache => {
-      return cache.addAll([
-        "/",
-        "/manifest.json"
-      ]);
-    })
-  );
 });
 
 self.addEventListener("activate", event => {
@@ -17,16 +9,15 @@ self.addEventListener("activate", event => {
 });
 
 self.addEventListener("fetch", event => {
-  if (event.request.mode === "navigate") {
-    event.respondWith(
-      fetch(event.request).catch(() => caches.match("/"))
-    );
-    return;
-  }
+  if (event.request.method !== "GET") return;
 
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    fetch(event.request)
+      .then(response => {
+        const clone = response.clone();
+        caches.open(CACHE).then(cache => cache.put(event.request, clone));
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
