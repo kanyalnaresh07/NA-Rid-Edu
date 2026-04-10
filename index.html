@@ -91,8 +91,9 @@
     <div id="root"></div>
 <script type="module" src="/index.tsx"></script>
 <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/sw.js");
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+  .then(() => console.log("SW registered"));
 }
 </script>
 </body>

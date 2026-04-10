@@ -1,36 +1,23 @@
-const CACHE_NAME = "narid-v1";
+console.log("Service Worker Loaded");
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll([
-        "/",
-        "/index.html",
-        "/manifest.json"
-      ]);
-    })
-  );
-  self.skipWaiting();
-});
+const CACHE = "narid-cache-v2";
 
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
-      );
-    })
+const offlineFiles = [
+  "/",
+  "/index.html",
+  "/manifest.json"
+];
+
+self.addEventListener("install", e => {
+  e.waitUntil(
+    caches.open(CACHE).then(cache => cache.addAll(offlineFiles))
   );
 });
 
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
+self.addEventListener("fetch", e => {
+  e.respondWith(
+    caches.match(e.request).then(res => {
+      return res || fetch(e.request);
     })
   );
 });
