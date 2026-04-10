@@ -16,16 +16,16 @@ interface HeroProps {
 
 const changelog = {
   major: [
-    { title: "New Glossary Structure", desc: "Redesigned the glossary layout for better navigation." },
-    { title: "Multi-language Support", desc: "Added full Hindi language support." }
+    { title: "PWA & Offline Support", desc: "App now works offline with full Service Worker caching." },
+    { title: "New Logo & Branding", desc: "Updated the main logo with a modern, custom design." }
   ],
   minor: [
-    { title: "UI Improvements", desc: "Enhanced animations and visual feedback." },
-    { title: "Performance", desc: "Optimized rendering for smoother experience." }
+    { title: "UI Enhancements", desc: "Added subtle animations and glowing effects to the UI." },
+    { title: "Multi-language Support", desc: "Full English and Hindi translations available." }
   ],
   fixes: [
-    { title: "Fixed navigation bugs" },
-    { title: "Resolved layout issues on mobile" }
+    { title: "Fixed image loading issues" },
+    { title: "Resolved SPA navigation bugs" }
   ]
 };
 

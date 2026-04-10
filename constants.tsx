@@ -33,7 +33,7 @@ export const AIRFOCUS_LOGO = (
       <span 
         className="text-[7px] md:text-[9px] font-bold text-cyan-500 tracking-[0.2em] md:tracking-[0.4em] uppercase ml-0.5"
       >
-        Education Hub
+        EDUCATION HUB
       </span>
     </div>
   </div>

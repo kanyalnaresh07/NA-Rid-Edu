@@ -94,8 +94,20 @@ const Contact: React.FC<ContactProps> = ({ translations }) => {
               animate={{ opacity: 1, scale: 1 }}
               className="h-full flex flex-col items-center justify-center text-center py-12"
             >
-              <div className="w-20 h-20 bg-cyan-500/20 rounded-full flex items-center justify-center mb-6">
-                <CheckCircle className="w-10 h-10 text-cyan-400" />
+              <div className="w-20 h-20 bg-cyan-500/20 rounded-full flex items-center justify-center mb-6 relative">
+                <motion.div
+                  initial={{ scale: 0, rotate: -45 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.1 }}
+                >
+                  <CheckCircle className="w-10 h-10 text-cyan-400" />
+                </motion.div>
+                <motion.div
+                  className="absolute inset-0 border-2 border-cyan-400 rounded-full"
+                  initial={{ scale: 0.8, opacity: 1 }}
+                  animate={{ scale: 1.5, opacity: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                />
               </div>
               <h3 className="text-xl font-black text-white mb-2">{t.successMessage}</h3>
             </motion.div>

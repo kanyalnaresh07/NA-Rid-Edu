@@ -5,6 +5,7 @@ import { Search, Settings, Lightbulb, Rocket, BarChart, Target, Factory, ShieldC
 import { GlossaryTerm, Language, DepartmentDetail, PageView } from '../types';
 import { getTermDefinition } from '../services/geminiService';
 import Markdown from 'react-markdown';
+import LoadingSkeleton from './LoadingSkeleton';
 
 const T5SDetail = lazy(() => import('./T5SDetail'));
 const PPEDetail = lazy(() => import('./PPEDetail'));
@@ -273,16 +274,7 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
 
   if (activeDeepDive) {
     return (
-      <Suspense fallback={
-        <div className="min-h-screen flex items-center justify-center bg-[#020817]">
-          <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-blue-400 font-medium animate-pulse">
-              {lang === 'hi' ? 'लोड हो रहा है...' : 'Loading...'}
-            </p>
-          </div>
-        </div>
-      }>
+      <Suspense fallback={<LoadingSkeleton type="detail" />}>
         {renderDeepDive()}
       </Suspense>
     );
@@ -369,13 +361,7 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
           </div>
 
           {isLoading ? (
-            <div className="h-64 md:h-[400px] flex flex-col items-center justify-center bg-slate-950/40 rounded-3xl md:rounded-[40px] border border-white/5 shadow-2xl backdrop-blur-xl">
-               <div className="relative w-12 h-12 md:w-16 md:h-16 mb-4 md:mb-6">
-                  <div className="absolute inset-0 border-4 border-cyan-500/10 rounded-full"></div>
-                  <div className="absolute inset-0 border-4 border-t-cyan-500 rounded-full animate-spin"></div>
-               </div>
-               <p className="text-cyan-400 text-[8px] md:text-xs font-black uppercase tracking-[0.5em] animate-pulse">Loading Intel...</p>
-            </div>
+            <LoadingSkeleton type="text" />
           ) : pointData ? (
             <div className="space-y-6 md:space-y-8">
                <div className="relative bg-slate-900/80 border border-cyan-500/30 p-6 md:p-10 rounded-2xl md:rounded-[32px] shadow-2xl overflow-hidden backdrop-blur-3xl group">

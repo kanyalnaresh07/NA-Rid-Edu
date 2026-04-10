@@ -679,6 +679,26 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
         views: "850",
         link: "https://youtu.be/_sXc_B9lEVQ?si=pGGt5BzG9CS_F6C_",
         embedId: "_sXc_B9lEVQ"
+      },
+      {
+        title: "Production Supervisor",
+        desc: isHi ? "प्रोडक्शन सुपरवाइजर की भूमिका और जिम्मेदारियां" : "Role and responsibilities of a production supervisor",
+        thumbnail: "https://img.youtube.com/vi/5F0TknCKSXM/0.jpg",
+        duration: "Training",
+        category: isHi ? "प्रोडक्शन" : "Production",
+        views: "New",
+        link: "https://youtu.be/5F0TknCKSXM?si=Me8Gs8BIzM7CCLbQ",
+        embedId: "5F0TknCKSXM"
+      },
+      {
+        title: "PPC Engineer",
+        desc: isHi ? "PPC इंजीनियरिंग के बारे में जानें" : "Learn about PPC engineering",
+        thumbnail: "https://img.youtube.com/vi/nmuhGAGJB-w/0.jpg",
+        duration: "Training",
+        category: isHi ? "इंजीनियरिंग" : "Engineering",
+        views: "New",
+        link: "https://youtu.be/nmuhGAGJB-w?si=fIHCtHq7AOCc9cfo",
+        embedId: "nmuhGAGJB-w"
       }
     ],
     notes: [
@@ -910,16 +930,6 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
                 >
                   <div className="absolute top-2 right-2 md:top-6 md:right-6 z-10 flex gap-2 md:gap-3">
                     <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(selectedVideo.link, '_blank');
-                      }}
-                      className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-950/50 hover:bg-orange-500 backdrop-blur-md flex items-center justify-center text-white transition-all group"
-                      title={isHi ? "YouTube पर देखें" : "Watch on YouTube"}
-                    >
-                      <ExternalLink size={18} className="group-hover:scale-110 transition-transform md:w-5 md:h-5" />
-                    </button>
-                    <button 
                       onClick={() => setSelectedVideo(null)}
                       className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-950/50 hover:bg-white/10 backdrop-blur-md flex items-center justify-center text-white transition-colors"
                     >
@@ -928,11 +938,12 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
                   </div>
                   
                   <iframe
-                    src={`https://www.youtube.com/embed/${selectedVideo.embedId}?autoplay=1`}
+                    src={`https://www.youtube.com/embed/${selectedVideo.embedId}?autoplay=1&vq=hd1080`}
                     title={selectedVideo.title}
                     className="w-full h-full border-0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
+                    loading="lazy"
                   />
                 </motion.div>
               </motion.div>

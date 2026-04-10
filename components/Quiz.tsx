@@ -367,7 +367,13 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
               </div>
             ) : state === 'result' ? (
               <div className="flex-grow flex flex-col items-center justify-center text-center">
-                <Award className="w-20 h-20 text-emerald-400 mb-6" />
+                <motion.div
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                >
+                  <Award className="w-20 h-20 text-emerald-400 mb-6" />
+                </motion.div>
                 <h2 className="text-4xl font-black text-white mb-2">Quiz Complete!</h2>
                 <p className="text-xl text-slate-300 mb-8">You scored {score} out of {questions.length}</p>
                 <button 

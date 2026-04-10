@@ -30,6 +30,51 @@ const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
       thumbnail: 'https://img.youtube.com/vi/0Fvyx2bqaoc/hqdefault.jpg',
       category: 'Production',
       videoUrl: 'https://www.youtube.com/embed/0Fvyx2bqaoc'
+    },
+    {
+      id: 'v6',
+      title: 'Short form industrial tools',
+      description: isHi ? 'औद्योगिक उपकरणों के संक्षिप्त रूप।' : 'Short forms of industrial tools.',
+      duration: 'Training',
+      thumbnail: 'https://img.youtube.com/vi/jZvFDa86hgA/0.jpg',
+      category: 'Tools',
+      videoUrl: 'https://www.youtube.com/embed/jZvFDa86hgA'
+    },
+    {
+      id: 'v7',
+      title: '3G, 3M, 3K',
+      description: isHi ? '3G, 3M, 3K अवधारणाओं को समझें।' : 'Understand 3G, 3M, 3K concepts.',
+      duration: 'Training',
+      thumbnail: 'https://img.youtube.com/vi/OfUsa_cpc_Q/0.jpg',
+      category: 'Concepts',
+      videoUrl: 'https://www.youtube.com/embed/OfUsa_cpc_Q'
+    },
+    {
+      id: 'v8',
+      title: 'DPR, OEE, HPR, DRR',
+      description: isHi ? 'DPR, OEE, HPR, DRR मैट्रिक्स के बारे में जानें।' : 'Learn about DPR, OEE, HPR, DRR metrics.',
+      duration: 'Training',
+      thumbnail: 'https://img.youtube.com/vi/cEnQ60NNt6M/0.jpg',
+      category: 'Metrics',
+      videoUrl: 'https://www.youtube.com/embed/cEnQ60NNt6M'
+    },
+    {
+      id: 'v9',
+      title: 'PPM, DPU, DPM, DPMO',
+      description: isHi ? 'गुणवत्ता मैट्रिक्स: PPM, DPU, DPM, DPMO' : 'Quality Metrics: PPM, DPU, DPM, DPMO',
+      duration: 'Training',
+      thumbnail: 'https://img.youtube.com/vi/S_jn2tPb_Oc/0.jpg',
+      category: 'Quality',
+      videoUrl: 'https://www.youtube.com/embed/S_jn2tPb_Oc'
+    },
+    {
+      id: 'v10',
+      title: '7QC TOOL',
+      description: isHi ? '7 गुणवत्ता नियंत्रण उपकरण सीखें।' : 'Learn the 7 Quality Control Tools.',
+      duration: 'Training',
+      thumbnail: 'https://img.youtube.com/vi/ElLwRsLAhv8/0.jpg',
+      category: 'Quality',
+      videoUrl: 'https://www.youtube.com/embed/ElLwRsLAhv8'
     }
   ];
 
@@ -102,7 +147,7 @@ const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
                 }}
               >
                 {isHi ? 'अभी देखें' : 'Watch Now'}
-                <ExternalLink size={14} />
+                <Play size={14} className="fill-current" />
               </button>
             </div>
           </motion.div>
@@ -157,12 +202,13 @@ const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
                 <X size={24} />
               </button>
               <iframe
-                src={`${selectedVideo}?autoplay=1`}
+                src={`${selectedVideo}?autoplay=1&vq=hd1080`}
                 title="YouTube video player"
                 className="w-full h-full"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
+                loading="lazy"
               ></iframe>
             </motion.div>
           </motion.div>

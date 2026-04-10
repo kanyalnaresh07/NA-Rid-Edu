@@ -7,6 +7,7 @@ import { GlossaryTerm, Language } from '../types';
 import { EmptyState } from './ui/EmptyState';
 import { searchWithAI } from '../services/geminiService';
 import Markdown from 'react-markdown';
+import LoadingSkeleton from './LoadingSkeleton';
 
 interface GlossaryListProps {
   translations: any;
@@ -376,12 +377,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                 {/* Content */}
                 <div className="p-6 md:p-8 overflow-y-auto custom-scrollbar flex-grow">
                   {isAiLoading ? (
-                    <div className="flex flex-col items-center justify-center py-12 gap-4">
-                      <Loader2 size={40} className="text-cyan-500 animate-spin" />
-                      <p className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] animate-pulse">
-                        {isHi ? 'AI जानकारी जुटा रहा है...' : 'AI is gathering information...'}
-                      </p>
-                    </div>
+                    <LoadingSkeleton type="text" />
                   ) : (
                     <div className="prose prose-invert max-w-none prose-p:text-slate-300 prose-headings:text-white prose-strong:text-white prose-li:text-slate-300">
                       <div className="text-slate-300 leading-relaxed text-sm md:text-base font-medium space-y-4">
