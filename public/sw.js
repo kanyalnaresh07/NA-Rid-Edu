@@ -1,23 +1,32 @@
-console.log("Service Worker Loaded");
+const CACHE = "narid-cache-v3";
 
-const CACHE = "narid-cache-v2";
-
-const offlineFiles = [
-  "/",
-  "/index.html",
-  "/manifest.json"
-];
-
-self.addEventListener("install", e => {
-  e.waitUntil(
-    caches.open(CACHE).then(cache => cache.addAll(offlineFiles))
+self.addEventListener("install", event => {
+  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE).then(cache => {
+      return cache.addAll([
+        "/",
+        "/manifest.json"
+      ]);
+    })
   );
 });
 
-self.addEventListener("fetch", e => {
-  e.respondWith(
-    caches.match(e.request).then(res => {
-      return res || fetch(e.request);
+self.addEventListener("activate", event => {
+  event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener("fetch", event => {
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match("/"))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
     })
   );
 });
