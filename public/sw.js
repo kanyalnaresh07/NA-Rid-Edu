@@ -1,11 +1,25 @@
+const CACHE_NAME = "narid-cache-v1";
+
+const urlsToCache = [
+  "/",
+  "/index.html",
+  "/manifest.json",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png"
+];
+
 self.addEventListener("install", (event) => {
-  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(urlsToCache);
+    })
+  );
 });
 
-self.addEventListener("activate", (event) => {
-  console.log("Service Worker Activated");
-});
-
-self.addEventListener("fetch", function (event) {
-  event.respondWith(fetch(event.request));
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
 });
