@@ -361,7 +361,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       <Sparkles size={20} className="animate-pulse" />
                     </div>
                     <div>
-                      <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-wider">AI {isHi ? 'खोज परिणाम' : 'Search Result'}</h3>
+                      <h2 className="text-lg md:text-xl font-black text-white uppercase tracking-wider">AI {isHi ? 'खोज परिणाम' : 'Search Result'}</h2>
                       <p className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest">{searchQuery}</p>
                     </div>
                   </div>
@@ -420,7 +420,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                     <Lightbulb size={20} strokeWidth={1.5} />
                   </div>
                   <div className="flex flex-col h-full">
-                    <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-2 text-white group-hover:text-rose-400 transition-colors">{translations.heroCards.card1.title}</h3>
+                    <h2 className="text-base md:text-lg font-black uppercase tracking-tight mb-2 text-white group-hover:text-rose-400 transition-colors">{translations.heroCards.card1.title}</h2>
                     <p className="text-slate-400 text-[10px] md:text-xs leading-relaxed font-medium mb-4">{translations.heroCards.card1.desc}</p>
                     <div className="mt-auto flex gap-1.5">
                       {[1, 2, 3, 4].map((i) => (
@@ -449,7 +449,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                     <Puzzle size={20} strokeWidth={1.5} />
                   </div>
                   <div className="flex flex-col h-full">
-                    <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-2 text-white group-hover:text-blue-400 transition-colors">{translations.heroCards.card2.title}</h3>
+                    <h2 className="text-base md:text-lg font-black uppercase tracking-tight mb-2 text-white group-hover:text-blue-400 transition-colors">{translations.heroCards.card2.title}</h2>
                     <p className="text-slate-400 text-[10px] md:text-xs leading-relaxed font-medium mb-4">{translations.heroCards.card2.desc}</p>
                     <div className="mt-auto flex gap-1.5">
                       {[1, 2, 3, 4].map((i) => (
@@ -478,7 +478,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                     <Megaphone size={20} strokeWidth={1.5} />
                   </div>
                   <div className="flex flex-col h-full">
-                    <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-2 text-white group-hover:text-amber-400 transition-colors">{translations.heroCards.card3.title}</h3>
+                    <h2 className="text-base md:text-lg font-black uppercase tracking-tight mb-2 text-white group-hover:text-amber-400 transition-colors">{translations.heroCards.card3.title}</h2>
                     <p className="text-slate-400 text-[10px] md:text-xs leading-relaxed font-medium mb-4">{translations.heroCards.card3.desc}</p>
                     <div className="mt-auto flex gap-1.5">
                       {[1, 2, 3, 4].map((i) => (
@@ -741,9 +741,9 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                         <Icon className="w-10 h-10 md:w-12 md:h-12" strokeWidth={1.5} />
                       </div>
                       
-                      <h3 className="text-slate-900 font-black text-sm md:text-lg uppercase tracking-wider mb-1 md:mb-2 line-clamp-2 px-2 leading-tight group-hover:text-cyan-600 transition-colors">
+                      <h2 className="text-slate-900 font-black text-sm md:text-lg uppercase tracking-wider mb-1 md:mb-2 line-clamp-2 px-2 leading-tight group-hover:text-cyan-600 transition-colors">
                         {term.title}
-                      </h3>
+                      </h2>
                       
                       <div className="w-10 h-1 bg-slate-200 mb-2 md:mb-3 rounded-full group-hover:w-16 group-hover:bg-cyan-500 transition-all duration-500"></div>
 

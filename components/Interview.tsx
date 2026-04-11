@@ -848,6 +848,7 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
                   alt={video.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/20 transition-colors" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -869,9 +870,9 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
                     <span className="text-[10px] font-black uppercase tracking-widest">{video.views}</span>
                   </div>
                 </div>
-                <h3 className="text-xl font-black text-white uppercase tracking-tight mb-2">
+                <h2 className="text-xl font-black text-white uppercase tracking-tight mb-2">
                   {video.title}
-                </h3>
+                </h2>
                 <p className="text-sm text-slate-400 font-medium">
                   {video.desc}
                 </p>
@@ -892,9 +893,9 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
                 <div className={`w-20 h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 ${note.color} group-hover:scale-110 transition-transform duration-500`}>
                   <Icon size={40} />
                 </div>
-                <h3 className="text-xl font-black text-white uppercase tracking-tight mb-2">
+                <h2 className="text-xl font-black text-white uppercase tracking-tight mb-2">
                   {note.title}
-                </h3>
+                </h2>
                 <div className="flex items-center gap-3 text-slate-500 text-[10px] font-black uppercase tracking-widest mb-8">
                   <span>{note.type}</span>
                   <span className="w-1 h-1 bg-slate-700 rounded-full" />
@@ -994,9 +995,9 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
                               {idx + 1}.
                             </span>
                             <div className="space-y-2">
-                              <h4 className="text-white font-black uppercase tracking-tight text-lg">
+                              <h3 className="text-white font-black uppercase tracking-tight text-lg">
                                 {item.q}
-                              </h4>
+                              </h3>
                               <p className="text-slate-400 font-medium leading-relaxed">
                                 {item.a}
                               </p>
@@ -1026,6 +1027,7 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
                     alt={photo.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     referrerPolicy="no-referrer"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">

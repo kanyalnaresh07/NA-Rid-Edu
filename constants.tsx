@@ -3,9 +3,9 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { GlossaryTerm } from './types';
 
-export const AIRFOCUS_LOGO = (
-  <div className="flex items-center gap-1.5 md:gap-3 group">
-    <div className="relative">
+export const Logo = ({ hideTextOnMobile = false }: { hideTextOnMobile?: boolean }) => (
+  <div className="flex items-center gap-2 md:gap-3 group">
+    <div className="relative shrink-0">
       {/* Floating Logo Icon */}
       <div 
         className="relative w-8 h-8 md:w-10 md:h-10 bg-slate-900 border border-cyan-500/50 rounded-lg flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(6,182,212,0.3)] z-10 transition-transform hover:scale-105"
@@ -19,9 +19,9 @@ export const AIRFOCUS_LOGO = (
       </div>
     </div>
 
-    <div className="flex flex-col -space-y-1">
+    <div className={`flex-col justify-center min-w-0 ${hideTextOnMobile ? 'hidden lg:flex' : 'flex'}`}>
       {/* Shimmering Main Text */}
-      <div className="relative">
+      <div className="relative truncate">
         <span 
           className="text-lg md:text-2xl font-black tracking-tighter uppercase italic bg-gradient-to-r from-cyan-400 via-white to-cyan-400 bg-[length:200%_auto] bg-clip-text text-transparent pr-1"
         >
@@ -31,13 +31,16 @@ export const AIRFOCUS_LOGO = (
 
       {/* Breathing Subtext */}
       <span 
-        className="text-[7px] md:text-[9px] font-bold text-cyan-500 tracking-[0.2em] md:tracking-[0.4em] uppercase ml-0.5"
+        className="text-[7px] md:text-[9px] font-bold text-cyan-500 tracking-[0.2em] md:tracking-[0.4em] uppercase truncate"
       >
         EDUCATION HUB
       </span>
     </div>
   </div>
 );
+
+// Keep AIRFOCUS_LOGO for backward compatibility where props aren't needed
+export const AIRFOCUS_LOGO = <Logo />;
 
 export const TRANSLATIONS = {
   en: {

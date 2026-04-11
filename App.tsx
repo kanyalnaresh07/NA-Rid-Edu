@@ -45,14 +45,12 @@ const App: React.FC = () => {
     }
     return 'en';
   });
-  const [hasSelectedLang, setHasSelectedLang] = useState<boolean>(true);
   const [showLangModal, setShowLangModal] = useState<boolean>(false);
   const [pendingView, setPendingView] = useState<PageView | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<GlossaryTerm | null>(null);
   const [initialSubItem, setInitialSubItem] = useState<string | null>(null);
   const [initialPoint, setInitialPoint] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [viewHistory, setViewHistory] = useState<PageView[]>([PageView.HOME]);
   const [showSecurityAlert, setShowSecurityAlert] = useState(false);
   const [showChangelog, setShowChangelog] = useState(false);
 
@@ -168,13 +166,6 @@ const App: React.FC = () => {
       // Handle subItem and point restoration
       setInitialSubItem(state.subItem || null);
       setInitialPoint(state.point || null);
-      
-      setViewHistory(prev => {
-        if (prev.length > 1 && prev[prev.length - 2] === targetView) {
-          return prev.slice(0, -1);
-        }
-        return [...prev, targetView];
-      });
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -201,7 +192,6 @@ const App: React.FC = () => {
         preloadMap[targetView]();
       }
 
-      setViewHistory(prev => [...prev, targetView]);
       setView(targetView);
       
       const newState = { view: targetView, ...additionalState };
@@ -234,7 +224,6 @@ const App: React.FC = () => {
 
   const handleLanguageSelect = (selectedLang: Language) => {
     setLang(selectedLang);
-    setHasSelectedLang(true);
     setShowLangModal(false);
     localStorage.setItem('app_lang', selectedLang);
     localStorage.setItem('app_lang_selected', 'true');
@@ -345,9 +334,9 @@ const App: React.FC = () => {
             <header className="sticky top-0 left-0 right-0 z-[40] bg-slate-950/80 backdrop-blur-md border-b border-white/5 px-4 md:px-8 py-4 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="block">
-                  <h2 className="text-sm font-black text-white uppercase tracking-widest">
+                  <h1 className="text-sm font-black text-white uppercase tracking-widest">
                     {getNavTitle()}
-                  </h2>
+                  </h1>
                 </div>
               </div>
               
@@ -468,7 +457,7 @@ const App: React.FC = () => {
 
                   {/* Footer */}
                   <div className="p-6 bg-slate-950/50 border-t border-white/5 flex items-center justify-between">
-                    <p className="text-[9px] font-bold text-slate-600 uppercase tracking-[0.2em]">
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]">
                       {lang === 'hi' ? 'सिस्टम स्थिति: इष्टतम' : 'System Status: Optimal'}
                     </p>
                     <button 
@@ -687,7 +676,7 @@ const App: React.FC = () => {
                           {t.navPrivacy}
                         </button>
                         <span className="text-white/10 text-[9px]">|</span>
-                        <p className="text-slate-600 text-[9px] uppercase tracking-widest font-bold">{t.footerText}</p>
+                        <p className="text-slate-400 text-[9px] uppercase tracking-widest font-bold">{t.footerText}</p>
                       </div>
                       <div className="flex gap-4 mt-4">
                           <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,1)]"></div>

@@ -85,9 +85,9 @@ const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
         animate={{ opacity: 1, y: 0 }}
         className="mb-12"
       >
-        <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
+        <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
           {isHi ? 'वीडियो लाइब्रेरी' : 'Video Library'}
-        </h2>
+        </h1>
         <div className="w-20 h-1 bg-cyan-500 mb-6"></div>
         <p className="text-slate-400 text-sm md:text-lg max-w-2xl font-medium leading-relaxed">
           {isHi 
@@ -129,9 +129,9 @@ const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
             </div>
 
             <div className="p-6">
-              <h3 className="text-lg font-black text-white uppercase tracking-tight mb-2 group-hover:text-cyan-400 transition-colors">
+              <h2 className="text-lg font-black text-white uppercase tracking-tight mb-2 group-hover:text-cyan-400 transition-colors">
                 {video.title}
-              </h3>
+              </h2>
               <p className="text-slate-500 text-xs font-medium leading-relaxed mb-6 line-clamp-2">
                 {video.description}
               </p>
@@ -167,9 +167,9 @@ const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
           <div className="w-20 h-20 rounded-3xl bg-slate-800 flex items-center justify-center text-cyan-400 mx-auto mb-8 border border-white/10 shadow-2xl">
             <Video size={40} />
           </div>
-          <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter mb-4">
+          <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter mb-4">
             {isHi ? 'अधिक वीडियो जल्द आ रहे हैं' : 'More Videos Coming Soon'}
-          </h3>
+          </h2>
           <p className="text-slate-500 text-sm md:text-lg max-w-xl mx-auto font-medium leading-relaxed uppercase tracking-widest">
             {isHi 
               ? 'हम आपके लिए और अधिक औद्योगिक प्रशिक्षण सामग्री तैयार कर रहे हैं।' 

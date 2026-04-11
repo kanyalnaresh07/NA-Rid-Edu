@@ -68,9 +68,9 @@ const AIHub: React.FC<AIHubProps> = ({ translations, lang }) => {
         <div className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-2xl border border-indigo-500/30 mb-6 shadow-[0_0_30px_rgba(99,102,241,0.2)]">
           <BrainCircuit className="w-10 h-10 text-indigo-400" />
         </div>
-        <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 uppercase tracking-tighter mb-4 drop-shadow-2xl">
+        <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 uppercase tracking-tighter mb-4 drop-shadow-2xl">
           {isHi ? 'AI हब' : 'AI HUB'}
-        </h2>
+        </h1>
         <p className="text-slate-200 text-sm md:text-lg max-w-2xl mx-auto font-medium leading-relaxed drop-shadow-lg">
           {isHi 
             ? 'औद्योगिक ज्ञान के लिए हमारे उन्नत AI सहायक का उपयोग करें। कोई भी प्रश्न पूछें और तुरंत उत्तर प्राप्त करें।' 
@@ -154,9 +154,9 @@ const AIHub: React.FC<AIHubProps> = ({ translations, lang }) => {
                   <Bot className="w-6 h-6 text-indigo-400" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-black text-white uppercase tracking-widest">
+                  <h2 className="text-lg font-black text-white uppercase tracking-widest">
                     {isHi ? 'AI उत्तर' : 'AI Response'}
-                  </h3>
+                  </h2>
                   <p className="text-xs text-indigo-400 font-medium">Powered by Gemini</p>
                 </div>
               </div>

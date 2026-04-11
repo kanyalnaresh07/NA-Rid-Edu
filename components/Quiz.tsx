@@ -228,9 +228,9 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
              <polygon points="50 5, 95 27.5, 95 72.5, 50 95, 5 72.5, 5 27.5" />
           </svg>
         </div>
-        <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 uppercase tracking-tighter mb-4 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]">
+        <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 uppercase tracking-tighter mb-4 drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]">
           {isHi ? 'Na-rid क्विज़' : 'Na-rid QUIZ'}
-        </h2>
+        </h1>
         <p className="text-slate-400 text-sm md:text-lg max-w-2xl mx-auto font-medium leading-relaxed">
           {isHi 
             ? 'हमारे अनुकूली, Na-rid क्विज़ के साथ अपने विनिर्माण ज्ञान का परीक्षण करें!' 
@@ -245,10 +245,10 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
           <div className="bg-slate-900/60 backdrop-blur-xl border border-indigo-500/20 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500"></div>
             
-            <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
+            <h2 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
               <Settings className="w-6 h-6 text-indigo-400" />
               {isHi ? 'अपना Na-rid क्विज़ कस्टमाइज़ करें' : 'Customize Your Na-rid Quiz'}
-            </h3>
+            </h2>
 
             <div className="space-y-6">
               {/* Topic */}
@@ -333,9 +333,9 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
                   <Bot className="w-6 h-6 text-indigo-400" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-black text-white uppercase tracking-widest">
+                  <h2 className="text-lg font-black text-white uppercase tracking-widest">
                     {isHi ? 'Na-rid क्विज़ कार्ड' : 'Na-rid QUIZ CARD'}
-                  </h3>
+                  </h2>
                   {state !== 'setup' && state !== 'loading' && (
                     <div className="flex items-center gap-4 mt-1 text-xs font-bold">
                       <span className="text-slate-400">Question {currentIndex + 1} / {questions.length}</span>
@@ -385,9 +385,9 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
               </div>
             ) : (
               <div className="flex-grow flex flex-col">
-                <h4 className="text-xl md:text-2xl font-bold text-white mb-8 leading-relaxed">
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-8 leading-relaxed">
                   {questions[currentIndex]?.text}
-                </h4>
+                </h3>
 
                 <div className="space-y-3 mb-8">
                   {questions[currentIndex]?.options.map((option, idx) => {
@@ -464,9 +464,9 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex flex-col justify-center">
-                <h3 className="text-2xl font-black text-white uppercase tracking-widest mb-6">
+                <h2 className="text-2xl font-black text-white uppercase tracking-widest mb-6">
                   {isHi ? 'Na-rid फीडबैक' : 'Na-rid FEEDBACK'}
-                </h3>
+                </h2>
                 
                 {(() => {
                   const parsed = parseExplanation(lastQuestionFeedback.explanation);
@@ -480,27 +480,27 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
                       
                       {parsed.why && (
                         <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-4">
-                          <h4 className="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
+                          <h3 className="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
                             <CheckCircle2 className="w-4 h-4" /> {isHi ? 'यह सही क्यों है' : 'Why it is correct'}
-                          </h4>
+                          </h3>
                           <p className="text-slate-300 text-sm leading-relaxed">{parsed.why}</p>
                         </div>
                       )}
                       
                       {parsed.where && (
                         <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4">
-                          <h4 className="text-emerald-400 font-bold text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
+                          <h3 className="text-emerald-400 font-bold text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
                             <Settings className="w-4 h-4" /> {isHi ? 'यह कहाँ उपयोग होता है' : 'Where it is used'}
-                          </h4>
+                          </h3>
                           <p className="text-slate-300 text-sm leading-relaxed">{parsed.where}</p>
                         </div>
                       )}
                       
                       {parsed.what && (
                         <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
-                          <h4 className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
+                          <h3 className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-2 flex items-center gap-2">
                             <Zap className="w-4 h-4" /> {isHi ? 'इसका क्या अर्थ है' : 'What it means'}
-                          </h4>
+                          </h3>
                           <p className="text-slate-300 text-sm leading-relaxed">{parsed.what}</p>
                         </div>
                       )}
@@ -510,9 +510,9 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
               </div>
               
               <div className="bg-slate-950/50 rounded-2xl p-6 border border-white/5">
-                <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                   <LineChart className="w-4 h-4" /> LAST QUESTION
-                </h4>
+                </h3>
                 
                 <div className={`p-4 rounded-xl border mb-6 flex items-center gap-4 ${lastQuestionFeedback.isCorrect ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-red-500/10 border-red-500/30'}`}>
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-black text-xl ${lastQuestionFeedback.isCorrect ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
@@ -553,7 +553,7 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
             <div className={`w-16 h-16 mx-auto rounded-full ${feature.bg} ${feature.border} border flex items-center justify-center mb-4`}>
               <feature.icon className={`w-8 h-8 ${feature.color}`} />
             </div>
-            <h4 className="text-sm font-black text-white uppercase tracking-widest mb-2">{feature.title}</h4>
+            <h3 className="text-sm font-black text-white uppercase tracking-widest mb-2">{feature.title}</h3>
             <p className="text-xs text-slate-400 leading-relaxed">{feature.desc}</p>
           </div>
         ))}

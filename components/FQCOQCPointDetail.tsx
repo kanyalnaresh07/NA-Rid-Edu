@@ -149,7 +149,7 @@ const FQCOQCPointDetail: React.FC<FQCOQCPointDetailProps> = ({ pointId, onBack, 
               <div className={`w-3 h-3 bg-${data.color}-500 rounded-full animate-pulse shadow-[0_0_12px_${data.color}]`}></div>
               <span className={`text-${data.color}-400 text-[10px] font-black uppercase tracking-[0.4em]`}>{data.subtitle}</span>
            </div>
-           <h3 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none italic font-mono">{data.title}</h3>
+           <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none italic font-mono">{data.title}</h2>
         </div>
         <button onClick={onBack} className="bg-slate-800 hover:bg-slate-700 text-white px-8 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl flex items-center justify-center gap-3 transform hover:-translate-x-1 border border-white/10">
           <svg className="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
@@ -161,9 +161,9 @@ const FQCOQCPointDetail: React.FC<FQCOQCPointDetailProps> = ({ pointId, onBack, 
       <div className="bg-slate-900 border border-white/10 p-8 md:p-12 rounded-[40px] shadow-2xl relative overflow-hidden group">
          <div className={`absolute top-0 right-0 p-8 text-9xl font-black text-${data.color}-500/[0.03] select-none uppercase italic`}>{pointId.slice(0, 3)}</div>
          <div className="relative z-10 space-y-8">
-            <h4 className="text-white text-xl md:text-3xl font-bold leading-relaxed italic max-w-4xl">
+            <h3 className="text-white text-xl md:text-3xl font-bold leading-relaxed italic max-w-4xl">
                "{data.desc}"
-            </h4>
+            </h3>
             <div className={`bg-${data.color}-500/10 p-6 rounded-3xl border border-${data.color}-500/20 inline-block`}>
                <p className={`text-${data.color}-400 font-black text-xs md:text-sm uppercase tracking-widest italic`}>
                   "{data.mantra}"
@@ -180,7 +180,7 @@ const FQCOQCPointDetail: React.FC<FQCOQCPointDetailProps> = ({ pointId, onBack, 
                  0{i+1}
               </div>
               <div className="space-y-1 flex-1">
-                 <h5 className="text-white font-black text-sm md:text-base uppercase tracking-tight group-hover:text-white transition-colors">{key.h}</h5>
+                 <h4 className="text-white font-black text-sm md:text-base uppercase tracking-tight group-hover:text-white transition-colors">{key.h}</h4>
                  <p className="text-slate-500 text-xs font-bold leading-relaxed italic">{key.d}</p>
               </div>
            </div>
@@ -189,7 +189,7 @@ const FQCOQCPointDetail: React.FC<FQCOQCPointDetailProps> = ({ pointId, onBack, 
 
       {/* Visual Simulation Area */}
       <div className="bg-slate-950 border border-white/5 rounded-[40px] p-8 md:p-12 shadow-inner flex flex-col items-center">
-         <h4 className="text-white text-[10px] font-black uppercase tracking-[0.5em] mb-10 text-center">Process Insight Visual</h4>
+         <h3 className="text-white text-[10px] font-black uppercase tracking-[0.5em] mb-10 text-center">Process Insight Visual</h3>
          
          {pointId === 'FIR' && (
            <div className="w-full max-w-2xl bg-white/5 rounded-2xl p-6 font-mono text-[10px] text-slate-400 border border-white/10 space-y-2 overflow-x-auto whitespace-nowrap">
@@ -258,7 +258,7 @@ const FQCOQCPointDetail: React.FC<FQCOQCPointDetailProps> = ({ pointId, onBack, 
 
               {/* Digital Cert Simulation */}
               <div className="max-w-md mx-auto bg-white p-6 rounded-sm shadow-2xl border-t-[10px] border-blue-600 text-slate-900 font-serif">
-                 <h6 className="text-center font-bold uppercase text-lg border-b border-slate-200 pb-2 mb-4">CERTIFICATE OF QUALITY</h6>
+                 <h4 className="text-center font-bold uppercase text-lg border-b border-slate-200 pb-2 mb-4">CERTIFICATE OF QUALITY</h4>
                  <div className="space-y-3 text-[10px]">
                     <div className="flex justify-between"><span>Batch No:</span><span className="font-bold">LOT-99812</span></div>
                     <div className="flex justify-between"><span>Inspection Date:</span><span className="font-bold">25-Jan-2025</span></div>

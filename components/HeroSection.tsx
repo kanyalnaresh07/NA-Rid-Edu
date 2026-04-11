@@ -57,7 +57,7 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
 
       {/* Content Area */}
       <motion.div 
-        className="flex-grow flex flex-col justify-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 z-20 py-8 md:py-16 w-full max-w-[100vw]"
+        className="flex-grow flex flex-col justify-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 z-20 pt-28 pb-8 md:py-16 w-full max-w-[100vw]"
       >
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 w-full max-w-7xl mx-auto">
           
@@ -142,9 +142,9 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
                   <div className="text-amber-400 bg-amber-500/10 p-2.5 rounded-full border border-amber-500/20">
                     <Target className="w-6 h-6" strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-white font-bold text-sm tracking-widest uppercase">
+                  <h2 className="text-white font-bold text-sm tracking-widest uppercase">
                     Manufacturing <span className="text-cyan-400">Hub</span>
-                  </h3>
+                  </h2>
                 </div>
                 <p className="text-slate-300 text-sm leading-relaxed">
                   A manufacturing hub is a centralized industrial ecosystem where production, supply chain, skilled workforce, and infrastructure come together to enable efficient, large-scale, and cost-effective manufacturing.
@@ -160,9 +160,9 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
                   <div className="text-cyan-400 bg-cyan-500/10 p-2.5 rounded-full border border-cyan-500/20">
                     <Lightbulb className="w-6 h-6" strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-white font-bold text-sm tracking-widest uppercase">
+                  <h2 className="text-white font-bold text-sm tracking-widest uppercase">
                     Vision
-                  </h3>
+                  </h2>
                 </div>
                 <p className="text-slate-300 text-sm leading-relaxed">
                   Build a smart, sustainable, and globally competitive manufacturing learning system that drives innovation, creates opportunity, and delivers skilled manpower with high quality knowledge.

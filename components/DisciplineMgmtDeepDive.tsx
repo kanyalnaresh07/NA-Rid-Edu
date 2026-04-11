@@ -170,7 +170,7 @@ const DisciplineMgmtDeepDive: React.FC<DisciplineMgmtDeepDiveProps> = ({ onBack,
               <div className="w-3 h-3 bg-fuchsia-500 rounded-full animate-pulse shadow-[0_0_12px_fuchsia]"></div>
               <span className="text-fuchsia-400 text-[10px] font-black uppercase tracking-[0.4em]">{current.subtitle}</span>
            </div>
-           <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight leading-none drop-shadow-lg font-mono italic">Pillar 04: Compliance</h3>
+           <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight leading-none drop-shadow-lg font-mono italic">Pillar 04: Compliance</h2>
         </div>
         <button onClick={onBack} className="bg-fuchsia-700 hover:bg-fuchsia-600 text-white px-8 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl flex items-center justify-center gap-3 transform hover:-translate-x-1 border border-white/10">
           <svg className="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
@@ -182,7 +182,7 @@ const DisciplineMgmtDeepDive: React.FC<DisciplineMgmtDeepDiveProps> = ({ onBack,
       <div className="bg-slate-900 border border-fuchsia-500/30 p-8 md:p-12 rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col items-center text-center gap-8 group">
          <div className="absolute top-0 right-0 p-8 text-8xl font-black text-white/[0.02] select-none uppercase italic tracking-tighter">Code of Conduct</div>
          <div className="space-y-4 max-w-4xl relative z-10">
-            <h4 className="text-white text-3xl md:text-5xl font-black uppercase tracking-tighter italic leading-none">{current.hero.question}</h4>
+            <h3 className="text-white text-3xl md:text-5xl font-black uppercase tracking-tighter italic leading-none">{current.hero.question}</h3>
             <p className="text-fuchsia-400 font-black text-xs md:text-xl uppercase tracking-widest italic drop-shadow-lg">"{current.hero.desc}"</p>
          </div>
          <div className="bg-white/5 p-6 md:p-10 rounded-[32px] border-l-8 border-fuchsia-500 max-w-4xl shadow-inner group-hover:bg-white/10 transition-colors">
@@ -201,7 +201,7 @@ const DisciplineMgmtDeepDive: React.FC<DisciplineMgmtDeepDiveProps> = ({ onBack,
                </div>
 
                <div className="space-y-1">
-                  <h5 className="text-white text-xl font-black uppercase tracking-tight group-hover:text-fuchsia-400 transition-colors">0{p.id}. {p.title}</h5>
+                  <h4 className="text-white text-xl font-black uppercase tracking-tight group-hover:text-fuchsia-400 transition-colors">0{p.id}. {p.title}</h4>
                   <p className="text-slate-500 text-[10px] font-bold leading-relaxed italic uppercase">"{p.desc}"</p>
                </div>
 
@@ -228,10 +228,10 @@ const DisciplineMgmtDeepDive: React.FC<DisciplineMgmtDeepDiveProps> = ({ onBack,
       {/* Corrective Path Visualization */}
       <div className="bg-slate-900 border border-white/10 p-8 md:p-12 rounded-[40px] shadow-2xl space-y-10 relative overflow-hidden">
          <div className="absolute top-0 right-0 p-8 text-6xl font-black text-fuchsia-500/[0.03] select-none uppercase italic">Process</div>
-         <h4 className="text-white text-xl md:text-2xl font-black uppercase tracking-tighter italic flex items-center gap-4">
+         <h3 className="text-white text-xl md:text-2xl font-black uppercase tracking-tighter italic flex items-center gap-4">
             <span className="w-12 h-1 bg-fuchsia-500 shadow-[0_0_10px_fuchsia]"></span>
             Disciplinary Correction Path
-         </h4>
+         </h3>
          <div className="flex flex-col md:flex-row items-center justify-between gap-6 relative">
             <div className="absolute top-1/2 left-0 w-full h-1 bg-white/5 -translate-y-1/2 hidden md:block"></div>
             {[
@@ -246,7 +246,7 @@ const DisciplineMgmtDeepDive: React.FC<DisciplineMgmtDeepDiveProps> = ({ onBack,
                  </div>
                  <div className="text-center">
                     <span className={`text-[10px] font-black uppercase tracking-widest text-${step.c}-400`}>{step.l}</span>
-                    <span className="block text-[8px] font-bold text-slate-600 uppercase">Stage 0{i+1}</span>
+                    <span className="block text-[8px] font-bold text-slate-400 uppercase">Stage 0{i+1}</span>
                  </div>
               </div>
             ))}
@@ -262,7 +262,7 @@ const DisciplineMgmtDeepDive: React.FC<DisciplineMgmtDeepDiveProps> = ({ onBack,
       <div className="bg-fuchsia-600 p-10 rounded-[48px] shadow-[0_0_50px_rgba(217,70,239,0.3)] text-center relative overflow-hidden group">
          <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-700 via-fuchsia-600 to-fuchsia-700 animate-pulse opacity-50"></div>
          <div className="relative z-10 space-y-4">
-            <h5 className="text-white/60 font-black text-[10px] uppercase tracking-[0.6em] mb-2">Technical Insight</h5>
+            <h4 className="text-white/60 font-black text-[10px] uppercase tracking-[0.6em] mb-2">Technical Insight</h4>
             <p className="text-white text-lg md:text-2xl font-black italic tracking-tight leading-snug">
                "{current.summary}"
             </p>

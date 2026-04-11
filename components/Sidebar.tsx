@@ -14,7 +14,7 @@ import {
   UserCheck
 } from 'lucide-react';
 import { PageView, Language } from '../types';
-import { AIRFOCUS_LOGO } from '../constants';
+import { Logo } from '../constants';
 
 interface SidebarProps {
   currentView: PageView;
@@ -65,7 +65,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             className="cursor-pointer hover:opacity-80 transition-opacity"
           >
             <div className="scale-90 lg:scale-110 origin-center lg:origin-left">
-              {AIRFOCUS_LOGO}
+              <Logo hideTextOnMobile={true} />
             </div>
           </div>
         </div>

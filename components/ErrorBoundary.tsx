@@ -58,9 +58,9 @@ class ErrorBoundary extends React.Component<Props, State> {
               </div>
               
               <div className="space-y-4">
-                <h2 className="text-white text-3xl md:text-5xl font-black uppercase tracking-tighter italic leading-none">
+                <h1 className="text-white text-3xl md:text-5xl font-black uppercase tracking-tighter italic leading-none">
                   System Malfunction
-                </h2>
+                </h1>
                 <p className="text-rose-400 font-black text-xs md:text-lg uppercase tracking-widest italic">
                   "We've encountered a critical exception in the procurement node."
                 </p>
@@ -84,7 +84,7 @@ class ErrorBoundary extends React.Component<Props, State> {
                 Reboot System
               </button>
               
-              <p className="text-slate-600 text-[9px] font-black uppercase tracking-[0.5em] italic mt-4">
+              <p className="text-slate-400 text-[9px] font-black uppercase tracking-[0.5em] italic mt-4">
                 Error Protocol: v4.0.1 // Node: Procurement-Main
               </p>
             </div>

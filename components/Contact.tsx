@@ -109,11 +109,11 @@ const Contact: React.FC<ContactProps> = ({ translations }) => {
                   transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                 />
               </div>
-              <h3 className="text-xl font-black text-white mb-2">{t.successMessage}</h3>
+              <h2 className="text-xl font-black text-white mb-2">{t.successMessage}</h2>
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
-              <h3 className="text-lg font-black text-white uppercase tracking-widest mb-6">{t.formTitle}</h3>
+              <h2 className="text-lg font-black text-white uppercase tracking-widest mb-6">{t.formTitle}</h2>
               
               <div>
                 <label className="block text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-2">

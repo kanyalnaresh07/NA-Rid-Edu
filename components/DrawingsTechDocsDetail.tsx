@@ -160,7 +160,7 @@ const DrawingsTechDocsDetail: React.FC<DrawingsTechDocsDetailProps> = ({ onBack,
               <div className="w-3 h-3 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_12px_cyan]"></div>
               <span className="text-cyan-400 text-[10px] font-black uppercase tracking-[0.4em]">{current.subtitle}</span>
            </div>
-           <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight leading-none drop-shadow-lg font-mono">Tech Docs Hub</h3>
+           <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight leading-none drop-shadow-lg font-mono">Tech Docs Hub</h2>
         </div>
         <button onClick={onBack} className="bg-slate-700 hover:bg-slate-600 text-white px-8 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl flex items-center justify-center gap-3 transform hover:-translate-x-1 border border-white/10">
           <svg className="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
@@ -172,7 +172,7 @@ const DrawingsTechDocsDetail: React.FC<DrawingsTechDocsDetailProps> = ({ onBack,
       <div className="bg-slate-900 border border-cyan-500/30 p-8 md:p-12 rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col items-center text-center gap-8 group">
          <div className="absolute top-0 right-0 p-8 text-8xl font-black text-white/[0.02] select-none uppercase italic tracking-tighter">Documentation</div>
          <div className="space-y-4 max-w-4xl relative z-10">
-            <h4 className="text-white text-3xl md:text-5xl font-black uppercase tracking-tighter italic leading-none">{current.hero.question}</h4>
+            <h3 className="text-white text-3xl md:text-5xl font-black uppercase tracking-tighter italic leading-none">{current.hero.question}</h3>
             <p className="text-cyan-400 font-black text-xs md:text-xl uppercase tracking-widest italic drop-shadow-lg">"{current.hero.desc}"</p>
          </div>
          <div className="bg-white/5 p-6 md:p-10 rounded-[32px] border-l-8 border-cyan-500 max-w-4xl shadow-inner group-hover:bg-white/10 transition-colors text-slate-300 text-sm md:text-lg font-bold italic leading-relaxed">
@@ -192,10 +192,10 @@ const DrawingsTechDocsDetail: React.FC<DrawingsTechDocsDetailProps> = ({ onBack,
                </div>
 
                <div className="space-y-2">
-                  <h5 className="text-white text-xl font-black uppercase tracking-tight group-hover:text-cyan-400 transition-colors flex items-center gap-3">
+                  <h4 className="text-white text-xl font-black uppercase tracking-tight group-hover:text-cyan-400 transition-colors flex items-center gap-3">
                      <span className="text-cyan-500/40 font-mono">0{p.id}</span>
                      {p.title}
-                  </h5>
+                  </h4>
                   <p className="text-slate-400 text-xs font-bold leading-relaxed italic">"{p.desc}"</p>
                </div>
 
@@ -218,19 +218,19 @@ const DrawingsTechDocsDetail: React.FC<DrawingsTechDocsDetailProps> = ({ onBack,
       {/* Change Management Flow Visual */}
       <div className="bg-slate-900/60 border border-white/10 p-8 md:p-12 rounded-[40px] shadow-2xl space-y-10 overflow-hidden relative">
          <div className="absolute top-0 right-0 p-4 text-white/5 font-black text-4xl italic">Revision Cycle</div>
-         <h4 className="text-white text-center font-black text-xl md:text-2xl uppercase tracking-[0.3em]">{current.comparison.title}</h4>
+         <h3 className="text-white text-center font-black text-xl md:text-2xl uppercase tracking-[0.3em]">{current.comparison.title}</h3>
          <div className="flex flex-col md:flex-row items-center justify-center gap-12 py-6">
             <div className="bg-slate-950 p-8 rounded-[32px] border border-amber-500/30 flex flex-col items-center gap-4 group hover:scale-105 transition-all shadow-xl">
                <div className="w-16 h-16 bg-amber-500/20 border border-amber-500/50 rounded-2xl flex items-center justify-center text-amber-500 text-3xl">📝</div>
-               <h5 className="text-white font-black text-lg uppercase tracking-tight">{current.comparison.ecr.name}</h5>
+               <h4 className="text-white font-black text-lg uppercase tracking-tight">{current.comparison.ecr.name}</h4>
                <span className="text-[10px] font-black uppercase text-amber-400 tracking-widest">{current.comparison.ecr.action}</span>
             </div>
 
-            <div className="text-slate-600 text-4xl rotate-90 md:rotate-0">➔</div>
+            <div className="text-slate-400 text-4xl rotate-90 md:rotate-0">➔</div>
 
             <div className="bg-slate-950 p-8 rounded-[32px] border border-emerald-500/30 flex flex-col items-center gap-4 group hover:scale-105 transition-all shadow-xl">
                <div className="w-16 h-16 bg-emerald-500/20 border border-emerald-500/50 rounded-2xl flex items-center justify-center text-emerald-500 text-3xl">✅</div>
-               <h5 className="text-white font-black text-lg uppercase tracking-tight">{current.comparison.ecn.name}</h5>
+               <h4 className="text-white font-black text-lg uppercase tracking-tight">{current.comparison.ecn.name}</h4>
                <span className="text-[10px] font-black uppercase text-emerald-400 tracking-widest">{current.comparison.ecn.action}</span>
             </div>
          </div>
@@ -238,10 +238,10 @@ const DrawingsTechDocsDetail: React.FC<DrawingsTechDocsDetailProps> = ({ onBack,
 
       {/* Impact Matrix Table */}
       <div className="bg-slate-900/60 border border-white/10 p-8 md:p-12 rounded-[40px] shadow-2xl overflow-hidden backdrop-blur-xl">
-         <h4 className="text-white text-xl md:text-2xl font-black uppercase tracking-tighter mb-8 flex items-center gap-4">
+         <h3 className="text-white text-xl md:text-2xl font-black uppercase tracking-tighter mb-8 flex items-center gap-4">
             <span className="w-10 h-1 bg-cyan-500 shadow-[0_0_12px_cyan]"></span>
             {current.impact.title}
-         </h4>
+         </h3>
          <div className="overflow-x-auto">
             <table className="w-full text-left">
                <thead>

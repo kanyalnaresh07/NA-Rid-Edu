@@ -403,7 +403,7 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                   </svg>
                </div>
                <div className="min-w-0">
-                  <h3 className="text-lg md:text-2xl font-black text-white uppercase tracking-tighter leading-none truncate">{selectedDetail.name}</h3>
+                  <h2 className="text-lg md:text-2xl font-black text-white uppercase tracking-tighter leading-none truncate">{selectedDetail.name}</h2>
                   <p className="text-cyan-500 text-[7px] md:text-[8px] font-black uppercase tracking-[0.4em] mt-1">Operational Dashboard / {selectedDetail.id}</p>
                </div>
             </div>
@@ -413,14 +413,14 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
             <div className="lg:col-span-4 flex flex-col gap-4 md:gap-6 order-2 lg:order-1">
               <div className="bg-slate-900/60 border border-cyan-500/20 p-4 md:p-5 rounded-2xl relative overflow-hidden backdrop-blur-xl shadow-xl">
                 <div className="absolute top-0 left-0 w-1 h-full bg-cyan-500"></div>
-                <h4 className="text-cyan-400 text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] mb-2">{translations.mainRole}</h4>
+                <h3 className="text-cyan-400 text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] mb-2">{translations.mainRole}</h3>
                 <p className="text-white text-[10px] md:text-sm font-bold leading-snug">"{selectedDetail.role}"</p>
               </div>
               <div className="bg-slate-900/40 border border-white/5 rounded-2xl p-4 md:p-5 shadow-xl backdrop-blur-xl">
-                <h4 className="text-white text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] mb-4 flex items-center gap-2">
+                <h3 className="text-white text-[8px] md:text-[9px] font-black uppercase tracking-[0.4em] mb-4 flex items-center gap-2">
                   <span className="w-4 h-[1px] bg-cyan-500"></span>
                   {translations.responsibleTeam}
-                </h4>
+                </h3>
                 <div className="flex flex-col gap-2">
                   {selectedDetail.responsiblePersons.map((person, idx) => (
                     <div key={idx} className="flex items-center gap-3 p-2 px-3 md:px-4 rounded-xl bg-white/5 border border-white/5 hover:bg-cyan-500/10 transition-all text-left">
@@ -435,20 +435,20 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
             </div>
             <div className="lg:col-span-8 bg-slate-900/40 border border-white/10 rounded-2xl p-4 md:p-6 shadow-2xl backdrop-blur-xl order-1 lg:order-2">
               <div className="flex items-center justify-between mb-4 md:mb-6 border-b border-white/5 pb-4">
-                 <h4 className="text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-3">
+                 <h3 className="text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-3">
                    <span className="w-6 md:w-8 h-0.5 bg-cyan-500"></span>
                    {translations.coreOperationalPoints}
-                 </h4>
+                 </h3>
                  <span className="hidden sm:inline-block text-cyan-500 text-[7px] font-black uppercase tracking-[0.5em] bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">Live System Map</span>
               </div>
               <div className="space-y-6">
                 {selectedDetail.responsibilities.map((group, idx) => (
                   <div key={idx} className="space-y-4">
                     {group.groupName && (
-                      <h5 className="text-cyan-400 font-black text-[8px] md:text-[9px] uppercase tracking-[0.3em] mb-2 flex items-center gap-2 opacity-70">
+                      <h4 className="text-cyan-400 font-black text-[8px] md:text-[9px] uppercase tracking-[0.3em] mb-2 flex items-center gap-2 opacity-70">
                         <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full"></span>
                         {group.groupName}
-                      </h5>
+                      </h4>
                     )}
                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4">
                       {group.items.map((item, i) => (
@@ -580,9 +580,9 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                             </div>
 
                             {/* Title */}
-                            <h4 className="text-base md:text-lg font-bold text-white uppercase tracking-wide text-center mb-2">
+                            <h3 className="text-base md:text-lg font-bold text-white uppercase tracking-wide text-center mb-2">
                                 {item}
-                            </h4>
+                            </h3>
 
                             {/* Description / Role */}
                             {category.details && category.details[item] && (

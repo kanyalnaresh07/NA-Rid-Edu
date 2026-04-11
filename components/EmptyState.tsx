@@ -46,7 +46,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
       animate={{ opacity: 1, y: 0 }}
       className={`flex flex-col items-center justify-center py-12 md:py-16 px-4 text-center ${className}`}
     >
-      <div className="w-16 h-16 md:w-24 md:h-24 rounded-2xl md:rounded-3xl bg-slate-900/50 border border-white/5 flex items-center justify-center text-slate-600 mb-6 md:mb-8 relative group overflow-hidden shadow-2xl">
+      <div className="w-16 h-16 md:w-24 md:h-24 rounded-2xl md:rounded-3xl bg-slate-900/50 border border-white/5 flex items-center justify-center text-slate-400 mb-6 md:mb-8 relative group overflow-hidden shadow-2xl">
         <div className={`absolute inset-0 ${theme.bg} opacity-0 group-hover:opacity-100 transition-opacity`} />
         <div className={`absolute inset-0 border ${theme.border} rounded-2xl md:rounded-3xl animate-pulse`} />
         
@@ -62,9 +62,9 @@ const EmptyState: React.FC<EmptyStateProps> = ({
         </div>
       </div>
       
-      <h3 className="text-lg md:text-2xl font-black text-white uppercase tracking-[0.2em] mb-2 md:mb-3">
+      <h2 className="text-lg md:text-2xl font-black text-white uppercase tracking-[0.2em] mb-2 md:mb-3">
         {title}
-      </h3>
+      </h2>
       
       {description && (
         <p className="text-slate-500 text-[10px] md:text-sm font-bold max-w-xs mx-auto mb-8 md:mb-10 leading-relaxed uppercase tracking-wider">

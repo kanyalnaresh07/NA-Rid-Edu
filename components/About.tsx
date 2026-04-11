@@ -158,7 +158,7 @@ const About: React.FC<AboutProps> = ({ translations, lang }) => {
           viewport={{ once: true }}
           className="md:col-span-2 bg-slate-900/50 border border-white/10 p-10 rounded-[32px] shadow-xl"
         >
-          <h3 className="text-cyan-400 text-xs font-black tracking-[0.4em] uppercase mb-6">{content.mission}</h3>
+          <h2 className="text-cyan-400 text-xs font-black tracking-[0.4em] uppercase mb-6">{content.mission}</h2>
           <p className="text-slate-200 text-xl font-bold leading-relaxed mb-8 italic">
             "{content.missionText}"
           </p>
@@ -209,7 +209,7 @@ const About: React.FC<AboutProps> = ({ translations, lang }) => {
             <div className="w-10 h-10 bg-cyan-500/20 rounded-xl flex items-center justify-center">
               <Target className="w-5 h-5 text-cyan-400" />
             </div>
-            <h3 className="text-white text-xl font-black uppercase tracking-tight">{lang === 'hi' ? 'हमारा लक्ष्य' : 'OUR MISSION'}</h3>
+            <h2 className="text-white text-xl font-black uppercase tracking-tight">{lang === 'hi' ? 'हमारा लक्ष्य' : 'OUR MISSION'}</h2>
           </div>
           <p className="text-slate-300 text-sm md:text-base font-bold leading-relaxed">
             {lang === 'hi' ? content.missionText : "TO EMPOWER EVERY OPERATOR WITH CORRECT KNOWLEDGE AND DIGITAL GUIDES, ENABLING THEM TO MASTER COMPLEX INDUSTRIAL SYSTEMS THROUGH SELF-IMPROVEMENT."}
@@ -226,7 +226,7 @@ const About: React.FC<AboutProps> = ({ translations, lang }) => {
             <div className="w-10 h-10 bg-cyan-500/20 rounded-xl flex items-center justify-center">
               <Eye className="w-5 h-5 text-cyan-400" />
             </div>
-            <h3 className="text-white text-xl font-black uppercase tracking-tight">{lang === 'hi' ? 'हमारा दृष्टिकोण' : 'OUR VISION'}</h3>
+            <h2 className="text-white text-xl font-black uppercase tracking-tight">{lang === 'hi' ? 'हमारा दृष्टिकोण' : 'OUR VISION'}</h2>
           </div>
           <p className="text-slate-300 text-sm md:text-base font-bold leading-relaxed">
             {lang === 'hi' ? content.visionText : "A FUTURE WHERE EVERY WORKER IS AN EXPERT, BRIDGING THE GAP BETWEEN BASIC FLOOR OPERATIONS AND COMPLEX TECHNICAL EXCELLENCE."}
@@ -256,7 +256,7 @@ const About: React.FC<AboutProps> = ({ translations, lang }) => {
               <div className="mb-6 p-4 bg-white/5 rounded-2xl group-hover:bg-cyan-500 group-hover:text-white transition-all duration-500">
                 {value.icon}
               </div>
-              <h4 className="text-white text-lg font-black uppercase tracking-tight mb-2">{value.title}</h4>
+              <h3 className="text-white text-lg font-black uppercase tracking-tight mb-2">{value.title}</h3>
               <p className="text-slate-300 text-xs font-medium leading-relaxed">{value.desc}</p>
             </motion.div>
           ))}

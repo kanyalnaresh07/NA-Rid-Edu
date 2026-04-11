@@ -109,9 +109,9 @@ const Photos: React.FC<PhotosProps> = ({ translations, lang }) => {
 
                       {/* Middle Text Area */}
                       <div className="w-[65%] mx-auto flex flex-col items-center justify-center pointer-events-auto">
-                        <h3 className="text-white font-bold text-[12px] lg:text-[9px] xl:text-[11px] 2xl:text-[14px] uppercase tracking-wider leading-snug mb-1 2xl:mb-2 text-center w-full break-words drop-shadow-lg">
+                        <h2 className="text-white font-bold text-[12px] lg:text-[9px] xl:text-[11px] 2xl:text-[14px] uppercase tracking-wider leading-snug mb-1 2xl:mb-2 text-center w-full break-words drop-shadow-lg">
                           {lang === 'hi' ? division.titleHi : division.title}
-                        </h3>
+                        </h2>
                         <p className={`text-[10px] lg:text-[8px] xl:text-[9px] 2xl:text-[11px] ${colors.text} italic text-center opacity-90 group-hover:opacity-100 transition-opacity font-medium tracking-wide`}>
                           {lang === 'hi' ? 'तस्वीरें देखें' : 'View Photos'}
                         </p>
