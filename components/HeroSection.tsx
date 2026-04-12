@@ -4,6 +4,8 @@ import { AIRFOCUS_LOGO } from '../constants';
 import { Language } from '../types';
 import { ChevronRight, Target, Lightbulb, CheckCircle2, Wrench, Sparkles } from 'lucide-react';
 
+import HiringSection from './HiringSection';
+
 interface HeroProps {
   title: string;
   description: string;
@@ -35,7 +37,7 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
   const isHi = lang === 'hi';
 
   return (
-      <div className="relative w-full min-h-screen overflow-x-hidden flex flex-col bg-transparent">
+      <div className="relative w-full overflow-x-hidden flex flex-col bg-transparent">
         {/* Decorative vertical lines */}
       <div className="hidden md:block absolute top-1/2 -translate-y-1/2 right-4 md:right-12 space-y-4 md:space-y-8 z-20 pointer-events-none">
         {[...Array(3)].map((_, i) => (
@@ -57,7 +59,7 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
 
       {/* Content Area */}
       <motion.div 
-        className="flex-grow flex flex-col justify-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 z-20 pt-28 pb-8 md:py-16 w-full max-w-[100vw]"
+        className="flex flex-col justify-start px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 z-20 pt-20 pb-2 w-full max-w-[100vw]"
       >
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 w-full max-w-7xl mx-auto">
           
@@ -308,6 +310,9 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
       >
         HUB
       </motion.div>
+
+      {/* Hiring Section at the bottom of Home Page */}
+      <HiringSection lang={lang} translations={translations} />
       </div>
   );
 };

@@ -67,6 +67,16 @@ export const TRANSLATIONS = {
     navContact: "CONTACT",
     navPrivacy: "PRIVACY POLICY",
     updates: "What's New",
+    hiring: {
+      title: "Latest Hiring",
+      subtitle: "Upcoming company hiring / interviews / placement opportunities",
+      role: "Role",
+      applyNow: "Apply Now",
+      newBadge: "New",
+      latestBadge: "Latest",
+      companyName: "Company Name",
+      description: "Description"
+    },
     searchPlaceholder: "Search categories, departments, or topics...",
     searchNoResults: "No results found for",
     searchClear: "Clear Search",
@@ -186,6 +196,16 @@ export const TRANSLATIONS = {
     navContact: "संपर्क",
     navPrivacy: "गोपनीयता नीति",
     updates: "नया क्या है?",
+    hiring: {
+      title: "नवीनतम भर्ती",
+      subtitle: "आगामी कंपनी भर्ती / साक्षात्कार / प्लेसमेंट के अवसर",
+      role: "पद",
+      applyNow: "अभी आवेदन करें",
+      newBadge: "नया",
+      latestBadge: "नवीनतम",
+      companyName: "कंपनी का नाम",
+      description: "विवरण"
+    },
     searchPlaceholder: "कैटेगरी, विभाग या विषय खोजें...",
     searchNoResults: "के लिए कोई परिणाम नहीं मिला",
     searchClear: "खोज साफ़ करें",
