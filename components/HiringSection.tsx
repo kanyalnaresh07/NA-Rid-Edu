@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Linkedin, ExternalLink, X, Briefcase, Building2, Sparkles, Clock } from 'lucide-react';
+import React from 'react';
+import { motion } from 'motion/react';
+import { Linkedin, ExternalLink, Briefcase, Building2, Sparkles, Clock } from 'lucide-react';
 import { Language } from '../types';
 
 interface HiringCard {
@@ -20,7 +20,6 @@ interface HiringSectionProps {
 const HiringSection: React.FC<HiringSectionProps> = ({ lang, translations }) => {
   const isHi = lang === 'hi';
   const t = translations.hiring;
-  const [selectedLink, setSelectedLink] = useState<string | null>(null);
 
   const getTimeAgo = (dateString: string) => {
     const now = new Date();
@@ -213,13 +212,15 @@ const HiringSection: React.FC<HiringSectionProps> = ({ lang, translations }) => 
 
                   {/* Actions */}
                   <div className="flex items-center justify-end gap-1.5">
-                    <button
-                      onClick={() => setSelectedLink(job.applyLink)}
+                    <a
+                      href={job.applyLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="px-3 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-md font-black uppercase tracking-widest text-[8px] transition-all flex items-center gap-1 shadow-lg active:scale-95 whitespace-nowrap"
                     >
                       {t.applyNow}
                       <ExternalLink size={10} />
-                    </button>
+                    </a>
                     <a
                       href={job.applyLink}
                       target="_blank"
@@ -245,65 +246,6 @@ const HiringSection: React.FC<HiringSectionProps> = ({ lang, translations }) => 
           {isHi ? 'अधिक अवसर जल्द ही आ रहे हैं' : 'More opportunities coming soon'}
         </motion.p>
       </div>
-
-      {/* Iframe Modal */}
-      <AnimatePresence>
-        {selectedLink && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-slate-950/90 backdrop-blur-xl"
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              className="relative w-full max-w-5xl h-[80vh] bg-slate-900 border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col"
-            >
-              <div className="p-6 border-b border-white/5 flex items-center justify-between bg-slate-900/50">
-                <div className="flex items-center gap-3">
-                  <Linkedin className="text-[#0077b5]" size={24} />
-                  <h2 className="text-lg font-black text-white uppercase tracking-wider">
-                    {isHi ? "लिंक्डइन पर आवेदन करें" : "Apply on LinkedIn"}
-                  </h2>
-                </div>
-                <div className="flex items-center gap-3">
-                  <a 
-                    href={selectedLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all"
-                    title="Open in new tab"
-                  >
-                    <ExternalLink size={20} />
-                  </a>
-                  <button 
-                    onClick={() => setSelectedLink(null)}
-                    className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all"
-                  >
-                    <X size={20} />
-                  </button>
-                </div>
-              </div>
-              <div className="flex-grow bg-white relative">
-                <iframe
-                  src={selectedLink}
-                  className="w-full h-full border-0"
-                  title="LinkedIn Application"
-                  loading="lazy"
-                />
-                {/* Fallback Overlay if iframe fails */}
-                <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center p-8 text-center bg-slate-900/10 backdrop-blur-[2px]">
-                   <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-4">
-                     {isHi ? "यदि पेज लोड नहीं होता है, तो कृपया 'नया टैब' बटन का उपयोग करें" : "If the page doesn't load, please use the 'New Tab' button"}
-                   </p>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 };
