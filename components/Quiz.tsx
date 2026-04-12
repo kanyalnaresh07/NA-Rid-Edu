@@ -224,7 +224,7 @@ const Quiz: React.FC<QuizProps> = ({ translations, lang }) => {
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-2xl"></div>
           <Bot className="w-12 h-12 text-indigo-400 relative z-10" />
           {/* Hexagon outline effect */}
-          <svg className="absolute inset-0 w-full h-full text-indigo-500/50 scale-125" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg className="absolute inset-0 w-full h-full text-indigo-400/50 scale-125" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
              <polygon points="50 5, 95 27.5, 95 72.5, 50 95, 5 72.5, 5 27.5" />
           </svg>
         </div>

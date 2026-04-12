@@ -269,7 +269,7 @@ const JITKanbanPullDetail: React.FC<JITKanbanPullDetailProps> = ({ onBack, lang 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {content.pull.points.map((point, idx) => (
                 <div key={idx} className="flex items-start gap-3 p-4 bg-white/5 rounded-2xl border border-white/5">
-                  <CheckCircle2 className="w-4 h-4 text-blue-500 shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-1" />
                   <span className="text-slate-400 text-[10px] font-black uppercase tracking-widest leading-tight">{point}</span>
                 </div>
               ))}

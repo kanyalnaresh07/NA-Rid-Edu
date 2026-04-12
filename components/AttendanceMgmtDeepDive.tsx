@@ -187,7 +187,7 @@ const AttendanceMgmtDeepDive: React.FC<AttendanceMgmtDeepDiveProps> = ({ onBack,
          </div>
          <div className="bg-white/5 p-6 md:p-10 rounded-[32px] border-l-8 border-indigo-500 max-w-4xl shadow-inner group-hover:bg-white/10 transition-colors">
             <p className="text-slate-300 text-sm md:text-lg font-bold leading-relaxed italic mb-4">"🕒 {current.hero.simple}"</p>
-            <p className="text-indigo-500 text-[10px] font-black uppercase tracking-[0.6em] animate-pulse italic">"{current.hero.mantra}"</p>
+            <p className="text-indigo-400 text-[10px] font-black uppercase tracking-[0.6em] animate-pulse italic">"{current.hero.mantra}"</p>
          </div>
       </div>
 

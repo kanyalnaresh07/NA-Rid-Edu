@@ -569,7 +569,7 @@ const FMEADMAICDetail: React.FC<FMEADMAICDetailProps> = ({ onBack, lang }) => {
                           {i !== current.fmea.processFlow.steps.length - 1 && (
                             <div className="md:hidden flex flex-col items-center gap-1">
                               <div className="w-0.5 h-4 bg-indigo-500/30"></div>
-                              <svg className="w-3 h-3 text-indigo-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-3 h-3 text-indigo-400/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
                               </svg>
                             </div>

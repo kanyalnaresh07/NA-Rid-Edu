@@ -263,7 +263,7 @@ const PayrollMgmtDeepDive: React.FC<PayrollMgmtDeepDiveProps> = ({ onBack, lang 
                <h4 className="text-2xl font-black uppercase tracking-tighter">{lang === 'hi' ? 'सैलरी स्लिप (Anatomy)' : 'Payslip Anatomy'}</h4>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                     <span className="text-[9px] font-black text-emerald-600 uppercase block mb-2">Earnings (+)</span>
+                     <span className="text-[9px] font-black text-emerald-700 uppercase block mb-2">Earnings (+)</span>
                      <ul className="text-[10px] font-bold space-y-1 opacity-70">
                         <li>Basic Salary</li>
                         <li>HRA / Rent</li>
@@ -272,7 +272,7 @@ const PayrollMgmtDeepDive: React.FC<PayrollMgmtDeepDiveProps> = ({ onBack, lang 
                      </ul>
                   </div>
                   <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                     <span className="text-[9px] font-black text-rose-600 uppercase block mb-2">Deductions (-)</span>
+                     <span className="text-[9px] font-black text-rose-700 uppercase block mb-2">Deductions (-)</span>
                      <ul className="text-[10px] font-bold space-y-1 opacity-70">
                         <li>PF Contribution</li>
                         <li>ESI Contribution</li>
@@ -295,7 +295,7 @@ const PayrollMgmtDeepDive: React.FC<PayrollMgmtDeepDiveProps> = ({ onBack, lang 
       <div className="bg-violet-600 p-10 rounded-[48px] shadow-[0_0_50px_rgba(139,92,246,0.3)] text-center relative overflow-hidden group">
          <div className="absolute inset-0 bg-gradient-to-r from-violet-700 via-violet-600 to-violet-700 animate-pulse opacity-50"></div>
          <div className="relative z-10 space-y-4">
-            <h5 className="text-white/60 font-black text-[10px] uppercase tracking-[0.6em] mb-2">Technical Insight</h5>
+            <h5 className="text-white/90 font-black text-[10px] uppercase tracking-[0.6em] mb-2">Technical Insight</h5>
             <p className="text-white text-lg md:text-2xl font-black italic tracking-tight leading-snug">
                "{current.summary}"
             </p>

@@ -199,14 +199,14 @@ const StoreInventoryDetail: React.FC<StoreInventoryDetailProps> = ({ onBack, lan
                 >
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-slate-900 border border-blue-500/20 rounded-2xl flex items-center justify-center text-blue-500 font-black text-xl shadow-lg group-hover:scale-110 transition-transform">0{p.id}</div>
+                      <div className="w-12 h-12 bg-slate-900 border border-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 font-black text-xl shadow-lg group-hover:scale-110 transition-transform">0{p.id}</div>
                       <h5 className="text-white font-black text-lg md:text-xl uppercase tracking-tight group-hover:text-blue-400 transition-colors">{p.name}</h5>
                     </div>
                     {p.clickable && <span className="text-[7px] bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 uppercase font-black animate-pulse">Deep Dive</span>}
                   </div>
                   <p className="text-slate-400 text-sm font-bold leading-relaxed italic">"{p.desc}"</p>
                   <div className="bg-blue-500/10 border-l-4 border-blue-500 p-4 rounded-r-xl mt-auto">
-                    <span className="text-[8px] font-black text-blue-500 uppercase block mb-1">📌 Use / उपयोग:</span>
+                    <span className="text-[8px] font-black text-blue-400 uppercase block mb-1">📌 Use / उपयोग:</span>
                     <p className="text-white text-[11px] font-bold italic leading-tight">{p.use}</p>
                   </div>
                 </div>

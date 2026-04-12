@@ -150,12 +150,12 @@ const LineBalancingDetail: React.FC<LineBalancingDetailProps> = ({ onBack, lang 
                   <div className="w-14 h-14 bg-slate-900 border border-indigo-500/20 rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform">
                      {p.icon}
                   </div>
-                  <span className="text-indigo-500 font-black text-[10px] uppercase tracking-widest border border-indigo-500/30 px-3 py-1 rounded-full">{p.tag}</span>
+                  <span className="text-indigo-400 font-black text-[10px] uppercase tracking-widest border border-indigo-500/30 px-3 py-1 rounded-full">{p.tag}</span>
                </div>
 
                <div className="space-y-2">
                   <h5 className="text-white text-xl font-black uppercase tracking-tight group-hover:text-indigo-400 transition-colors flex items-center gap-3">
-                     <span className="text-indigo-500/40 font-mono">0{p.id}</span>
+                     <span className="text-indigo-400/40 font-mono">0{p.id}</span>
                      {p.title}
                   </h5>
                   <p className="text-slate-400 text-xs font-bold leading-relaxed italic">"{p.desc}"</p>

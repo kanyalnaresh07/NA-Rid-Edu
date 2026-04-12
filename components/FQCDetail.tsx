@@ -140,7 +140,7 @@ const FQCDetail: React.FC<FQCDetailProps> = ({ onBack, lang }) => {
            <div key={i} className="bg-slate-950/60 border border-white/5 p-8 rounded-[32px] hover:bg-slate-900 transition-all group flex flex-col gap-6 shadow-xl relative overflow-hidden">
               <div className="flex items-center justify-between">
                  <div className="w-14 h-14 bg-slate-900 border border-indigo-500/20 rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform">{el.icon}</div>
-                 <span className="text-indigo-500 font-black text-[9px] uppercase tracking-widest opacity-40">FQC-0{i+1}</span>
+                 <span className="text-indigo-400 font-black text-[9px] uppercase tracking-widest opacity-40">FQC-0{i+1}</span>
               </div>
               <div className="space-y-2">
                  <h5 className="text-white font-black text-lg uppercase tracking-tight group-hover:text-indigo-400 transition-colors">{el.title}</h5>
@@ -169,7 +169,7 @@ const FQCDetail: React.FC<FQCDetailProps> = ({ onBack, lang }) => {
                {current.docs.items.map((doc, i) => (
                   <div key={i} className="bg-slate-950 p-5 rounded-3xl border border-white/5 group hover:border-indigo-500/40 transition-all shadow-xl">
                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-indigo-500 font-black text-[10px] uppercase tracking-widest">{doc.name}</span>
+                        <span className="text-indigo-400 font-black text-[10px] uppercase tracking-widest">{doc.name}</span>
                         <div className="w-6 h-6 bg-slate-900 rounded-lg flex items-center justify-center text-xs opacity-50">📑</div>
                      </div>
                      <h6 className="text-white font-black text-xs uppercase mb-2 tracking-tight leading-none">{doc.full}</h6>

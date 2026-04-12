@@ -108,7 +108,7 @@ const ABC_VEDDetail: React.FC<ABC_VEDDetailProps> = ({ onBack, lang }) => {
 
       {/* ABC Section */}
       <div className="bg-slate-900 border border-white/10 p-8 md:p-12 rounded-[40px] shadow-2xl space-y-8 relative overflow-hidden group">
-         <div className="absolute top-0 right-0 p-8 text-9xl font-black text-blue-500/[0.03] select-none uppercase italic tracking-tighter">ABC</div>
+         <div className="absolute top-0 right-0 p-8 text-9xl font-black text-blue-400/[0.03] select-none uppercase italic tracking-tighter">ABC</div>
          <div className="relative z-10 space-y-6">
             <div>
                <h4 className="text-white text-xl md:text-3xl font-black uppercase tracking-widest border-b-2 border-blue-500 w-fit pb-2">{current.abc.title}</h4>
@@ -118,12 +118,12 @@ const ABC_VEDDetail: React.FC<ABC_VEDDetailProps> = ({ onBack, lang }) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                {current.abc.items.map((item, i) => (
                   <div key={i} className="bg-slate-950/60 p-6 rounded-[32px] border border-white/5 flex flex-col gap-4 group hover:bg-slate-900 transition-all">
-                     <span className="text-blue-500 font-black text-3xl italic">{item.l.split(' ')[0]}</span>
+                     <span className="text-blue-400 font-black text-3xl italic">{item.l.split(' ')[0]}</span>
                      <div className="space-y-2">
                         <h5 className="text-white font-black text-sm uppercase tracking-tight">{item.h}</h5>
                         <p className="text-slate-400 text-xs font-bold">{item.d}</p>
                         <div className="pt-2 border-t border-white/5">
-                           <span className="text-[8px] font-black text-blue-500 uppercase tracking-widest">Control Mode:</span>
+                           <span className="text-[8px] font-black text-blue-400 uppercase tracking-widest">Control Mode:</span>
                            <p className="text-white text-[10px] font-bold italic">{item.ctrl}</p>
                         </div>
                      </div>

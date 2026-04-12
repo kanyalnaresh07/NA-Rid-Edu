@@ -383,7 +383,7 @@ const CorrectiveActionDetail: React.FC<CorrectiveActionDetailProps> = ({ onBack,
                 {current.eightD.steps.map((step, i) => (
                    <div key={i} className="bg-slate-950/60 border border-white/5 p-6 rounded-[32px] hover:bg-slate-900 transition-all group flex flex-col gap-4 shadow-xl">
                       <div className="flex items-center justify-between">
-                         <span className="text-3xl font-black text-indigo-500 italic opacity-20 group-hover:opacity-60 transition-opacity">{step.d}</span>
+                         <span className="text-3xl font-black text-indigo-400 italic opacity-20 group-hover:opacity-60 transition-opacity">{step.d}</span>
                          <div className="w-1 h-8 bg-indigo-500/20 rounded-full group-hover:bg-indigo-500 transition-colors"></div>
                       </div>
                       <h5 className="text-white font-black text-xs md:text-sm uppercase tracking-tight leading-tight group-hover:text-indigo-400 transition-colors">{step.title}</h5>
@@ -408,10 +408,10 @@ const CorrectiveActionDetail: React.FC<CorrectiveActionDetailProps> = ({ onBack,
                 <div className="flex justify-between items-start mb-10 pb-6 border-b border-slate-100">
                    <div>
                       <h4 className="text-slate-900 text-3xl font-black uppercase tracking-tighter">CMR Report</h4>
-                      <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Corrective Measure Record</p>
+                      <p className="text-slate-600 text-[10px] font-black uppercase tracking-widest">Corrective Measure Record</p>
                    </div>
                    <div className="text-right">
-                      <div className="bg-rose-100 text-rose-600 px-4 py-1 rounded text-[10px] font-black uppercase tracking-widest">Doc No: Q-2025-042</div>
+                      <div className="bg-rose-100 text-rose-700 px-4 py-1 rounded text-[10px] font-black uppercase tracking-widest">Doc No: Q-2025-042</div>
                    </div>
                 </div>
 
@@ -419,11 +419,11 @@ const CorrectiveActionDetail: React.FC<CorrectiveActionDetailProps> = ({ onBack,
                    <div className="space-y-8">
                       <div>
                          <span className="text-[7px] font-black text-slate-400 uppercase tracking-tighter block mb-2">Problem Statement</span>
-                         <div className="h-12 bg-slate-50 rounded-lg border border-slate-100 p-3 italic text-slate-500 text-[10px]">Cabinet scratch reported on Line 4...</div>
+                         <div className="h-12 bg-slate-50 rounded-lg border border-slate-100 p-3 italic text-slate-600 text-[10px]">Cabinet scratch reported on Line 4...</div>
                       </div>
                       <div>
                          <span className="text-[7px] font-black text-slate-400 uppercase tracking-tighter block mb-2">Root Cause Analysis</span>
-                         <div className="h-20 bg-slate-50 rounded-lg border border-slate-100 p-3 italic text-slate-500 text-[10px]">Protective film missing from supplier packaging...</div>
+                         <div className="h-20 bg-slate-50 rounded-lg border border-slate-100 p-3 italic text-slate-600 text-[10px]">Protective film missing from supplier packaging...</div>
                       </div>
                    </div>
                    <div className="space-y-8">

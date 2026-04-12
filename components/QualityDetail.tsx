@@ -219,9 +219,9 @@ const QualityDetail: React.FC<QualityDetailProps> = ({ onBack, lang }) => {
 
       {/* SSI (Supplier Side Issue) */}
       <div className="bg-slate-900/60 border border-blue-500/20 rounded-3xl p-6 md:p-8 flex flex-col gap-5 shadow-2xl relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-4 text-4xl font-black text-blue-500/[0.03] select-none">EXTERNAL</div>
+        <div className="absolute top-0 right-0 p-4 text-4xl font-black text-blue-400/[0.03] select-none">EXTERNAL</div>
         <div className="flex items-center justify-between">
-          <h4 className="text-blue-500 font-black text-sm md:text-lg uppercase tracking-tight">{current.sections.ssiSupplier}</h4>
+          <h4 className="text-blue-400 font-black text-sm md:text-lg uppercase tracking-tight">{current.sections.ssiSupplier}</h4>
           <span className="px-2 py-0.5 bg-blue-500/10 border border-blue-500/40 rounded text-[8px] text-blue-400 font-black uppercase">{current.ssiSupplier.tag}</span>
         </div>
         
@@ -229,7 +229,7 @@ const QualityDetail: React.FC<QualityDetailProps> = ({ onBack, lang }) => {
            <div className="space-y-4">
               <p className="text-slate-300 text-xs md:text-sm font-bold leading-relaxed">{current.ssiSupplier.desc}</p>
               <div className="bg-slate-950/80 p-5 rounded-2xl border border-white/5">
-                 <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-3 block">Real World Examples</span>
+                 <span className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-3 block">Real World Examples</span>
                  <div className="grid grid-cols-1 gap-2">
                     {current.ssiSupplier.examples.map((ex, i) => (
                       <div key={i} className="flex items-center gap-3 p-2 bg-white/5 rounded-lg border border-white/5">
@@ -244,7 +244,7 @@ const QualityDetail: React.FC<QualityDetailProps> = ({ onBack, lang }) => {
            <div className="flex justify-center">
               <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl border-2 border-dashed border-blue-500/30 flex items-center justify-center p-6 text-center group-hover:rotate-6 transition-transform">
                  <div className="flex flex-col items-center gap-2">
-                    <svg className="w-12 h-12 text-blue-500 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-12 h-12 text-blue-400 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     <span className="text-[8px] font-black text-blue-400 uppercase tracking-widest">Incoming Intelligence Unit</span>

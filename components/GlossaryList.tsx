@@ -498,7 +498,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
             animate={{ opacity: 1, x: 0 }}
             className="flex-grow border-b border-white/10 pb-2"
           >
-            <h2 className="text-[10px] md:text-xs font-black text-slate-400 tracking-[0.3em] uppercase leading-none">{translations.browseTerms}</h2>
+            <h1 className="text-[10px] md:text-xs font-black text-slate-400 tracking-[0.3em] uppercase leading-none">{translations.browseTerms}</h1>
             <div className="w-6 md:w-10 h-0.5 bg-cyan-500 mt-2"></div>
           </motion.div>
 
@@ -512,7 +512,7 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
               {/* Glowing Background */}
               <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity rounded-2xl"></div>
               
-              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none z-10">
+              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none z-10" title={translations.searchPlaceholder}>
                 <Search className={`w-4 h-4 transition-colors duration-300 ${searchQuery ? 'text-cyan-400' : 'text-slate-500 group-focus-within:text-cyan-400'}`} />
               </div>
               <input
@@ -524,14 +524,15 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                 className="w-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-2xl py-3 pl-12 pr-12 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50 focus:bg-slate-800/90 transition-all shadow-2xl relative z-0"
               />
               {searchQuery && (
-                <button
-                  onClick={() => handleSearchChangeLocal('')}
-                  className="absolute inset-y-0 right-4 flex items-center text-slate-500 hover:text-white transition-colors z-10"
-                >
-                  <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 border border-white/10">
-                    <span className="text-sm font-bold">×</span>
-                  </div>
-                </button>
+                  <button
+                    onClick={() => handleSearchChangeLocal('')}
+                    className="absolute inset-y-0 right-4 flex items-center text-slate-500 hover:text-white transition-colors z-10"
+                    title={isHi ? 'खोज साफ़ करें' : 'Clear Search'}
+                  >
+                    <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 border border-white/10">
+                      <span className="text-sm font-bold">×</span>
+                    </div>
+                  </button>
               )}
             </motion.div>
 
@@ -741,13 +742,13 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                         <Icon className="w-10 h-10 md:w-12 md:h-12" strokeWidth={1.5} />
                       </div>
                       
-                      <h2 className="text-slate-900 font-black text-sm md:text-lg uppercase tracking-wider mb-1 md:mb-2 line-clamp-2 px-2 leading-tight group-hover:text-cyan-600 transition-colors">
+                      <h2 className="text-slate-900 font-black text-sm md:text-lg uppercase tracking-wider mb-1 md:mb-2 line-clamp-2 px-2 leading-tight group-hover:text-cyan-700 transition-colors">
                         {term.title}
                       </h2>
                       
                       <div className="w-10 h-1 bg-slate-200 mb-2 md:mb-3 rounded-full group-hover:w-16 group-hover:bg-cyan-500 transition-all duration-500"></div>
 
-                      <p className="text-slate-500 text-[10px] md:text-xs font-bold px-2 line-clamp-4 leading-relaxed tracking-wide">
+                      <p className="text-slate-600 text-[10px] md:text-xs font-bold px-2 line-clamp-4 leading-relaxed tracking-wide">
                         {term.subItems.join(', ')}
                       </p>
                     </motion.button>

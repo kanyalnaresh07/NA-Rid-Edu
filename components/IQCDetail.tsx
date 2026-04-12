@@ -199,7 +199,7 @@ const IQCDetail: React.FC<IQCDetailProps> = ({ onBack, lang }) => {
 
       {/* Hero Intro */}
       <div className="bg-slate-900/60 border border-blue-500/20 p-8 md:p-12 rounded-[40px] shadow-2xl relative overflow-hidden group">
-         <div className="absolute top-0 right-0 p-8 text-8xl font-black text-blue-500/[0.03] select-none uppercase italic">INCOMING</div>
+         <div className="absolute top-0 right-0 p-8 text-8xl font-black text-blue-400/[0.03] select-none uppercase italic">INCOMING</div>
          <div className="relative z-10 space-y-4">
             <h4 className="text-white text-xl md:text-2xl font-black uppercase tracking-widest border-b-2 border-blue-500 w-fit pb-2">Entry Gate Standards</h4>
             <p className="text-slate-300 text-sm md:text-lg font-bold leading-relaxed max-w-4xl italic">

@@ -70,7 +70,7 @@ const Contact: React.FC<ContactProps> = ({ translations }) => {
               rel="noopener noreferrer"
               className="flex items-center gap-4 p-4 md:p-5 rounded-2xl border border-white/5 bg-slate-900/40 backdrop-blur-md hover:bg-slate-900/60 hover:border-cyan-500/30 transition-all group cursor-pointer"
             >
-              <div className="w-12 h-12 rounded-xl bg-slate-950/50 border border-white/5 flex items-center justify-center text-cyan-400 shrink-0 group-hover:scale-110 group-hover:bg-cyan-500/10 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-slate-950/50 border border-white/5 flex items-center justify-center text-cyan-400 shrink-0 group-hover:scale-110 group-hover:bg-cyan-500/10 transition-all" title={info.label}>
                 {info.icon}
               </div>
               <div className="flex flex-col">

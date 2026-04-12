@@ -173,7 +173,7 @@ const SLEDetail: React.FC<SLEDetailProps> = ({ onBack, lang }) => {
 
       {/* Hero 4M Intro */}
       <div className="bg-slate-900/60 border border-indigo-500/20 p-8 md:p-12 rounded-[40px] shadow-2xl relative overflow-hidden group">
-         <div className="absolute top-0 right-0 p-8 text-8xl font-black text-indigo-500/[0.03] select-none">4-M</div>
+         <div className="absolute top-0 right-0 p-8 text-8xl font-black text-indigo-400/[0.03] select-none">4-M</div>
          <div className="relative z-10 space-y-4">
             <h4 className="text-white text-xl md:text-3xl font-black uppercase tracking-tighter">{current.hero.title}</h4>
             <p className="text-slate-300 text-sm md:text-xl font-medium leading-relaxed max-w-3xl">{current.hero.desc}</p>
@@ -205,7 +205,7 @@ const SLEDetail: React.FC<SLEDetailProps> = ({ onBack, lang }) => {
               </div>
 
               <div className="bg-white/5 p-4 rounded-xl border border-white/5">
-                 <span className="text-[9px] font-black text-indigo-500 uppercase tracking-widest block mb-1">Scenario / उदाहरण</span>
+                 <span className="text-[9px] font-black text-indigo-400 uppercase tracking-widest block mb-1">Scenario / उदाहरण</span>
                  <p className="text-[11px] text-slate-200 font-bold">⚠️ {m.example}</p>
               </div>
            </div>

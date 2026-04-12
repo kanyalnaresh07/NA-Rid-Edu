@@ -176,7 +176,7 @@ const NCRDetail: React.FC<NCRDetailProps> = ({ onBack, lang }) => {
 
          {/* SCAR Section */}
          <div className="bg-slate-900/60 border border-blue-500/20 rounded-[40px] p-8 md:p-10 shadow-2xl space-y-8 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-8 text-8xl font-black text-blue-500/[0.03] select-none uppercase italic">Vendor</div>
+            <div className="absolute top-0 right-0 p-8 text-8xl font-black text-blue-400/[0.03] select-none uppercase italic">Vendor</div>
             <div className="relative z-10 space-y-6">
                <div className="flex items-center justify-between">
                   <h4 className="text-white text-xl md:text-2xl font-black uppercase tracking-tighter">{current.scar.title}</h4>
@@ -215,7 +215,7 @@ const NCRDetail: React.FC<NCRDetailProps> = ({ onBack, lang }) => {
                   <div className="absolute top-4 left-1/2 -translate-x-1/2 w-6 h-6 bg-slate-900 rounded-full border-2 border-white shadow-inner flex items-center justify-center">
                      <div className="w-1 h-12 bg-slate-400 absolute bottom-full"></div>
                   </div>
-                  <div className="mt-6 bg-white text-rose-600 font-black text-center py-2 text-2xl uppercase tracking-widest rounded-lg mb-6 shadow-md">
+                  <div className="mt-6 bg-white text-rose-700 font-black text-center py-2 text-2xl uppercase tracking-widest rounded-lg mb-6 shadow-md">
                      {current.redTag.label}
                   </div>
                   <div className="space-y-4">

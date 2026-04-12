@@ -344,6 +344,7 @@ const App: React.FC = () => {
                 <button 
                   onClick={() => setShowLangModal(true)}
                   className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-cyan-400 hover:bg-white/10 transition-all group"
+                  title={lang === 'en' ? 'Switch to Hindi' : 'अंग्रेजी में बदलें'}
                 >
                   <Globe size={18} className="group-hover:rotate-12 transition-transform" />
                   <span className="text-[10px] font-black uppercase tracking-widest hidden sm:block">
@@ -379,7 +380,7 @@ const App: React.FC = () => {
                   <div className="p-6 md:p-8 border-b border-white/5 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-[60px] rounded-full -translate-y-1/2 translate-x-1/2" />
                     <div className="relative z-10 flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                      <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400" title={lang === 'hi' ? 'अपडेट्स' : 'Updates'}>
                         <Sparkles size={24} />
                       </div>
                       <div>

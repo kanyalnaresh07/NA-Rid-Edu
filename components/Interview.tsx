@@ -651,36 +651,6 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
   const content = {
     videos: [
       {
-        title: isHi ? "Quality engineer session -01" : "Quality engineer session -01",
-        desc: isHi ? "क्वालिटी इंजीनियरिंग का परिचय - भाग 1" : "Introduction to Quality Engineering - Part 1",
-        thumbnail: "https://img.youtube.com/vi/lKGNwLBq0ao/maxresdefault.jpg",
-        duration: "12:45",
-        category: isHi ? "क्वालिटी" : "Quality",
-        views: "1.2K",
-        link: "https://youtu.be/lKGNwLBq0ao?si=x0x7adPIOz_dXgg4",
-        embedId: "lKGNwLBq0ao"
-      },
-      {
-        title: isHi ? "Quality engineer session -02" : "Quality engineer session -02",
-        desc: isHi ? "क्वालिटी इंजीनियरिंग प्रक्रियाएं - भाग 2" : "Quality Engineering Processes - Part 2",
-        thumbnail: "https://img.youtube.com/vi/TUUo6PbMsCw/maxresdefault.jpg",
-        duration: "18:20",
-        category: isHi ? "क्वालिटी" : "Quality",
-        views: "2.1K",
-        link: "https://youtu.be/TUUo6PbMsCw?si=QjI030kG2w1SYuc4",
-        embedId: "TUUo6PbMsCw"
-      },
-      {
-        title: isHi ? "Quality engineer session -03" : "Quality engineer session -03",
-        desc: isHi ? "उन्नत क्वालिटी इंजीनियरिंग - भाग 3" : "Advanced Quality Engineering - Part 3",
-        thumbnail: "https://img.youtube.com/vi/_sXc_B9lEVQ/maxresdefault.jpg",
-        duration: "15:30",
-        category: isHi ? "क्वालिटी" : "Quality",
-        views: "850",
-        link: "https://youtu.be/_sXc_B9lEVQ?si=pGGt5BzG9CS_F6C_",
-        embedId: "_sXc_B9lEVQ"
-      },
-      {
         title: "Production Supervisor",
         desc: isHi ? "प्रोडक्शन सुपरवाइजर की भूमिका और जिम्मेदारियां" : "Role and responsibilities of a production supervisor",
         thumbnail: "https://img.youtube.com/vi/5F0TknCKSXM/0.jpg",
@@ -699,6 +669,16 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
         views: "New",
         link: "https://youtu.be/nmuhGAGJB-w?si=fIHCtHq7AOCc9cfo",
         embedId: "nmuhGAGJB-w"
+      },
+      {
+        title: "Quality Engineer",
+        desc: isHi ? "क्वालिटी इंजीनियर की भूमिका और जिम्मेदारियां" : "Role and responsibilities of a quality engineer",
+        thumbnail: "https://img.youtube.com/vi/4r0aAGUulw0/hqdefault.jpg",
+        duration: "15:20",
+        category: isHi ? "क्वालिटी" : "Quality",
+        views: "New",
+        link: "https://youtu.be/4r0aAGUulw0",
+        embedId: "4r0aAGUulw0"
       }
     ],
     notes: [
@@ -810,6 +790,7 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as Tab)}
+              title={tab.label}
               className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-black uppercase tracking-widest transition-all duration-300 ${
                 isActive 
                   ? 'bg-orange-500 text-white shadow-[0_10px_30px_rgba(249,115,22,0.3)] scale-105' 
@@ -840,7 +821,7 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
               onClick={() => setSelectedVideo(video)}
-              className="group relative bg-slate-900/50 border border-white/5 rounded-3xl overflow-hidden hover:border-orange-500/30 transition-all duration-500 cursor-pointer"
+              className="group relative bg-slate-900/50 border border-white/5 rounded-3xl overflow-hidden hover:border-orange-500/50 transition-all duration-500 cursor-pointer shadow-2xl"
             >
               <div className="aspect-video relative overflow-hidden">
                 <img 
@@ -851,29 +832,39 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/20 transition-colors" />
+                
+                {/* Shining Effect Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center text-white shadow-2xl scale-75 group-hover:scale-100 transition-transform duration-500">
-                    <Play size={32} fill="currentColor" />
+                  <div className="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center text-white shadow-[0_0_30px_rgba(249,115,22,0.6)] scale-75 group-hover:scale-100 transition-transform duration-500" title={isHi ? 'वीडियो चलाएं' : 'Play Video'}>
+                    <Play size={32} fill="currentColor" className="ml-1" />
                   </div>
                 </div>
-                <div className="absolute bottom-4 right-4 px-2 py-1 bg-slate-950/80 backdrop-blur-md rounded text-[10px] font-black text-white">
+                <div className="absolute bottom-4 right-4 px-2 py-1 bg-slate-950/80 backdrop-blur-md rounded-lg border border-white/10 text-[10px] font-black text-white">
                   {video.duration}
                 </div>
+                <div className="absolute top-4 left-4 bg-orange-500 px-3 py-1 rounded-full text-[8px] font-black text-white uppercase tracking-widest shadow-lg">
+                  {video.category}
+                </div>
               </div>
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <div className="text-[10px] font-black text-orange-500 uppercase tracking-widest">
-                    {video.category}
+              <div className="p-6 relative">
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-3 bg-orange-500 rounded-full"></div>
+                    <div className="text-[10px] font-black text-orange-500 uppercase tracking-widest">
+                      {isHi ? "वीडियो सत्र" : "Video Session"}
+                    </div>
                   </div>
                   <div className="flex items-center gap-1.5 text-slate-500">
                     <Eye size={12} />
                     <span className="text-[10px] font-black uppercase tracking-widest">{video.views}</span>
                   </div>
                 </div>
-                <h2 className="text-xl font-black text-white uppercase tracking-tight mb-2">
+                <h2 className="text-xl font-black text-white uppercase tracking-tight mb-2 group-hover:text-orange-400 transition-colors">
                   {video.title}
                 </h2>
-                <p className="text-sm text-slate-400 font-medium">
+                <p className="text-sm text-slate-400 font-medium line-clamp-2">
                   {video.desc}
                 </p>
               </div>
@@ -1058,7 +1049,7 @@ const Interview: React.FC<InterviewProps> = ({ translations, lang }) => {
               ? "हमारे विशेषज्ञों के साथ अभ्यास करें और अपना आत्मविश्वास बढ़ाएं।" 
               : "Practice with our experts and boost your confidence before the big day."}
           </p>
-          <button className="px-10 py-5 bg-white text-orange-600 rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-transform shadow-2xl">
+          <button className="px-10 py-5 bg-white text-orange-700 rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-transform shadow-2xl">
             {isHi ? "अभी बुक करें" : "Book Session Now"}
           </button>
         </div>

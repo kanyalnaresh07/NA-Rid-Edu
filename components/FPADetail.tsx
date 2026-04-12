@@ -167,7 +167,7 @@ const FPADetail: React.FC<FPADetailProps> = ({ onBack, lang }) => {
 
          {/* FAI Detail Card */}
          <div className="bg-slate-900/60 border border-indigo-500/20 rounded-[40px] p-8 md:p-12 shadow-2xl space-y-8 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-8 text-8xl font-black text-indigo-500/[0.03] select-none uppercase italic">VALIDATE</div>
+            <div className="absolute top-0 right-0 p-8 text-8xl font-black text-indigo-400/[0.03] select-none uppercase italic">VALIDATE</div>
             <div className="relative z-10 space-y-6">
                <div className="flex items-center justify-between">
                   <h4 className="text-white text-xl md:text-2xl font-black uppercase tracking-tighter">{current.fai.title}</h4>

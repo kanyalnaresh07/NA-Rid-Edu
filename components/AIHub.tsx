@@ -150,7 +150,7 @@ const AIHub: React.FC<AIHubProps> = ({ translations, lang }) => {
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500"></div>
               <div className="flex items-center gap-4 mb-6 pb-6 border-b border-white/5">
-                <div className="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30">
+                <div className="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30" title={isHi ? 'AI सहायक' : 'AI Assistant'}>
                   <Bot className="w-6 h-6 text-indigo-400" />
                 </div>
                 <div>

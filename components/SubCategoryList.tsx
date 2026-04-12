@@ -315,33 +315,51 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
             `}</style>
         </div>
       )}
-      <div className="mb-4 md:mb-8 flex items-center gap-2 md:gap-3 text-[7px] md:text-[8px] font-black uppercase tracking-[0.2em] md:tracking-[0.5em] bg-slate-950/80 w-fit max-w-full px-3 py-1.5 md:px-4 md:py-2 rounded-lg border border-white/10 shadow-2xl backdrop-blur-md relative z-10 overflow-x-auto no-scrollbar whitespace-nowrap">
-        <button onClick={onBack} className="text-slate-500 hover:text-white transition-colors flex-shrink-0 focus:outline-none focus-visible:text-white focus-visible:underline">{category.category}</button>
-        <span className="text-slate-800">/</span>
-        <button onClick={() => { setSelectedSubItem(null); setSelectedPoint(null); pushHistoryState({ subItem: null, point: null, deepDive: null }); }} className={`transition-colors flex-shrink-0 focus:outline-none focus-visible:underline ${!selectedSubItem ? 'text-cyan-400' : 'text-slate-500 hover:text-white'}`}>
-            {category.title}
+      <div className="mb-4 md:mb-8 flex items-center gap-4">
+        <button 
+          onClick={onBack}
+          className="flex items-center gap-2 px-4 py-2 bg-slate-900/80 border border-white/10 rounded-xl text-slate-400 hover:text-white hover:border-cyan-500/50 transition-all duration-300 group shadow-xl backdrop-blur-md"
+          title={lang === 'hi' ? 'पीछे जाएं' : 'Go Back'}
+        >
+          <motion.div
+            whileHover={{ x: -3 }}
+            className="flex items-center gap-2"
+          >
+            <Search className="w-4 h-4 rotate-180" />
+            <span className="text-[10px] font-black uppercase tracking-widest">
+              {lang === 'hi' ? 'पीछे' : 'Back'}
+            </span>
+          </motion.div>
         </button>
-        {selectedSubItem && (
-            <>
-                <span className="text-slate-800">/</span>
-                <button onClick={() => { 
-                  if (selectedPoint || activeDeepDive) {
-                    window.history.back();
-                  } else {
-                    setSelectedPoint(null); 
-                    pushHistoryState({ point: null, deepDive: null }); 
-                  }
-                }} className={`transition-colors flex-shrink-0 focus:outline-none focus-visible:underline ${!selectedPoint ? 'text-cyan-400' : 'text-slate-500 hover:text-white'}`}>
-                    {selectedSubItem}
-                </button>
-            </>
-        )}
-        {selectedPoint && (
-            <>
-                <span className="text-slate-800">/</span>
-                <span className="text-cyan-400 flex-shrink-0">{selectedPoint}</span>
-            </>
-        )}
+
+        <div className="flex items-center gap-2 md:gap-3 text-[7px] md:text-[8px] font-black uppercase tracking-[0.2em] md:tracking-[0.5em] bg-slate-950/80 w-fit max-w-full px-3 py-1.5 md:px-4 md:py-2 rounded-lg border border-white/10 shadow-2xl backdrop-blur-md relative z-10 overflow-x-auto no-scrollbar whitespace-nowrap">
+          <button onClick={onBack} className="text-slate-500 hover:text-white transition-colors flex-shrink-0 focus:outline-none focus-visible:text-white focus-visible:underline">{category.category}</button>
+          <span className="text-slate-800">/</span>
+          <button onClick={() => { setSelectedSubItem(null); setSelectedPoint(null); pushHistoryState({ subItem: null, point: null, deepDive: null }); }} className={`transition-colors flex-shrink-0 focus:outline-none focus-visible:underline ${!selectedSubItem ? 'text-cyan-400' : 'text-slate-500 hover:text-white'}`}>
+              {category.title}
+          </button>
+          {selectedSubItem && (
+              <>
+                  <span className="text-slate-800">/</span>
+                  <button onClick={() => { 
+                    if (selectedPoint || activeDeepDive) {
+                      window.history.back();
+                    } else {
+                      setSelectedPoint(null); 
+                      pushHistoryState({ point: null, deepDive: null }); 
+                    }
+                  }} className={`transition-colors flex-shrink-0 focus:outline-none focus-visible:underline ${!selectedPoint ? 'text-cyan-400' : 'text-slate-500 hover:text-white'}`}>
+                      {selectedSubItem}
+                  </button>
+              </>
+          )}
+          {selectedPoint && (
+              <>
+                  <span className="text-slate-800">/</span>
+                  <span className="text-cyan-400 flex-shrink-0">{selectedPoint}</span>
+              </>
+          )}
+        </div>
       </div>
 
       <AnimatePresence>
@@ -371,9 +389,9 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                     <div className="inline-block px-3 py-1 bg-cyan-500/20 border border-cyan-500/40 rounded-full text-cyan-400 text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] mb-4 md:mb-6">
                        Highlighted Concept
                     </div>
-                    <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter leading-tight mb-6 md:mb-8 drop-shadow-2xl">
+                    <h1 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter leading-tight mb-6 md:mb-8 drop-shadow-2xl">
                        {pointData.title}
-                    </h2>
+                    </h1>
                     <div className="h-1 w-24 md:h-1.5 md:w-32 bg-gradient-to-r from-cyan-500 to-transparent mb-6 md:mb-8 rounded-full"></div>
                     
                     <div className="bg-white/5 p-5 md:p-8 rounded-xl md:rounded-2xl border border-white/10 shadow-inner">
@@ -403,7 +421,7 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                   </svg>
                </div>
                <div className="min-w-0">
-                  <h2 className="text-lg md:text-2xl font-black text-white uppercase tracking-tighter leading-none truncate">{selectedDetail.name}</h2>
+                  <h1 className="text-lg md:text-2xl font-black text-white uppercase tracking-tighter leading-none truncate">{selectedDetail.name}</h1>
                   <p className="text-cyan-500 text-[7px] md:text-[8px] font-black uppercase tracking-[0.4em] mt-1">Operational Dashboard / {selectedDetail.id}</p>
                </div>
             </div>
@@ -504,9 +522,9 @@ const SubCategoryList: React.FC<SubCategoryListProps> = ({
                         <div className="w-1 h-4 md:h-6 bg-cyan-500"></div>
                         <span className="text-cyan-500 text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] md:tracking-[0.6em]">Directory v2.5</span>
                     </div>
-                    <h2 className="text-xl md:text-4xl font-black text-white tracking-tighter uppercase leading-[0.9] mb-3 md:mb-6 drop-shadow-2xl">
+                    <h1 className="text-xl md:text-4xl font-black text-white tracking-tighter uppercase leading-[0.9] mb-3 md:mb-6 drop-shadow-2xl">
                       {category.title}
-                    </h2>
+                    </h1>
                 </div>
                 <div className="hidden lg:flex flex-col items-end gap-2 border-r-2 border-cyan-500/30 pr-6 h-fit">
                     <span className="text-white font-black text-2xl leading-none">{category.subItems.length}</span>

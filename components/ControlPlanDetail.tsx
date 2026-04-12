@@ -183,7 +183,7 @@ const ControlPlanDetail: React.FC<ControlPlanDetailProps> = ({ onBack, lang }) =
             <div className="lg:w-1/2 grid grid-cols-2 gap-4 w-full">
                {current.connectivity.links.map((link, i) => (
                   <div key={i} className="bg-slate-950/60 border border-white/5 p-5 rounded-3xl group hover:border-blue-500/30 transition-all shadow-xl">
-                     <span className="text-blue-500 font-black text-[9px] uppercase tracking-widest block mb-1">{link.from}</span>
+                     <span className="text-blue-400 font-black text-[9px] uppercase tracking-widest block mb-1">{link.from}</span>
                      <div className="h-px w-8 bg-blue-500/20 mb-2"></div>
                      <span className="text-slate-200 text-xs font-bold uppercase italic">{link.to}</span>
                   </div>
@@ -269,7 +269,7 @@ const ControlPlanDetail: React.FC<ControlPlanDetailProps> = ({ onBack, lang }) =
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
          {current.types.map((type, i) => (
             <div key={i} className="bg-slate-950/60 border border-white/10 p-8 rounded-[40px] flex flex-col gap-4 group hover:bg-slate-900 transition-all shadow-2xl">
-               <h6 className="text-blue-500 font-black text-[10px] uppercase tracking-[0.4em]">PHASE 0{i+1}</h6>
+               <h6 className="text-blue-400 font-black text-[10px] uppercase tracking-[0.4em]">PHASE 0{i+1}</h6>
                <h5 className="text-white text-xl font-black uppercase tracking-tight">{type.n}</h5>
                <p className="text-slate-400 text-xs font-bold leading-relaxed italic">"{type.desc}"</p>
                <div className="mt-4 h-1 w-0 bg-blue-500 group-hover:w-full transition-all duration-500 rounded-full"></div>
@@ -283,7 +283,7 @@ const ControlPlanDetail: React.FC<ControlPlanDetailProps> = ({ onBack, lang }) =
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
             {current.rules.map((rule, i) => (
                <div key={i} className="flex gap-4 p-5 bg-white/5 rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
-                  <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 font-black text-xs flex-shrink-0 shadow-lg group-hover:rotate-12 transition-transform">
+                  <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 font-black text-xs flex-shrink-0 shadow-lg group-hover:rotate-12 transition-transform">
                      ★
                   </div>
                   <p className="text-slate-300 text-[10px] md:text-xs font-bold leading-relaxed uppercase">{rule}</p>

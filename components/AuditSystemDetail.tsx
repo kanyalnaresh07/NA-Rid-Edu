@@ -344,7 +344,7 @@ const AuditSystemDetail: React.FC<AuditSystemDetailProps> = ({ onBack, lang }) =
           <div className="animate-in slide-in-from-right-4 duration-500 space-y-12">
              {/* IATF Hero Deep Dive */}
              <div className="bg-slate-900 border border-indigo-500/30 p-8 md:p-12 rounded-[40px] shadow-2xl relative overflow-hidden space-y-8">
-                <div className="absolute top-0 right-0 p-8 text-8xl font-black text-indigo-500/[0.03] select-none italic uppercase">Standard</div>
+                <div className="absolute top-0 right-0 p-8 text-8xl font-black text-indigo-400/[0.03] select-none italic uppercase">Standard</div>
                 <div className="max-w-3xl space-y-4 relative z-10">
                    <div className="flex items-center gap-4">
                       <div className="w-16 h-16 rounded-2xl bg-indigo-600 flex items-center justify-center text-white text-2xl font-black shadow-lg">16</div>

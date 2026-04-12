@@ -159,7 +159,7 @@ const ERPDetail: React.FC<ERPDetailProps> = ({ onBack, lang }) => {
                      <span className={`text-[7px] font-black text-${item.color}-500 border border-${item.color}-500/30 px-2 py-0.5 rounded uppercase`}>{item.tag}</span>
                   </div>
                   <p className="text-slate-500 text-[10px] font-bold leading-relaxed">{item.desc}</p>
-                  <div className="mt-auto flex items-center gap-2 text-blue-500 text-[8px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="mt-auto flex items-center gap-2 text-blue-400 text-[8px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
                      Details <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M9 5l7 7-7 7" /></svg>
                   </div>
                </div>

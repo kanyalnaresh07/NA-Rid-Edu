@@ -156,7 +156,7 @@ const QualityManagementDetail: React.FC<QualityManagementDetailProps> = ({ onBac
 
       {/* Hero Definition */}
       <div className="bg-slate-900/60 border border-indigo-500/20 p-8 md:p-12 rounded-[40px] shadow-2xl relative overflow-hidden group">
-         <div className="absolute top-0 right-0 p-8 text-8xl font-black text-indigo-500/[0.03] select-none uppercase italic">TRUST</div>
+         <div className="absolute top-0 right-0 p-8 text-8xl font-black text-indigo-400/[0.03] select-none uppercase italic">TRUST</div>
          <div className="relative z-10 space-y-6">
             <h4 className="text-white text-xl md:text-3xl font-black uppercase tracking-tighter leading-tight max-w-4xl italic">
                "{current.hero.definition}"

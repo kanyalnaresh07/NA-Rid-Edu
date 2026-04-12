@@ -245,7 +245,7 @@ const PlanningDetail: React.FC<PlanningDetailProps> = ({ onBack, lang }) => {
                   <div className="w-12 h-12 bg-slate-900 border border-indigo-500/20 rounded-2xl flex items-center justify-center text-2xl shadow-lg group-hover:scale-110 transition-transform">
                      {sec.icon}
                   </div>
-                  <span className="text-indigo-500 font-black text-[8px] uppercase tracking-widest border border-indigo-500/30 px-3 py-1 rounded-full">{sec.tag}</span>
+                  <span className="text-indigo-400 font-black text-[8px] uppercase tracking-widest border border-indigo-500/30 px-3 py-1 rounded-full">{sec.tag}</span>
                </div>
 
                <div className="space-y-1">
@@ -253,7 +253,7 @@ const PlanningDetail: React.FC<PlanningDetailProps> = ({ onBack, lang }) => {
                   <p className="text-slate-500 text-[10px] font-bold leading-relaxed italic">"{sec.desc}"</p>
                </div>
 
-               <div className="relative pt-2 flex items-center gap-2 text-indigo-500 text-[8px] font-black uppercase tracking-widest group-hover:gap-4 transition-all">
+               <div className="relative pt-2 flex items-center gap-2 text-indigo-400 text-[8px] font-black uppercase tracking-widest group-hover:gap-4 transition-all">
                   Deep Dive <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                </div>
 

@@ -75,6 +75,24 @@ const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
       thumbnail: 'https://img.youtube.com/vi/ElLwRsLAhv8/0.jpg',
       category: 'Quality',
       videoUrl: 'https://www.youtube.com/embed/ElLwRsLAhv8'
+    },
+    {
+      id: 'v11',
+      title: 'PPAP',
+      description: isHi ? 'PPAP (Production Part Approval Process) के बारे में जानें।' : 'Learn about PPAP (Production Part Approval Process).',
+      duration: 'Training',
+      thumbnail: 'https://img.youtube.com/vi/_cs3yrijQt8/hqdefault.jpg',
+      category: 'Quality',
+      videoUrl: 'https://www.youtube.com/embed/_cs3yrijQt8'
+    },
+    {
+      id: 'v12',
+      title: 'PPAP Document',
+      description: isHi ? 'PPAP दस्तावेज़ों को विस्तार से समझें।' : 'Understand PPAP documents in detail.',
+      duration: 'Training',
+      thumbnail: 'https://img.youtube.com/vi/kklupOI3KNM/hqdefault.jpg',
+      category: 'Quality',
+      videoUrl: 'https://www.youtube.com/embed/kklupOI3KNM'
     }
   ];
 
@@ -115,7 +133,7 @@ const Videos: React.FC<VideosProps> = ({ translations, lang }) => {
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-slate-950/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="w-16 h-16 rounded-full bg-cyan-500 flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.5)]">
+                <div className="w-16 h-16 rounded-full bg-cyan-500 flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.5)]" title={isHi ? 'वीडियो चलाएं' : 'Play Video'}>
                   <Play className="text-white fill-current ml-1" size={32} />
                 </div>
               </div>

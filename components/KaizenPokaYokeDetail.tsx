@@ -135,7 +135,7 @@ const KaizenPokaYokeDetail: React.FC<KaizenPokaYokeDetailProps> = ({ onBack, lan
 
       {/* Kaizen Section */}
       <div className="bg-slate-900/60 border border-purple-500/20 rounded-[40px] p-8 md:p-12 shadow-2xl space-y-8 relative overflow-hidden group">
-         <div className="absolute top-0 right-0 p-8 text-8xl font-black text-purple-500/[0.03] select-none uppercase italic">Kaizen</div>
+         <div className="absolute top-0 right-0 p-8 text-8xl font-black text-purple-400/[0.03] select-none uppercase italic">Kaizen</div>
          
          <div className="relative z-10 space-y-4">
             <h4 className="text-white text-xl md:text-3xl font-black uppercase tracking-tighter">{current.kaizen.header}</h4>

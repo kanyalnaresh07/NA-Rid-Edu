@@ -110,7 +110,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity bg-gradient-to-r ${item.id === PageView.QUIZ ? 'from-amber-500 to-orange-500' : 'from-indigo-500 to-cyan-500'}`} />
                 )}
 
-                <div className={`shrink-0 transition-transform duration-300 group-hover:scale-110 ${isActive ? item.color : 'text-slate-500 group-hover:text-slate-300'}`}>
+                <div className={`shrink-0 transition-transform duration-300 group-hover:scale-110 ${isActive ? item.color : 'text-slate-500 group-hover:text-slate-300'}`} title={item.label}>
                   <Icon className="w-5 h-5 lg:w-[22px] lg:h-[22px]" strokeWidth={isActive ? 2.5 : 2} />
                 </div>
 

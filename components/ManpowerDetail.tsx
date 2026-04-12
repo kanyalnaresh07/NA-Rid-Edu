@@ -176,7 +176,7 @@ const ManpowerDetail: React.FC<ManpowerDetailProps> = ({ onBack, lang }) => {
             <div className="space-y-4">
                {current.points.map((pt, i) => (
                  <div key={i} className="flex gap-5 p-4 bg-white/5 rounded-2xl border border-white/5 hover:bg-indigo-500/10 transition-colors">
-                    <div className="w-10 h-10 rounded-xl bg-slate-950 flex items-center justify-center text-indigo-500 font-black text-sm flex-shrink-0 border border-white/10 shadow-lg">
+                    <div className="w-10 h-10 rounded-xl bg-slate-950 flex items-center justify-center text-indigo-400 font-black text-sm flex-shrink-0 border border-white/10 shadow-lg">
                        0{i+1}
                     </div>
                     <div>

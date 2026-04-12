@@ -139,7 +139,7 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
               {/* Top Section: Manufacturing Hub */}
               <div className="p-8 pb-6">
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="text-amber-400 bg-amber-500/10 p-2.5 rounded-full border border-amber-500/20">
+                  <div className="text-amber-400 bg-amber-500/10 p-2.5 rounded-full border border-amber-500/20" title={isHi ? 'लक्ष्य' : 'Target'}>
                     <Target className="w-6 h-6" strokeWidth={1.5} />
                   </div>
                   <h2 className="text-white font-bold text-sm tracking-widest uppercase">
@@ -157,7 +157,7 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
               {/* Bottom Section: Vision */}
               <div className="p-8 pt-6">
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="text-cyan-400 bg-cyan-500/10 p-2.5 rounded-full border border-cyan-500/20">
+                  <div className="text-cyan-400 bg-cyan-500/10 p-2.5 rounded-full border border-cyan-500/20" title={isHi ? 'दृष्टिकोण' : 'Vision'}>
                     <Lightbulb className="w-6 h-6" strokeWidth={1.5} />
                   </div>
                   <h2 className="text-white font-bold text-sm tracking-widest uppercase">
