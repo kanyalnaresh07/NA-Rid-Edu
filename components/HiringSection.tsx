@@ -151,14 +151,14 @@ const HiringSection: React.FC<HiringSectionProps> = ({ lang, translations }) => 
           </motion.p>
         </div>
 
-        {/* Minimal List Layout - More Compact */}
-        <div className="bg-slate-950/40 backdrop-blur-xl border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+        {/* Minimal List Layout - Ultra Compact */}
+        <div className="bg-slate-950/40 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden shadow-2xl">
           {/* Table Header - Desktop Only */}
-          <div className="hidden md:grid grid-cols-[2fr_1.5fr_1fr_1fr] gap-4 px-6 py-4 border-b border-white/5 bg-white/[0.02]">
-            <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">{isHi ? 'पद' : 'Position'}</span>
-            <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">{isHi ? 'कंपनी' : 'Company'}</span>
-            <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">{isHi ? 'समय' : 'Posted'}</span>
-            <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] text-right">{isHi ? 'कार्रवाई' : 'Action'}</span>
+          <div className="hidden md:grid grid-cols-[2fr_1.5fr_1fr_1fr] gap-4 px-5 py-3 border-b border-white/5 bg-white/[0.02]">
+            <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em]">{isHi ? 'पद' : 'Position'}</span>
+            <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em]">{isHi ? 'कंपनी' : 'Company'}</span>
+            <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em]">{isHi ? 'समय' : 'Posted'}</span>
+            <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] text-right">{isHi ? 'कार्रवाई' : 'Action'}</span>
           </div>
 
           <div className="divide-y divide-white/5">
@@ -172,25 +172,25 @@ const HiringSection: React.FC<HiringSectionProps> = ({ lang, translations }) => 
                 className="group relative hover:bg-white/[0.03] transition-colors duration-300"
               >
                 {/* Mobile & Desktop Responsive Row */}
-                <div className="grid grid-cols-1 md:grid-cols-[2fr_1.5fr_1fr_1fr] gap-3 md:gap-4 px-5 md:px-6 py-4 md:py-5 items-center">
+                <div className="grid grid-cols-1 md:grid-cols-[2fr_1.5fr_1fr_1fr] gap-2 md:gap-4 px-4 md:px-5 py-3 md:py-3.5 items-center">
                   
                   {/* Position / Role */}
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-cyan-400 shrink-0 group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-white transition-all duration-500">
-                      <Briefcase size={18} />
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-cyan-400 shrink-0 group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-white transition-all duration-500">
+                      <Briefcase size={16} />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 mb-0.5">
-                        <h3 className="text-sm font-black text-white uppercase tracking-tight truncate group-hover:text-cyan-400 transition-colors">
+                        <h3 className="text-xs font-black text-white uppercase tracking-tight truncate group-hover:text-cyan-400 transition-colors">
                           {job.role}
                         </h3>
                         {job.isNew && (
-                          <span className="px-1.5 py-0.5 rounded-md bg-cyan-500 text-white text-[6px] font-black uppercase tracking-widest">
+                          <span className="px-1 py-0.5 rounded bg-cyan-500 text-white text-[5px] font-black uppercase tracking-widest">
                             {t.newBadge}
                           </span>
                         )}
                       </div>
-                      <p className="text-[9px] text-slate-500 font-medium truncate md:hidden">
+                      <p className="text-[8px] text-slate-500 font-medium truncate md:hidden">
                         {job.company}
                       </p>
                     </div>
@@ -198,36 +198,36 @@ const HiringSection: React.FC<HiringSectionProps> = ({ lang, translations }) => 
 
                   {/* Company - Desktop Only */}
                   <div className="hidden md:flex items-center">
-                    <span className="px-2.5 py-0.5 rounded-lg bg-white/5 border border-white/10 text-slate-400 text-[9px] font-black uppercase tracking-widest group-hover:border-cyan-500/30 group-hover:text-cyan-400 transition-all">
+                    <span className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-400 text-[8px] font-black uppercase tracking-widest group-hover:border-cyan-500/30 group-hover:text-cyan-400 transition-all">
                       {job.company}
                     </span>
                   </div>
 
                   {/* Time */}
-                  <div className="flex items-center gap-1.5 text-slate-500">
-                    <Clock size={10} className="shrink-0" />
-                    <span className="text-[9px] font-bold uppercase tracking-wider">
+                  <div className="flex items-center gap-1 text-slate-500">
+                    <Clock size={9} className="shrink-0" />
+                    <span className="text-[8px] font-bold uppercase tracking-wider">
                       {getTimeAgo(job.postedAt)}
                     </span>
                   </div>
 
                   {/* Actions */}
-                  <div className="flex items-center justify-end gap-2">
+                  <div className="flex items-center justify-end gap-1.5">
                     <button
                       onClick={() => setSelectedLink(job.applyLink)}
-                      className="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-lg font-black uppercase tracking-widest text-[9px] transition-all flex items-center gap-1.5 shadow-lg active:scale-95 whitespace-nowrap"
+                      className="px-3 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-md font-black uppercase tracking-widest text-[8px] transition-all flex items-center gap-1 shadow-lg active:scale-95 whitespace-nowrap"
                     >
                       {t.applyNow}
-                      <ExternalLink size={12} />
+                      <ExternalLink size={10} />
                     </button>
                     <a
                       href={job.applyLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 hover:text-white hover:bg-[#0077b5] hover:border-[#0077b5] transition-all shrink-0"
+                      className="w-7 h-7 rounded-md bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 hover:text-white hover:bg-[#0077b5] hover:border-[#0077b5] transition-all shrink-0"
                       title="View on LinkedIn"
                     >
-                      <Linkedin size={16} />
+                      <Linkedin size={14} />
                     </a>
                   </div>
                 </div>
