@@ -134,9 +134,13 @@ const HiringSection: React.FC<HiringSectionProps> = ({ lang, translations }) => 
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter"
+              className="text-2xl md:text-4xl font-black uppercase tracking-tighter relative group"
             >
-              {t.title}
+              <span className="relative z-10 bg-gradient-to-r from-cyan-400 via-white to-cyan-400 bg-[length:200%_auto] bg-clip-text text-transparent animate-shimmer">
+                {t.title}
+              </span>
+              {/* Glow Effect */}
+              <div className="absolute -inset-1 bg-cyan-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
             </motion.h2>
           </div>
           <motion.p

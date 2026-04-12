@@ -68,7 +68,7 @@ export const TRANSLATIONS = {
     navPrivacy: "PRIVACY POLICY",
     updates: "What's New",
     hiring: {
-      title: "Latest Hiring",
+      title: "Latest Hiring & News Updates",
       subtitle: "Upcoming company hiring / interviews / placement opportunities",
       role: "Role",
       applyNow: "More details apply now",
@@ -197,7 +197,7 @@ export const TRANSLATIONS = {
     navPrivacy: "गोपनीयता नीति",
     updates: "नया क्या है?",
     hiring: {
-      title: "नवीनतम भर्ती",
+      title: "नवीनतम भर्ती और समाचार अपडेट",
       subtitle: "आगामी कंपनी भर्ती / साक्षात्कार / प्लेसमेंट के अवसर",
       role: "पद",
       applyNow: "अधिक जानकारी और आवेदन",
