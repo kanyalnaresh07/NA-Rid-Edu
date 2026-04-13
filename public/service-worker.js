@@ -6,7 +6,7 @@ const urlsToCache = [
   '/index.html',
   '/offline.html',
   '/manifest.json',
-  'https://raw.githubusercontent.com/kanyalnaresh07/NA-Rid-Edu/main/public/images/logo.png'
+  '/images/logo.png'
 ];
 
 self.addEventListener('install', (event) => {
