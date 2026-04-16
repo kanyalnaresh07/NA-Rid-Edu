@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { Linkedin, ExternalLink, Briefcase, Building2, Sparkles, Clock } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Linkedin, ExternalLink, Briefcase, Building2, Sparkles, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import { Language } from '../types';
 
 interface HiringCard {
@@ -20,6 +20,7 @@ interface HiringSectionProps {
 const HiringSection: React.FC<HiringSectionProps> = ({ lang, translations }) => {
   const isHi = lang === 'hi';
   const t = translations.hiring;
+  const [showAll, setShowAll] = useState(false);
 
   const getTimeAgo = (dateString: string) => {
     const now = new Date();
@@ -151,7 +152,7 @@ const HiringSection: React.FC<HiringSectionProps> = ({ lang, translations }) => 
   ];
 
   return (
-    <section className="pt-0 pb-12 relative overflow-hidden">
+    <section className="pt-0 pb-0 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-500/5 blur-[100px] rounded-full" />
       <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-500/5 blur-[100px] rounded-full" />
@@ -197,89 +198,117 @@ const HiringSection: React.FC<HiringSectionProps> = ({ lang, translations }) => 
         {/* Minimal List Layout - Ultra Compact */}
         <div className="bg-slate-950/40 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden shadow-2xl">
           {/* Table Header - Desktop Only */}
-          <div className="hidden md:grid grid-cols-[2fr_1.5fr_1fr_1fr] gap-4 px-5 py-3 border-b border-white/5 bg-white/[0.02]">
-            <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em]">{isHi ? 'पद' : 'Position'}</span>
-            <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em]">{isHi ? 'कंपनी' : 'Company'}</span>
-            <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em]">{isHi ? 'समय' : 'Posted'}</span>
-            <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] text-right">{isHi ? 'कार्रवाई' : 'Action'}</span>
+          <div className="hidden md:grid grid-cols-[2fr_1.5fr_1fr_1fr] gap-4 px-6 py-4 border-b border-white/5 bg-white/[0.02]">
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">{isHi ? 'पद' : 'Position'}</span>
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">{isHi ? 'कंपनी' : 'Company'}</span>
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">{isHi ? 'समय' : 'Posted'}</span>
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] text-right">{isHi ? 'कार्रवाई' : 'Action'}</span>
           </div>
 
-          <div className="divide-y divide-white/5">
-            {hiringData.map((job, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.05 }}
-                className="group relative hover:bg-white/[0.03] transition-colors duration-300"
-              >
-                {/* Mobile & Desktop Responsive Row */}
-                <div className="grid grid-cols-1 md:grid-cols-[2fr_1.5fr_1fr_1fr] gap-2 md:gap-4 px-4 md:px-5 py-3 md:py-3.5 items-center">
-                  
-                  {/* Position / Role */}
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-cyan-400 shrink-0 group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-white transition-all duration-500">
-                      <Briefcase size={16} />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <h3 className="text-xs font-black text-white uppercase tracking-tight truncate group-hover:text-cyan-400 transition-colors">
-                          {job.role}
-                        </h3>
-                        {job.isNew && (
-                          <span className="px-1 py-0.5 rounded bg-cyan-500 text-white text-[5px] font-black uppercase tracking-widest">
-                            {t.newBadge}
-                          </span>
-                        )}
+          <div className="flex flex-col">
+            <AnimatePresence initial={false}>
+              {(showAll ? hiringData : hiringData.slice(0, 5)).map((job, idx) => (
+                <motion.div
+                  key={job.company + job.role + idx}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="group relative hover:bg-white/[0.03] transition-colors duration-300 border-b border-white/5 last:border-0 overflow-hidden"
+                >
+                  {/* Mobile & Desktop Responsive Row */}
+                  <div className="grid grid-cols-1 md:grid-cols-[2fr_1.5fr_1fr_1fr] gap-3 md:gap-4 px-4 md:px-6 py-4 md:py-5 items-center">
+                    
+                    {/* Position / Role */}
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-cyan-400 shrink-0 group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-white transition-all duration-500">
+                        <Briefcase size={18} />
                       </div>
-                      <p className="text-[8px] text-slate-500 font-medium truncate md:hidden">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="text-sm font-black text-white uppercase tracking-tight truncate group-hover:text-cyan-400 transition-colors">
+                            {job.role}
+                          </h3>
+                          {job.isNew && (
+                            <span className="px-1.5 py-0.5 rounded bg-cyan-500 text-white text-[8px] font-black uppercase tracking-widest">
+                              {t.newBadge}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-slate-400 font-medium truncate md:hidden">
+                          {job.company}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Company - Desktop Only */}
+                    <div className="hidden md:flex items-center">
+                      <span className="px-3 py-1 rounded-md bg-white/5 border border-white/10 text-slate-300 text-xs font-bold uppercase tracking-widest group-hover:border-cyan-500/30 group-hover:text-cyan-400 transition-all">
                         {job.company}
-                      </p>
+                      </span>
+                    </div>
+
+                    {/* Time */}
+                    <div className="flex items-center gap-1.5 text-slate-400">
+                      <Clock size={12} className="shrink-0" />
+                      <span className="text-[10px] font-bold uppercase tracking-wider">
+                        {getTimeAgo(job.postedAt)}
+                      </span>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex items-center justify-end gap-2">
+                      <a
+                        href={job.applyLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-lg font-black uppercase tracking-widest text-[10px] transition-all flex items-center gap-1.5 shadow-lg active:scale-95 whitespace-nowrap"
+                      >
+                        {t.applyNow}
+                        <ExternalLink size={12} />
+                      </a>
+                      <a
+                        href={job.applyLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-[#0077b5] hover:border-[#0077b5] transition-all shrink-0"
+                        title="View on LinkedIn"
+                      >
+                        <Linkedin size={16} />
+                      </a>
                     </div>
                   </div>
-
-                  {/* Company - Desktop Only */}
-                  <div className="hidden md:flex items-center">
-                    <span className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-400 text-[8px] font-black uppercase tracking-widest group-hover:border-cyan-500/30 group-hover:text-cyan-400 transition-all">
-                      {job.company}
-                    </span>
-                  </div>
-
-                  {/* Time */}
-                  <div className="flex items-center gap-1 text-slate-500">
-                    <Clock size={9} className="shrink-0" />
-                    <span className="text-[8px] font-bold uppercase tracking-wider">
-                      {getTimeAgo(job.postedAt)}
-                    </span>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex items-center justify-end gap-1.5">
-                    <a
-                      href={job.applyLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-md font-black uppercase tracking-widest text-[8px] transition-all flex items-center gap-1 shadow-lg active:scale-95 whitespace-nowrap"
-                    >
-                      {t.applyNow}
-                      <ExternalLink size={10} />
-                    </a>
-                    <a
-                      href={job.applyLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-7 h-7 rounded-md bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 hover:text-white hover:bg-[#0077b5] hover:border-[#0077b5] transition-all shrink-0"
-                      title="View on LinkedIn"
-                    >
-                      <Linkedin size={14} />
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         </div>
+
+        {/* See More Button */}
+        {hiringData.length > 5 && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="mt-6 flex justify-center"
+          >
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="group flex items-center gap-2 px-6 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-[10px] font-black text-white uppercase tracking-widest transition-all duration-300 hover:border-cyan-500/30 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+            >
+              {showAll ? (
+                <>
+                  {isHi ? 'कम दिखाएं' : 'Show Less'}
+                  <ChevronUp size={14} className="text-cyan-400 group-hover:-translate-y-0.5 transition-transform" />
+                </>
+              ) : (
+                <>
+                  {isHi ? 'और देखें' : 'See More'}
+                  <ChevronDown size={14} className="text-cyan-400 group-hover:translate-y-0.5 transition-transform" />
+                </>
+              )}
+            </button>
+          </motion.div>
+        )}
 
         {/* Future Hint */}
         <motion.p 

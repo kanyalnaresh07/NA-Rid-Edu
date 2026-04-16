@@ -185,6 +185,144 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
             </div>
           </motion.div>
         </div>
+
+        {/* Hiring Section Intro */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="w-full max-w-5xl mx-auto px-4 mt-24 mb-8 z-20 relative text-center"
+        >
+          <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-4">
+            {isHi ? 'अपने करियर की ' : 'Kickstart Your '}<span className="text-cyan-400">{isHi ? 'शुरुआत करें' : 'Career'}</span>
+          </h2>
+          <p className="text-slate-300 text-sm leading-relaxed max-w-3xl mx-auto">
+            {isHi 
+              ? 'विनिर्माण क्षेत्र में नवीनतम नौकरी के उद्घाटन और करियर के अवसरों का अन्वेषण करें। हम आपके कौशल और आकांक्षाओं से मेल खाने वाली भूमिकाएं लाने के लिए शीर्ष कंपनियों के साथ साझेदारी करते हैं। अपने अगले बड़े करियर कदम को न चूकें।' 
+              : 'Explore the latest job openings and career opportunities in the manufacturing sector. We partner with top companies to bring you roles that match your skills and aspirations. Don\'t miss out on your next big career move.'}
+          </p>
+        </motion.div>
+
+        {/* Hiring Section */}
+        <HiringSection lang={lang} translations={translations} />
+
+        {/* Trust Bar */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="w-full max-w-7xl mx-auto mt-8 z-20 relative"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+            <div className="flex flex-col items-center text-center">
+              <span className="text-4xl font-black text-cyan-400 mb-2">1k+</span>
+              <span className="text-slate-300 text-sm uppercase tracking-widest font-bold">{isHi ? 'सक्रिय शिक्षार्थी' : 'Active Learners'}</span>
+            </div>
+            <div className="flex flex-col items-center text-center border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0">
+              <span className="text-4xl font-black text-cyan-400 mb-2">50+</span>
+              <span className="text-slate-300 text-sm uppercase tracking-widest font-bold">{isHi ? 'शिक्षार्थियों के साथ भागीदार' : 'Partners with Learners'}</span>
+            </div>
+            <div className="flex flex-col items-center text-center border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0">
+              <span className="text-4xl font-black text-cyan-400 mb-2">100+</span>
+              <span className="text-slate-300 text-sm uppercase tracking-widest font-bold">{isHi ? 'नौकरियां पोस्ट की गईं' : 'Jobs Posted'}</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* What You Will Get */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="w-full max-w-7xl mx-auto mt-24 z-20 relative"
+        >
+          <div className="flex flex-col md:flex-row gap-12 items-center">
+            <div className="w-full md:w-1/2">
+              <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-6">
+                {isHi ? 'आपको क्या ' : 'What You Will '}<span className="text-cyan-400">{isHi ? 'मिलेगा' : 'Get'}</span>
+              </h2>
+              <p className="text-slate-300 text-sm leading-relaxed mb-8">
+                {isHi 
+                  ? 'हमारा प्लेटफ़ॉर्म आपको विनिर्माण उद्योग में सफल होने में मदद करने के लिए व्यापक संसाधन और उपकरण प्रदान करता है। बुनियादी ज्ञान से लेकर उन्नत अवधारणाओं तक, हमने सब कुछ कवर किया है।' 
+                  : 'Our platform provides comprehensive resources and tools to help you succeed in the manufacturing industry. From foundational knowledge to advanced concepts, we\'ve got you covered.'}
+              </p>
+              <ul className="space-y-4">
+                {[
+                  isHi ? "विनिर्माण शब्दों की गहन शब्दावली" : "In-depth glossary of manufacturing terms",
+                  isHi ? "गुणवत्ता नियंत्रण और प्रक्रियाओं पर विस्तृत मार्गदर्शिकाएँ" : "Detailed guides on quality control and processes",
+                  isHi ? "आपके ज्ञान का परीक्षण करने के लिए इंटरैक्टिव क्विज़" : "Interactive quizzes to test your knowledge",
+                  isHi ? "शीर्ष कंपनियों से नवीनतम भर्ती अपडेट" : "Latest hiring updates from top companies",
+                  isHi ? "आपके प्रश्नों के लिए एआई-संचालित सहायता" : "AI-powered assistance for your queries"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 className="text-cyan-400 shrink-0 mt-0.5" size={18} />
+                    <span className="text-slate-200 text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="w-full md:w-1/2 relative">
+              <div className="aspect-square max-w-md mx-auto relative">
+                <div className="absolute inset-0 bg-cyan-500/20 blur-[100px] rounded-full" />
+                <div className="relative h-full bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col justify-center items-center text-center shadow-2xl">
+                  <Sparkles className="text-cyan-400 w-16 h-16 mb-6" />
+                  <h3 className="text-xl font-black text-white uppercase tracking-widest mb-4">
+                    {isHi ? 'प्रीमियम सामग्री' : 'Premium Content'}
+                  </h3>
+                  <p className="text-slate-400 text-sm">
+                    {isHi 
+                      ? 'आपके करियर के विकास को गति देने के लिए उद्योग विशेषज्ञों द्वारा डिज़ाइन की गई उच्च-गुणवत्ता, क्यूरेटेड शिक्षण सामग्री तक पहुंचें।' 
+                      : 'Access high-quality, curated learning materials designed by industry experts to accelerate your career growth.'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Why Choose Us */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="w-full max-w-7xl mx-auto mt-24 mb-16 z-20 relative"
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-4">
+              {isHi ? 'हमें क्यों ' : 'Why Choose '}<span className="text-cyan-400">{isHi ? 'चुनें' : 'Us'}</span>
+            </h2>
+            <p className="text-slate-400 text-sm max-w-2xl mx-auto">
+              {isHi 
+                ? 'हम शिक्षा और उद्योग की आवश्यकताओं के बीच की खाई को पाटने के लिए समर्पित हैं, यह सुनिश्चित करते हुए कि आप हमेशा नौकरी के लिए तैयार रहें।' 
+                : 'We are dedicated to bridging the gap between education and industry requirements, ensuring you are always job-ready.'}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { 
+                title: isHi ? "उद्योग संरेखित" : "Industry Aligned", 
+                desc: isHi ? "वर्तमान उद्योग मानकों और आवश्यकताओं से मेल खाने के लिए क्यूरेट की गई सामग्री।" : "Content curated to match current industry standards and requirements." 
+              },
+              { 
+                title: isHi ? "विशेषज्ञ संचालित" : "Expert Driven", 
+                desc: isHi ? "अनुभवी पेशेवरों के अनुभवों और अंतर्दृष्टि से सीखें।" : "Learn from the experiences and insights of seasoned professionals." 
+              },
+              { 
+                title: isHi ? "करियर केंद्रित" : "Career Focused", 
+                desc: isHi ? "भर्ती अपडेट और करियर उन्नति के अवसरों तक सीधी पहुंच।" : "Direct access to hiring updates and career advancement opportunities." 
+              }
+            ].map((feature, i) => (
+              <div key={i} className="bg-slate-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:bg-white/5 transition-colors group">
+                <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition-transform">
+                  <Target size={24} />
+                </div>
+                <h3 className="text-lg font-black text-white uppercase tracking-widest mb-3">{feature.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
       </motion.div>
 
       {/* Changelog Modal */}
@@ -311,8 +449,6 @@ const HeroSection: React.FC<HeroProps> = ({ title, description, onGlossaryClick,
         HUB
       </motion.div>
 
-      {/* Hiring Section at the bottom of Home Page */}
-      <HiringSection lang={lang} translations={translations} />
       </div>
   );
 };

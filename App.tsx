@@ -677,19 +677,31 @@ const App: React.FC = () => {
 
               <footer className="bg-slate-950 text-white py-12 px-6 border-t border-cyan-500/5 backdrop-blur-md">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-                  <div className="scale-110 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 rounded-lg p-1" onClick={handleBackHome} tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handleBackHome()}>
-                    {AIRFOCUS_LOGO}
+                  <div className="flex flex-col items-center md:items-start gap-2">
+                    <div className="scale-110 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 rounded-lg p-1" onClick={handleBackHome} tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handleBackHome()}>
+                      {AIRFOCUS_LOGO}
+                    </div>
+                    <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2">
+                      {lang === 'hi' ? 'अंतिम अद्यतन: 16 अप्रैल 2026' : 'Last Updated: April 16, 2026'}
+                    </p>
                   </div>
-                  <div className="flex flex-col items-center md:items-end gap-2">
+                  <div className="flex flex-col items-center md:items-end gap-3">
                       <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em]">{t.copyright}</p>
-                      <div className="flex items-center gap-4">
+                      <div className="flex flex-wrap justify-center md:justify-end items-center gap-4">
+                        <button onClick={handleAboutClick} className="text-cyan-500/60 hover:text-cyan-400 text-[9px] uppercase tracking-widest font-bold transition-colors">
+                          {t.navAbout || (lang === 'hi' ? 'हमारे बारे में' : 'About')}
+                        </button>
+                        <span className="text-white/10 text-[9px]">|</span>
+                        <button onClick={handleContactClick} className="text-cyan-500/60 hover:text-cyan-400 text-[9px] uppercase tracking-widest font-bold transition-colors">
+                          {t.navContact || (lang === 'hi' ? 'संपर्क करें' : 'Contact')}
+                        </button>
+                        <span className="text-white/10 text-[9px]">|</span>
                         <button onClick={handlePrivacyClick} className="text-cyan-500/60 hover:text-cyan-400 text-[9px] uppercase tracking-widest font-bold transition-colors">
                           {t.navPrivacy}
                         </button>
-                        <span className="text-white/10 text-[9px]">|</span>
-                        <p className="text-slate-400 text-[9px] uppercase tracking-widest font-bold">{t.footerText}</p>
                       </div>
-                      <div className="flex gap-4 mt-4">
+                      <p className="text-slate-400 text-[9px] uppercase tracking-widest font-bold mt-1">{t.footerText}</p>
+                      <div className="flex gap-4 mt-2">
                           <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,1)]"></div>
                           <div className="w-1.5 h-1.5 rounded-full bg-white/10"></div>
                           <div className="w-1.5 h-1.5 rounded-full bg-white/10"></div>
