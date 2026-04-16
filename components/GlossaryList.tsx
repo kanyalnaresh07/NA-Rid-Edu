@@ -717,22 +717,22 @@ const GlossaryList: React.FC<GlossaryListProps> = ({ translations, lang, onCateg
                       whileTap={{ scale: 0.95 }}
                       transition={{ type: "spring", damping: 20, stiffness: 100, delay: index * 0.05 }}
                       onClick={() => onCategorySelect(term)}
-                      className={`relative w-[260px] sm:w-[280px] md:w-[300px] lg:w-[320px] aspect-square rounded-full border-[10px] md:border-[14px] ${color.border} bg-white flex flex-col items-center justify-center p-10 md:p-12 text-center group z-10 shadow-[0_20px_40px_rgba(0,0,0,0.4)] focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50 overflow-visible`}
+                      className={`relative w-[200px] sm:w-[240px] md:w-[280px] lg:w-[320px] aspect-square rounded-full border-[8px] md:border-[14px] ${color.border} bg-white flex flex-col items-center justify-center p-6 md:p-12 text-center group z-10 shadow-[0_20px_40px_rgba(0,0,0,0.4)] focus:outline-none focus-visible:ring-4 focus-visible:ring-cyan-500/50 overflow-visible`}
                     >
                       {/* Premium Loader Animation Rings */}
                       <div 
-                        className={`absolute inset-[-14px] md:inset-[-18px] rounded-full border-[3px] md:border-[4px] border-transparent ${color.text} opacity-60 animate-[spin_4s_linear_infinite] pointer-events-none`}
+                        className={`absolute inset-[-10px] md:inset-[-18px] rounded-full border-[2px] md:border-[4px] border-transparent ${color.text} opacity-60 animate-[spin_4s_linear_infinite] pointer-events-none`}
                         style={{ borderTopColor: 'currentColor', borderRightColor: 'currentColor' }}
                       ></div>
                       <div 
-                        className={`absolute inset-[-20px] md:inset-[-26px] rounded-full border-[1px] md:border-[2px] border-dashed ${color.text} opacity-30 animate-[spin_10s_linear_infinite_reverse] pointer-events-none`}
+                        className={`absolute inset-[-16px] md:inset-[-26px] rounded-full border-[1px] md:border-[2px] border-dashed ${color.text} opacity-30 animate-[spin_10s_linear_infinite_reverse] pointer-events-none`}
                         style={{ borderColor: 'currentColor' }}
                       ></div>
                       <div 
-                        className={`absolute inset-[-26px] md:inset-[-34px] rounded-full border-[2px] md:border-[3px] border-transparent ${color.text} opacity-40 animate-[spin_6s_linear_infinite] pointer-events-none`}
+                        className={`absolute inset-[-22px] md:inset-[-34px] rounded-full border-[2px] md:border-[3px] border-transparent ${color.text} opacity-40 animate-[spin_6s_linear_infinite] pointer-events-none`}
                         style={{ borderBottomColor: 'currentColor', borderLeftColor: 'currentColor' }}
                       >
-                        <div className={`absolute bottom-[14%] right-[14%] w-2 h-2 md:w-3 md:h-3 rounded-full ${color.line} shadow-[0_0_10px_currentColor] animate-pulse`}></div>
+                        <div className={`absolute bottom-[14%] right-[14%] w-1.5 h-1.5 md:w-3 md:h-3 rounded-full ${color.line} shadow-[0_0_10px_currentColor] animate-pulse`}></div>
                       </div>
 
                       {/* Inner dashed ring */}

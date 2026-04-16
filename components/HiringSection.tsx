@@ -39,6 +39,46 @@ const HiringSection: React.FC<HiringSectionProps> = ({ lang, translations }) => 
 
   const hiringData: HiringCard[] = [
     {
+      company: "veira Electronic",
+      role: "QA inspector/Enginner",
+      description: isHi 
+        ? "वीरा इलेक्ट्रॉनिक में QA इंस्पेक्टर/इंजीनियर पदों के लिए भर्ती। गुणवत्ता नियंत्रण में करियर का अवसर।" 
+        : "Hiring for QA inspector/Enginner positions at veira Electronic. Career opportunity in quality control.",
+      applyLink: "https://www.linkedin.com/posts/vicky-kumar-236462240_iqc-share-7450075324727418880-_s-C?utm_source=social_share_send&utm_medium=android_app&rcm=ACoAACL-0WMBZwaN1UkXbC0KqCsi6AMAgFY2K3E&utm_campaign=copy_link",
+      isNew: true,
+      postedAt: "2026-04-16T06:36:00Z"
+    },
+    {
+      company: "HVR Solar pvt ltd",
+      role: "Multiple positions",
+      description: isHi 
+        ? "HVR सोलर प्राइवेट लिमिटेड में विभिन्न पदों के लिए भर्ती। सौर ऊर्जा क्षेत्र में करियर का अवसर।" 
+        : "Hiring for multiple positions at HVR Solar pvt ltd. Career opportunity in the solar energy sector.",
+      applyLink: "https://www.linkedin.com/posts/karthick-k-87b7b0211_we-are-hiring-join-hvr-solar-pvt-ltd-share-7449826749636591616-CKIj?utm_source=share&utm_medium=member_android&rcm=ACoAACL-0WMBZwaN1UkXbC0KqCsi6AMAgFY2K3E",
+      isNew: true,
+      postedAt: "2026-04-16T06:34:00Z"
+    },
+    {
+      company: "DBG india Pvt Ltd",
+      role: "Smt enginner",
+      description: isHi 
+        ? "SMT इंजीनियर पदों के लिए भर्ती। EMS विनिर्माण क्षेत्र में करियर का अवसर।" 
+        : "Hiring for SMT Engineer positions. Career opportunity in EMS manufacturing sector.",
+      applyLink: "https://www.linkedin.com/posts/nidhi-5238a323a_hiring-smtengineer-ems-share-7449360390653652992-mgiw?utm_source=share&utm_medium=member_android&rcm=ACoAACL-0WMBZwaN1UkXbC0KqCsi6AMAgFY2K3E",
+      isNew: true,
+      postedAt: "2026-04-16T06:31:00Z"
+    },
+    {
+      company: "sanmica-SCl india Pvt Ltd",
+      role: "Associate engineer/Engineer/senior Engineer",
+      description: isHi 
+        ? "एसोसिएट इंजीनियर/इंजीनियर/सीनियर इंजीनियर पदों के लिए भर्ती। इलेक्ट्रॉनिक्स विनिर्माण में अवसर।" 
+        : "Hiring for Associate engineer/Engineer/senior Engineer positions. Opportunity in electronics manufacturing.",
+      applyLink: "https://www.linkedin.com/posts/karthick-k-87b7b0211_hiring-engineeringjobs-electronicsmanufacturing-share-7448012549566099456-PvDY?utm_source=share&utm_medium=member_android&rcm=ACoAACL-0WMBZwaN1UkXbC0KqCsi6AMAgFY2K3E",
+      isNew: true,
+      postedAt: "2026-04-16T06:30:00Z"
+    },
+    {
       company: "XIHI Technology Pvt Ltd",
       role: "ME Supervisor (Wave soldering)",
       description: isHi 

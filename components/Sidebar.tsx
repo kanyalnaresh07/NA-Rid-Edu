@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Home, 
   Trophy, 
@@ -24,6 +24,8 @@ interface SidebarProps {
   translations: any;
   showChangelog: boolean;
   setShowChangelog: (show: boolean) => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ 
@@ -33,7 +35,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   onLangChange, 
   translations,
   showChangelog,
-  setShowChangelog
+  setShowChangelog,
+  isOpen = false,
+  onClose
 }) => {
   const isHi = lang === 'hi';
 
@@ -50,24 +54,49 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const handleNavClick = (view: PageView) => {
     onNavigate(view);
+    if (onClose) onClose();
   };
 
   return (
     <>
+      {/* Mobile Backdrop */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[57] lg:hidden"
+          />
+        )}
+      </AnimatePresence>
+
       {/* Sidebar Container */}
       <motion.aside 
-        className="fixed top-0 left-0 h-screen bg-slate-950/90 backdrop-blur-3xl border-r border-white/10 z-[58] flex flex-col transition-all duration-500 ease-in-out w-[70px] lg:w-[280px] group/sidebar shadow-[10px_0_50px_rgba(0,0,0,0.5)]"
+        initial={false}
+        animate={{ 
+          x: isOpen ? 0 : (typeof window !== 'undefined' && window.innerWidth < 1024 ? -280 : 0)
+        }}
+        className={`fixed top-0 left-0 h-screen bg-slate-950/90 backdrop-blur-3xl border-r border-white/10 z-[58] flex flex-col transition-all duration-500 ease-in-out w-[280px] lg:w-[280px] group/sidebar shadow-[10px_0_50px_rgba(0,0,0,0.5)] ${!isOpen ? 'hidden lg:flex' : 'flex'}`}
       >
         {/* Logo Section */}
-        <div className="p-4 lg:p-8 mb-4 flex justify-center lg:justify-start">
+        <div className="p-8 mb-4 flex justify-start items-center">
           <div 
             onClick={() => handleNavClick(PageView.HOME)}
             className="cursor-pointer hover:opacity-80 transition-opacity"
           >
-            <div className="scale-90 lg:scale-110 origin-center lg:origin-left">
-              <Logo hideTextOnMobile={true} />
+            <div className="scale-110 origin-left">
+              <Logo hideTextOnMobile={false} />
             </div>
           </div>
+          {/* Close button for mobile */}
+          <button 
+            onClick={onClose}
+            className="ml-auto p-2 text-slate-400 hover:text-white lg:hidden"
+          >
+            <Sparkles size={20} />
+          </button>
         </div>
 
         {/* Navigation Links */}

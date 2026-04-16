@@ -5,6 +5,7 @@ import Hero from './components/HeroSection';
 import LanguageModal from './components/LanguageModal';
 import LoadingSkeleton from './components/LoadingSkeleton';
 import Sidebar from './components/Sidebar';
+import BottomNav from './components/BottomNav';
 import { PageView, Language, GlossaryTerm } from './types';
 import { TRANSLATIONS, AIRFOCUS_LOGO, GLOSSARY_TERMS } from './constants';
 import AppBackground from './components/AppBackground';
@@ -53,6 +54,7 @@ const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [showSecurityAlert, setShowSecurityAlert] = useState(false);
   const [showChangelog, setShowChangelog] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const t = TRANSLATIONS[lang] || TRANSLATIONS['en'];
 
@@ -313,10 +315,12 @@ const App: React.FC = () => {
             translations={t}
             showChangelog={showChangelog}
             setShowChangelog={setShowChangelog}
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
           />
         )}
 
-        <div className={`relative z-10 flex-grow transition-all duration-500 ${view === PageView.HOME ? 'pl-0' : 'pl-[70px] lg:pl-[280px]'}`}>
+        <div className={`relative z-10 flex-grow transition-all duration-500 ${view === PageView.HOME ? 'pl-0' : 'pl-0 lg:pl-[280px]'}`}>
           {/* Floating Logo for Home Page (since Sidebar/Nav is hidden) */}
           {view === PageView.HOME && (
             <div className="absolute top-8 left-8 md:left-12 z-[50] flex items-center gap-6">
@@ -333,6 +337,12 @@ const App: React.FC = () => {
           {view !== PageView.HOME && (
             <header className="sticky top-0 left-0 right-0 z-[40] bg-slate-950/80 backdrop-blur-md border-b border-white/5 px-4 md:px-8 py-4 flex items-center justify-between">
               <div className="flex items-center gap-4">
+                <button 
+                  onClick={() => setIsSidebarOpen(true)}
+                  className="p-2 text-slate-400 hover:text-white lg:hidden"
+                >
+                  <Sparkles size={20} />
+                </button>
                 <div className="block">
                   <h1 className="text-sm font-black text-white uppercase tracking-widest">
                     {getNavTitle()}
@@ -516,7 +526,7 @@ const App: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="min-h-screen flex flex-col"
+              className="min-h-screen flex flex-col pb-20 lg:pb-0"
             >
               <main className="flex-grow">
                 <Suspense fallback={<LoadingSkeleton />}>
@@ -690,6 +700,16 @@ const App: React.FC = () => {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Bottom Navigation for Mobile */}
+        {view !== PageView.HOME && (
+          <BottomNav 
+            currentView={view}
+            onNavigate={navigateTo}
+            onMenuClick={() => setIsSidebarOpen(true)}
+            translations={t}
+          />
+        )}
       </div>
       </div>
     </AppBackground>
